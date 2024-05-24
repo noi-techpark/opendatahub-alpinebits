@@ -33,8 +33,6 @@ SPDX-License-Identifier: CC0-1.0
         <!-- Skip Sonar analysis for examples module -->
         <sonar.skip>true</sonar.skip>
 
-        <jackson.version>2.11.1</jackson.version>
-
         <maven-war-plugin.version>3.2.2</maven-war-plugin.version>
         <cargo-maven2-plugin.version>1.6.11</cargo-maven2-plugin.version>
     </properties>
