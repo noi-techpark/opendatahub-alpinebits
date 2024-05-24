@@ -12,12 +12,12 @@ SPDX-License-Identifier: CC0-1.0
     <parent>
         <groupId>it.bz.opendatahub.alpinebits</groupId>
         <artifactId>alpinebits-validation</artifactId>
-        <version>2.1.1</version>
+        <version>3.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>alpinebits-validation-impl</artifactId>
-    <version>2.1.1</version>
+    <version>3.0.0-SNAPSHOT</version>
 
     <name>AlpineBits validation impl</name>
 
