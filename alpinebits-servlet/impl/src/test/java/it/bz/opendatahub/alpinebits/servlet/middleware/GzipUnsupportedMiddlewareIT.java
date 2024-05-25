@@ -56,7 +56,7 @@ public class GzipUnsupportedMiddlewareIT extends Arquillian {
                 .then()
                 .statusCode(HttpServletResponse.SC_NOT_IMPLEMENTED)
                 .and()
-                .content(containsString("ERROR:"));
+                .body(containsString("ERROR:"));
     }
 
     @Test

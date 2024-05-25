@@ -89,7 +89,7 @@ public class XmlRequestMappingMiddlewareIT extends Arquillian {
                 .post(this.base + "AlpineBits")
                 .then()
                 .statusCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
-                .content(containsString("ERROR:"));
+                .body(containsString("ERROR:"));
     }
 
     @Test
@@ -103,7 +103,7 @@ public class XmlRequestMappingMiddlewareIT extends Arquillian {
                 .post(this.base + "AlpineBits")
                 .then()
                 .statusCode(HttpServletResponse.SC_BAD_REQUEST)
-                .content(containsString("ERROR:"));
+                .body(containsString("ERROR:"));
     }
 
     @Test
@@ -119,7 +119,7 @@ public class XmlRequestMappingMiddlewareIT extends Arquillian {
                 .post(this.base + "AlpineBits")
                 .then()
                 .statusCode(HttpServletResponse.SC_OK)
-                .content(containsString(OTAReadRQ.class.toString()));
+                .body(containsString(OTAReadRQ.class.toString()));
     }
 
     @Test
@@ -135,7 +135,7 @@ public class XmlRequestMappingMiddlewareIT extends Arquillian {
                 .post(this.base + "AlpineBits")
                 .then()
                 .statusCode(HttpServletResponse.SC_BAD_REQUEST)
-                .content(containsString("ERROR:"));
+                .body(containsString("ERROR:"));
     }
 
     @Test
@@ -151,7 +151,7 @@ public class XmlRequestMappingMiddlewareIT extends Arquillian {
                 .post(this.base + "AlpineBits")
                 .then()
                 .statusCode(HttpServletResponse.SC_OK)
-                .content(containsString(OTAReadRQ.class.toString()));
+                .body(containsString(OTAReadRQ.class.toString()));
     }
 
     @Test
@@ -167,7 +167,7 @@ public class XmlRequestMappingMiddlewareIT extends Arquillian {
                 .post(this.base + "AlpineBits")
                 .then()
                 .statusCode(HttpServletResponse.SC_BAD_REQUEST)
-                .content(containsString("ERROR:"));
+                .body(containsString("ERROR:"));
     }
 
     @Test
@@ -183,6 +183,6 @@ public class XmlRequestMappingMiddlewareIT extends Arquillian {
                 .post(this.base + "AlpineBits")
                 .then()
                 .statusCode(HttpServletResponse.SC_OK)
-                .content(containsString(OTAReadRQ.class.toString()));
+                .body(containsString(OTAReadRQ.class.toString()));
     }
 }

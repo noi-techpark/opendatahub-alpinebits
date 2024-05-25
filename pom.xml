@@ -67,7 +67,7 @@ SPDX-License-Identifier: CC0-1.0
         <mockito.version>2.22.0</mockito.version>
         <arquillian.version>1.8.0.Final</arquillian.version>
         <tomcat-embedded.version>9.0.88</tomcat-embedded.version>
-        <rest-assured.version>3.1.1</rest-assured.version>
+        <rest-assured.version>5.4.0</rest-assured.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

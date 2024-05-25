@@ -70,7 +70,7 @@ public class HousekeepingGetCapabilitiesMiddlewareIT extends Arquillian {
                 .then()
                 .statusCode(HttpServletResponse.SC_BAD_REQUEST)
                 .header(ContentTypeHintMiddleware.RESPONSE_CONTENT_TYPE_HEADER, HttpContentTypeHeaderValues.TEXT_PLAIN)
-                .content(containsString("ERROR"));
+                .body(containsString("ERROR"));
     }
 
     @Test
@@ -87,7 +87,7 @@ public class HousekeepingGetCapabilitiesMiddlewareIT extends Arquillian {
                 .then()
                 .statusCode(HttpServletResponse.SC_OK)
                 .header(ContentTypeHintMiddleware.RESPONSE_CONTENT_TYPE_HEADER, HttpContentTypeHeaderValues.TEXT_PLAIN)
-                .content(
+                .body(
                         containsString(AlpineBitsCapability.GET_VERSION),
                         containsString(AlpineBitsCapability.GET_CAPABILITIES));
     }

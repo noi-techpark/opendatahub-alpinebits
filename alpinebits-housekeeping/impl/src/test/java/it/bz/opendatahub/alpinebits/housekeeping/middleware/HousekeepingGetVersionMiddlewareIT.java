@@ -72,7 +72,7 @@ public class HousekeepingGetVersionMiddlewareIT extends Arquillian {
                 .then()
                 .statusCode(HttpServletResponse.SC_BAD_REQUEST)
                 .header(ContentTypeHintMiddleware.RESPONSE_CONTENT_TYPE_HEADER, HttpContentTypeHeaderValues.TEXT_PLAIN)
-                .content(containsString("ERROR:unknown or missing action"));
+                .body(containsString("ERROR:unknown or missing action"));
     }
 
 
@@ -90,7 +90,7 @@ public class HousekeepingGetVersionMiddlewareIT extends Arquillian {
                 .then()
                 .statusCode(HttpServletResponse.SC_OK)
                 .header(ContentTypeHintMiddleware.RESPONSE_CONTENT_TYPE_HEADER, HttpContentTypeHeaderValues.TEXT_PLAIN)
-                .content(containsString(RouterMiddlewareBuilder.DEFAULT_VERSION));
+                .body(containsString(RouterMiddlewareBuilder.DEFAULT_VERSION));
     }
 
 }

@@ -63,7 +63,7 @@ public class BasicAuthenticationMiddlewareIT extends Arquillian {
                 .then()
                 .statusCode(HttpServletResponse.SC_UNAUTHORIZED)
                 .and()
-                .content(containsString("ERROR:"));
+                .body(containsString("ERROR:"));
     }
 
     @Test(dataProvider = "badBasicAuthentication")
@@ -76,7 +76,7 @@ public class BasicAuthenticationMiddlewareIT extends Arquillian {
                 .then()
                 .statusCode(HttpServletResponse.SC_UNAUTHORIZED)
                 .and()
-                .content(containsString("ERROR:"));
+                .body(containsString("ERROR:"));
     }
 
     @Test

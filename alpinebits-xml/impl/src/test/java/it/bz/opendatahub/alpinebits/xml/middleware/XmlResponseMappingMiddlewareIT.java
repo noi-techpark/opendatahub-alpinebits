@@ -107,7 +107,7 @@ public class XmlResponseMappingMiddlewareIT extends Arquillian {
                 .then()
                 .statusCode(HttpServletResponse.SC_OK)
                 .header(ContentTypeHintMiddleware.RESPONSE_CONTENT_TYPE_HEADER, HttpContentTypeHeaderValues.TEXT_XML)
-                .content(
+                .body(
                         containsString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"),
                         containsString("Success"));
     }
@@ -124,7 +124,7 @@ public class XmlResponseMappingMiddlewareIT extends Arquillian {
                 .then()
                 .statusCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
                 .header(ContentTypeHintMiddleware.RESPONSE_CONTENT_TYPE_HEADER, HttpContentTypeHeaderValues.TEXT_PLAIN)
-                .content(containsString("ERROR:"));
+                .body(containsString("ERROR:"));
     }
 
     @Test
@@ -139,7 +139,7 @@ public class XmlResponseMappingMiddlewareIT extends Arquillian {
                 .then()
                 .statusCode(HttpServletResponse.SC_OK)
                 .header(ContentTypeHintMiddleware.RESPONSE_CONTENT_TYPE_HEADER, HttpContentTypeHeaderValues.TEXT_XML)
-                .content(
+                .body(
                         containsString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"),
                         containsString("Success"));
     }
@@ -156,7 +156,7 @@ public class XmlResponseMappingMiddlewareIT extends Arquillian {
                 .then()
                 .statusCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
                 .header(ContentTypeHintMiddleware.RESPONSE_CONTENT_TYPE_HEADER, HttpContentTypeHeaderValues.TEXT_PLAIN)
-                .content(containsString("ERROR:"));
+                .body(containsString("ERROR:"));
     }
 
     @Test
@@ -171,7 +171,7 @@ public class XmlResponseMappingMiddlewareIT extends Arquillian {
                 .then()
                 .statusCode(HttpServletResponse.SC_OK)
                 .header(ContentTypeHintMiddleware.RESPONSE_CONTENT_TYPE_HEADER, HttpContentTypeHeaderValues.TEXT_XML)
-                .content(
+                .body(
                         containsString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"),
                         containsString("Success"));
     }
