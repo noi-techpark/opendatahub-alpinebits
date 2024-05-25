@@ -22,8 +22,8 @@ SPDX-License-Identifier: CC0-1.0
     <name>AlpineBits XML impl</name>
 
     <properties>
-        <jing.version>20091111</jing.version>
-        <xmlunit.version>2.6.2</xmlunit.version>
+        <jing.version>20220510</jing.version>
+        <xmlunit.version>2.10.0</xmlunit.version>
     </properties>
 
     <dependencies>
@@ -44,9 +44,21 @@ SPDX-License-Identifier: CC0-1.0
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.thaiopensource</groupId>
+            <groupId>org.relaxng</groupId>
             <artifactId>jing</artifactId>
             <version>${jing.version}</version>
+            <exclusions>
+                <!-- Exclude xercesImpl, it is not needed and just causes errors -->
+                <exclusion>
+                    <groupId>xerces</groupId>
+                    <artifactId>xercesImpl</artifactId>
+                </exclusion>
+                <!-- Exclude xercesImpl, it is not needed and just causes errors -->
+                <exclusion>
+                    <groupId>net.sf.saxon</groupId>
+                    <artifactId>Saxon-HE</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- testing -->
@@ -95,16 +107,6 @@ SPDX-License-Identifier: CC0-1.0
             <groupId>org.xmlunit</groupId>
             <artifactId>xmlunit-matchers</artifactId>
             <version>${xmlunit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <!--
-            Arquilllian needs this additional dependency
-            to work in combination with jing
-        -->
-        <dependency>
-            <groupId>net.sf.saxon</groupId>
-            <artifactId>saxon-dom</artifactId>
-            <version>8.7</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
