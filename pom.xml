@@ -40,8 +40,7 @@ SPDX-License-Identifier: CC0-1.0
     </modules>
 
     <properties>
-        <slf4j.version>1.7.25</slf4j.version>
-        <log4j-slf4j-impl.version>2.11.1</log4j-slf4j-impl.version>
+        <slf4j.version>2.0.13</slf4j.version>
 
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
