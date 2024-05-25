@@ -54,7 +54,7 @@ SPDX-License-Identifier: CC0-1.0
         <jacoco.version>0.8.2</jacoco.version>
 
         <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
-        <dependency-check-maven.version>5.0.0</dependency-check-maven.version>
+        <dependency-check-maven.version>9.2.0</dependency-check-maven.version>
         <gitflow-maven-plugin.version>1.10.0</gitflow-maven-plugin.version>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
 
@@ -660,7 +660,6 @@ SPDX-License-Identifier: CC0-1.0
                     </executions>
                     <configuration>
                         <failBuildOnCVSS>8</failBuildOnCVSS>
-                        <cveValidForHours>24</cveValidForHours>
                         <skipProvidedScope>true</skipProvidedScope>
                     </configuration>
                 </plugin>
