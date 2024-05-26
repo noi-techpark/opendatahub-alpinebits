@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+<OTA_HotelDescriptiveContentNotifRQ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                    xmlns="http://www.opentravel.org/OTA/2003/05"
+                                    xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_HotelDescriptiveContentNotifRQ.xsd"
+                                    Version="8.000">
+
+    <HotelDescriptiveContents>
+
+				<!-- 
+				HotelCode: Is the sender unique ID of the Property.
+				HotelName: The Name of the property
+				AreaID:    Unique id that identify a city/location.
+									For Example, could be used the GeoNames code as common reference. 
+				-->
+				<HotelDescriptiveContent HotelCode="123" HotelName="Frangart Inn" AreaID="3181913" >
+  
+            <HotelInfo>
+				
+								<!-- type of propriety like: Hotel, B&B, Chalet... -->
+							
+                <CategoryCodes>
+									
+                    <!-- 
+                    CodeDetail attribute: is composed by 2 elements separated by colon.  CustomPropertyTypeTable_Value:ClassValue
+                    CustomPropertyTypeTable_Value:  composition of 'CustomPropertyTypeTable' intended as the name of a custom property type table, the `_` char is used as separator and the value of the table that identify the property type. Partners are freely to use and share theirs own table
+                    ClassValue: intended as the property class value. Es. `4` for 4 stars or `4s` for superior 4 stars properties
+                    -->
+                    <HotelCategory CodeDetail="ASTAT2020_11:4s"/> <!-- String 128 chars -->
+                </CategoryCodes>
+				
+                <!-- descriptive elements of the propriety - see OTA code table for information codes (INF) -->
+                <Descriptions>
+									
+										<!-- may contain one MultimediaDescriptions  -->
+                    <MultimediaDescriptions>
+						
+												<!-- 
+												at least one MultimediaDescription 
+												for InfoCode see INF table. 
+												Es. 
+													1  = description
+													17 = Short Desc.
+													23 = pictures 
+												-->
+												
+												<!-- InfoCode="17" for short description -->
+                        <MultimediaDescription InfoCode="17">
+                            <TextItems>
+                                <TextItem  CopyrightNotice="Hotel copyright">
+                                    <Description Language="en" TextFormat="PlainText">A short description</Description>
+                                </TextItem>
+                                <TextItem  CopyrightNotice="Hotel copyright">
+                                    <Description Language="de" TextFormat="PlainText">kurze beschreibung</Description>
+                                </TextItem>
+                                <TextItem  CopyrightNotice="Hotel copyright">
+                                    <Description Language="it" TextFormat="PlainText">Descrizione Breve</Description>
+                                </TextItem>
+                            </TextItems>
+                        </MultimediaDescription>
+						
+                        <!-- InfoCode="1" for long description -->
+                        <MultimediaDescription InfoCode="1">
+                            <TextItems>
+                                <TextItem  CopyrightNotice="Other copyright">
+                                    <Description Language="en" TextFormat="PlainText">A long description</Description>
+                                </TextItem> 
+														<TextItem  CopyrightNotice="Other copyright">
+                                    <Description Language="de" TextFormat="PlainText">erweiterte Beschreibung</Description>
+                                </TextItem>
+                                <TextItem  CopyrightNotice="Other copyright">
+                                    <Description Language="it" TextFormat="PlainText">Descrizione lunga</Description>
+                                </TextItem>
+                            </TextItems>
+                        </MultimediaDescription>
+						
+                        <!-- hotel pictures -->
+                        <MultimediaDescription InfoCode="23">
+                            <!-- 
+														Category: picture elements of the propriety - see OTA code table for picture category codes (PIC)
+														Es.
+															1 = Exterior View
+															2 = Lobby View
+															4 = Restaurant
+															12 = Spa
+															15 = Logo
+															22 = Property Amenity
+														-->
+                            <ImageItems>
+															
+																<!-- hotel Logo -->
+															
+                                <ImageItem Category="15">
+																	
+																		<!-- SourceID: Unique identifier for each image file -->
+                                    <ImageFormat CopyrightNotice="Image copyright" SourceID="56757e0211b70d379107707fb6f657fa">
+                                        <URL>https://..../HotelLogo.jpg</URL>
+                                    </ImageFormat>
+                                    <Description TextFormat="PlainText" Language="en">Logo Frangart Inn</Description>
+                                    <Description TextFormat="PlainText" Language="de">Logo Frangart Inn</Description>
+                                    <Description TextFormat="PlainText" Language="it">Logo Frangart Inn</Description>
+                                </ImageItem>
+								
+                                <!-- example: exterior picture applicable from Sep 30 to Mar 30 for seasonal pictures -->
+                                <ImageItem Category="1">
+                                    <ImageFormat CopyrightNotice="Image copyright" SourceID="56757e0211440d37910f407fb6f657fb" ApplicableStart="--09-30" ApplicableEnd="--03-30">
+                                        <URL>https://..../HotelExteriorWinterView.jpg</URL>
+                                    </ImageFormat>
+                                    <Description TextFormat="PlainText" Language="en">Image description</Description>
+                                </ImageItem>
+								
+                            </ImageItems>
+							
+                        </MultimediaDescription>
+						
+												<!-- hotel Videos -->
+                        <MultimediaDescription InfoCode="24">
+        
+                            <VideoItems>    
+															
+																<!-- one or more video -->
+															
+                                <VideoItem Category="12">
+																	
+																		<!-- SourceID: Unique identifier for each video file -->
+                                    <VideoFormat CopyrightNotice="Video copyright" SourceID="56757e0211b70887910f407fb6f657fa">
+                                        <URL>https://..../HotelVideo.mp4</URL>
+                                    </VideoFormat>
+                                    <Description TextFormat="PlainText" Language="en">Video Frangart Inn</Description>
+                                    <Description TextFormat="PlainText" Language="de">Video Frangart Inn</Description>
+                                    <Description TextFormat="PlainText" Language="it">Video Frangart Inn</Description>
+                                </VideoItem>
+                            </VideoItems>
+							
+                        </MultimediaDescription>
+                    </MultimediaDescriptions>
+					
+                </Descriptions>
+				
+                <!-- geo position 
+								For AltitudeUnitOfMeasureCode attribute see UOM CodeList. 3 = Meters, could be assume all altitudes are in meters.
+								-->
+                <Position Altitude="200" AltitudeUnitOfMeasureCode="3" Latitude="46.1372647" Longitude="12.2011353"/>
+				
+                <!-- hotel amenities -->
+								
+                <Services>
+                    <!-- 
+										hotel level facilities / services - see OTA code table for hotel amenity codes (HAC) 
+										Es. 
+											47=Accessible facilities
+											68=Parking
+											224=Pet allowed
+											76=Restaurant
+											118=BBQ Grill
+										Proximity code (PRX) describe where the service is located
+										Es. 
+											1=Onsite
+											2=Offsite
+											3=Nearby
+											4=Info not Available
+											5=Onsite and Offsite
+											-->
+                    <Service Code="68"  ProximityCode="2"/>
+                    <Service Code="224" ProximityCode="1"/>
+                    <Service Code="118" ProximityCode="1"/>
+                    <Service Code="76"  ProximityCode="1"/>
+										<Service Code="47"  ProximityCode="3">
+											
+                        <Features>
+														<!-- See PHY Disability Feature Code
+														Es. 
+															8=Accessible Parking
+															49=Ramp Access
+															56=Elevator near accessible rooms 
+														-->
+                            <Feature AccessibleCode="8"/>
+                            <Feature AccessibleCode="49"/>
+                        </Features>
+												
+                    </Service>
+										
+                    <Service Code="342" MealPlanCode="12" Included="true" ProximityCode="1"/>
+					
+                </Services>
+				
+            </HotelInfo>
+
+            <!-- Policies: check-in and check_out period, min guest age, ... -->
+            <Policies>
+                <Policy>
+										<CancelPolicy>
+												<CancelPenalty>
+														<!-- Describe cancellation policies -->
+														<PenaltyDescription>
+																<Text TextFormat="PlainText" Language="en">You will pay the entire vacation if you don't cancel 2 days before check-in</Text>
+																<Text TextFormat="PlainText" Language="it">Cancellazione gratuita fino a 48 ore dal check-in, poi verrà addebitato il 100% dell'importo</Text>
+														</PenaltyDescription>
+												</CancelPenalty>
+										</CancelPolicy>
+								</Policy>
+				
+								<Policy>
+										<CheckoutCharges>
+												<!-- Useful for apartments cleaning service -->
+												<CheckoutCharge Amount="100" CurrencyCode="EUR">
+														<Description>
+															<Text TextFormat="PlainText" Language="en">Will be charged 100€ for cleaning</Text>
+															<Text TextFormat="PlainText" Language="it">Verranno addebitati 100€ per le pulizie</Text>
+														</Description>
+												</CheckoutCharge>
+										</CheckoutCharges>
+								</Policy>
+							
+								<Policy>					
+										<PetsPolicies>
+												<!-- 
+												For proprieties that allow pets and charge the vacation. 
+												NonRefundableFee is for pet/room
+												ChargeCode: 1=daily, 12=per Stay.  see CHG code list				
+												-->
+												<PetsPolicy MaxPetQuantity="2" NonRefundableFee="20" ChargeCode="1" CurrencyCode="EUR" >
+														<Description>
+															<Text TextFormat="PlainText" Language="en">it's possible to bring 2 pets per room. A supplement of € 20 / day will be applied for each animal</Text>
+															<Text TextFormat="PlainText" Language="it">E' possibile portare 2 animali da compagnia per stanza. Per ogni animale verrà applicato un supplemento di 20€/giorno</Text>
+														</Description>
+												</PetsPolicy>
+										</PetsPolicies>
+								</Policy>
+					
+								<Policy>					
+										<TaxPolicies>
+												<!-- 
+												City Tax/ Ortstaxe 
+												ChargeFrequency: 1 = Daily. See (CHG) CodeList
+												hargeUnit: 21=Per Person/night. See (CHG) CodeList
+												Code: 3=City Tax (Fee Tax Type FTT)
+												-->
+												<TaxPolicy ChargeFrequency="1" ChargeUnit="21" Amount="2.52" CurrencyCode="EUR"  Code="3">
+														<TaxDescription>
+																<Text TextFormat="PlainText" Language="en">City Tax: 2.52€ a person a day</Text>
+																<Text TextFormat="PlainText" Language="it">Tassa di soggiorno:2.52€ a ospite al giorno</Text>
+														</TaxDescription>	
+												</TaxPolicy>
+										</TaxPolicies>
+								</Policy>
+							
+								<Policy>					
+										<!-- Payment accepted: we accept V**A, MAS*****RD.. cash.. -->
+										<GuaranteePaymentPolicy>
+												<GuaranteePayment>
+											
+														<AcceptedPayments>
+																<AcceptedPayment>
+																		<BankAcct>
+																				<BankAcctName>My Bank</BankAcctName>
+																				<BankAcctNumber>
+																						<PlainText>IBAN12345</PlainText>
+																				</BankAcctNumber>
+																				<BankID>
+																						<PlainText>SWIFT123</PlainText>
+																				</BankID>
+																		</BankAcct>
+																</AcceptedPayment>
+													
+																<AcceptedPayment>
+																		<Cash CashIndicator="true"/>
+																</AcceptedPayment>
+																
+																<AcceptedPayment>
+																		<PaymentCard CardCode="AX"/>
+																</AcceptedPayment>
+																
+																<AcceptedPayment>
+																		<PaymentCard CardCode="MC"/>
+																</AcceptedPayment>
+																
+																<AcceptedPayment>
+																		<PaymentCard CardCode="VI"/>
+																</AcceptedPayment>
+																
+														</AcceptedPayments>
+															
+														<!-- caparra/deposit -->
+														<AmountPercent Percent="30"/>
+																<Deadline OffsetDropTime="AfterBooking" OffsetTimeUnit="Day" OffsetUnitMultiplier="0"/>
+																
+												</GuaranteePayment>
+												
+										</GuaranteePaymentPolicy>
+										
+								</Policy>
+			
+								<Policy>
+										<!-- Check-in and Check-out range -->
+										<StayRequirements>
+												<StayRequirement StayContext="Checkin" Start="15:00:00" End="20:00:00"/>
+												<StayRequirement StayContext="Checkout" Start="06:00:00" End="10:00:00"/>
+										</StayRequirements>
+								</Policy>
+
+						</Policies>
+
+						<!-- Scale value depends by the review provider. See provider's documentation -->
+						<AffiliationInfo>
+								<Awards>
+										<Award Rating="95" Provider="TRUSTYOU" OfficialAppointmentInd="false"/>
+								</Awards>
+						</AffiliationInfo>
+						
+						<!-- ContactInfos: this element has been restricted in AlpineBits 2022-10 -->
+						<ContactInfos>
+								<!-- Location must be "6" ("Hotel direct contact" according to OTA code table for type codes (CON)) -->
+								<ContactInfo Location="6">
+									
+										<Addresses>
+												<Address Language="it">
+														<AddressLine>Via Bolzano 63/A</AddressLine>
+														<CityName>Bolzano</CityName>
+														<PostalCode>39057</PostalCode>
+														<StateProv StateCode="BZ"/>
+														<CountryName Code="IT"/>
+												</Address>
+												<Address Language="de">
+														<AddressLine>Bozner Straße Nr. 63/A</AddressLine>
+														<CityName>Bozen</CityName>
+														<PostalCode>39057</PostalCode>
+														<StateProv StateCode="BZ"/>
+														<CountryName Code="IT"/>
+												</Address>
+												<Address Language="en">
+														<AddressLine>Via Bolzano 63/A</AddressLine>
+														<CityName>Bolzano</CityName>
+														<PostalCode>39057</PostalCode>
+														<StateProv StateCode="BZ"/>
+														<CountryName Code="IT"/>
+												</Address>
+										</Addresses>
+													
+										<Phones>
+												<Phone PhoneTechType="1" PhoneNumber="+3903720000000"/>
+												<Phone PhoneTechType="3" PhoneNumber="+3903400000000"/>
+										</Phones>
+										
+										<Emails>
+												<!-- EmailType:  5 = Property -->
+												<Email EmailType="5">info@alpinebits.org</Email>
+										</Emails>
+										
+										<URLs>
+												<URL ID="WEBSITE">https://www.alpinebits.org/</URL>
+												<URL ID="FACEBOOK">https://www.facebook.com/alpinebits/</URL>
+										</URLs>
+								</ContactInfo>
+								
+						</ContactInfos>
+
+        </HotelDescriptiveContent>
+				
+    </HotelDescriptiveContents>
+
+</OTA_HotelDescriptiveContentNotifRQ>

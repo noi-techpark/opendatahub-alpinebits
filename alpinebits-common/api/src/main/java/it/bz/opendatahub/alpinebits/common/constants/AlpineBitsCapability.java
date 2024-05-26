@@ -11,7 +11,7 @@
 package it.bz.opendatahub.alpinebits.common.constants;
 
 /**
- * This class provides constants for all known AlpineBits capabilities for version 2020-10.
+ * This class provides constants for all known AlpineBits capabilities for version 2022-10.
  *
  * In the context of this class, "capability" means the values exchanged as capabilities during
  * the Housekeeping -&gt; getCapabilities and Handshaking requests. They express, what the
@@ -139,6 +139,11 @@ public final class AlpineBitsCapability {
 
     /**
      * For pushing GuestRequests, the actor accepts daily rates via RoomRates.
+     */
+    public static final String GUEST_REQUESTS_WRITE_STATUS_UPDATE = "action_OTA_HotelResNotif_GuestRequests";
+
+    /**
+     * The actor implements the status update for quote requests (GuestRequests Push status update).
      */
     public static final String GUEST_REQUESTS_WRITE_ACCEPT_ROOM_RATES = "OTA_HotelResNotif_GuestRequests_accept_RoomRates";
 

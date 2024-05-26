@@ -191,6 +191,14 @@ public final class Action {
             AlpineBitsCapability.GUEST_REQUESTS_WRITE_ACCEPT_ROOM_RATES
     );
 
+    /**
+     * The actor implements pushing quote requests, booking reservations and cancellations (GuestRequests Push).
+     */
+    public static final Action GUEST_REQUESTS_WRITE_STATUS_UPDATE = of(
+            AlpineBitsAction.GUEST_REQUESTS_WRITE_STATUS_UPDATE,
+            AlpineBitsCapability.GUEST_REQUESTS_WRITE_STATUS_UPDATE
+    );
+
     // Inventory
 
     /**

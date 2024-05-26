@@ -11,7 +11,7 @@
 package it.bz.opendatahub.alpinebits.common.constants;
 
 /**
- * This class provides constants for all known AlpineBits actions for version 2020-10.
+ * This class provides constants for all known AlpineBits actions for version 2022-10.
  *
  * In the context of this class, "action" means the value of the request parameter called "action".
  */
@@ -74,6 +74,13 @@ public final class AlpineBitsAction {
      * A client acknowledges the requests it has received.
      */
     public static final String GUEST_REQUESTS_NOTIF_REPORT_GUEST_REQUESTS = "OTA_NotifReport:GuestRequests";
+
+    /**
+     * Value for "GuestRequests -&gt; write status update for GuestRequests" action request parameter.
+     *
+     * A a client sends status updates for a quote or booking requests to the server.
+     */
+    public static final String GUEST_REQUESTS_WRITE_STATUS_UPDATE = "OTA_HotelResNotif:GuestRequests_StatusUpdate";
 
     // Inventory
 

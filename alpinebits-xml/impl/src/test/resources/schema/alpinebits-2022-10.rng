@@ -1,0 +1,4600 @@
+<?xml version="1.0"?>
+
+<!-- 
+     AlpineBits 2020-10 
+     http://www.alpinebits.org/
+
+     Relax-NG grammar file
+
+     changelog:
+
+
+    v. 2022-10  1.2    **************************************************************************************************
+                       GuestRequests: allow Errors in OTA_HotelResNotifRS
+                       GuestRequests: allow Warnings in OTA_NotifReportRS
+                       Inventory: allow Warnings in OTA_HotelDescriptiveInfoRS
+                       BaseRates: allow Warnings in OTA_HotelRatePlanRS
+
+
+    v. 2022-10  1.1    **************************************************************************************************
+                       GuestRequests: added optional LastModifyDateTime attribute for HotelReservation element
+
+
+    v. 2022-10  1.0    **************************************************************************************************
+                       GuestRequests: added optional attribute RoomStayReservation to element HotelReservation
+
+
+    v. 2020-10  1.6    **************************************************************************************************
+                       HotelCode: define HotelCode as String of length 1 to 16, just like in OTA2015A
+
+
+    v. 2020-10  1.5    **************************************************************************************************
+                       Inventory: fix HotelDescriptiveContents -> ... -> ContactInfo -> ... -> URL -> ID restriction
+                       The written 2020-10 standard says on page 55 that "...Partners are allowed to define further
+                       values...". The prior XSD defined an enumeration of allowed values, which was to restrictive. This
+                       was fixed.
+
+
+    v. 2020-10  1.4    **************************************************************************************************
+                       Inventory: removed attributes Code and CodeContext from element CompanyName under ContactInfo
+
+
+    v. 2020-10  1.3    **************************************************************************************************
+                       make LocationCategories optional
+
+
+
+
+
+    v. 2020-10  1.2    **************************************************************************************************
+                       OTA_PingRS has been loosened to accept Warning elements of any type, as well asError elements
+
+
+    v. 2020-10  1.1    **************************************************************************************************
+                       FreeRooms: major changes, since that action has completely been rewritten; the root node has been
+                       changed from OTA_HotelAvailNotifRQ/RS to OTA_HotelInvCountNotifRQ/RS
+                       (done by C. Gapp)
+
+                       **************************************************************************************************
+                       the CurrencyCode attribute used to be defined as non-empty string or hard-coded to "EUR"; this has
+                       been changed to a generic string with 3 character in order to allow other currencies and to be
+                       compatible with OTA
+
+                       **************************************************************************************************
+                       GuestRequests: added SpecialRequests for pets
+
+                       **************************************************************************************************
+                       Inventory: HotelDescriptiveContents has been expanded: ContactInfos has more content and
+                       HotelInfo, Policies and AffiliationInfo are now strictly defined (they used to allow any OTA 
+                       content).
+
+                       **************************************************************************************************
+                       new action Activities: elements OTA_HotelPostEventNotifRQ and OTA_HotelPostEventNotifRS added
+
+                       **************************************************************************************************
+                       GuestRequests: OTA_NotifReportRS: removed erroneous, interleaved Error -> Code attribute that some
+                       RNG validators deem as invalid (thank to C. Gapp for spotting this)
+
+
+    v. 2018-10  1.3    more things changed related to the new section "Responses with a request for complete sets of data":
+
+                       - added "11" as allowed value for the attribute Type of the Error elements
+
+                       - made the attribute Code of the Error elements optional 
+
+                       - added Warnings element below OTA_ResRetrieveRS 
+
+
+    v. 2018-10  1.2    the Status attribute has been extended to all Warning elements (also the ones
+                       for GuestRequests) and to Error elements; the choice of keywords has become
+                       a common definition (def_send_complete)
+
+
+    v. 2018-10  1.1    added Status attribute to Warning element (see section "Responses with a 
+                       request for complete sets of data")
+
+
+    v. 2018-10  1.0    **************************************************************************************************
+                       allowed additional value "HTML" for attribute TextFormat in Inventory
+                       HotelDescriptiveContents -> ... -> FacilityInfo -> ... -> MultimediaDescription -> ... -> Description
+
+
+                       **************************************************************************************************
+                       https://gitlab.com/alpinebits/developers-kit/issues/5
+                       "Booking push functionality"
+
+                       042 - GuestRequests:
+
+                             added HotelCode and HotelName attributes to BasicPropertyInfo element
+                             (this is needed to share the HotelReservation-sub-schema for
+                             "GuestRequests" and "GuestRequests (Push)")
+                       
+                             added new root nodes OTA_HotelResNotifRQ/OTA_HotelResNotifRS for
+                             "GuestRequests (Push)" messages with a shared HotelReservation-sub-schema
+
+
+                       **************************************************************************************************
+                       https://gitlab.com/alpinebits/developers-kit/issues/8
+                       "Extension with new room types"
+
+                       042 - GuestRequests:
+                             OTA_ResRetrieveRS -> ... -> HotelReservation > RoomStays > RoomStay > RoomTypes > RoomType {1}
+
+                       and
+
+                       044 - Inventory/*:
+                             ref name="def_hoteldescriptivecontents" -> ... -> GuestRoom -> TypeRoom 
+
+                       => Added optional RoomType attribute with possible values 1, 2, 3, 4, 5, 6, 7, 8, 9.
+
+
+                       **************************************************************************************************
+                       https://gitlab.com/alpinebits/developers-kit/issues/10
+                       "Hotel ID transmission"
+
+                       044 - Inventory/*
+                             ref name="def_hoteldescriptivecontents" -> ... -> ContactInfos 
+
+                       => defined (narrowed down) the content of the ContactInfos element
+
+
+                       **************************************************************************************************
+                       https://gitlab.com/alpinebits/developers-kit/issues/4
+                       "Handshaking review"
+
+                       03 - Handshake 
+
+                       => added new root elements OTA_PingRQ and OTA_PingRS
+
+
+    v. 2017-10  1.3 -  Inventory common type def_hoteldescriptivecontents -> FacilityInfo -> ... -> MultimediaDescription (allow one or more ImageItem elements for InfoCode="23")
+
+    v. 2017-10  1.2 -  FreeRooms:       OTA_HotelAvailNotifRQ -> AvailStatusMessages -> ...  -> StatusApplicationControl (make BookingThreshold not mandatory)
+
+    v. 2017-10  1.1 -  RatePlans:       RatePlans > RatePlan > Offers: allow only MinLOS and MaxLOS attributes (not the forward ones too)
+
+    v. 2017-10  1.0 -  FreeRooms:       OTA_HotelAvailNotifRQ -> UniqueID (added allowed value to attribute Type, by Luca Rainone)
+                       FreeRooms:       OTA_HotelAvailNotifRQ -> AvailStatusMessages -> ...  -> StatusApplicationControl (added new mandatory attribute BookingThreshold)
+
+                       GuestRequests:   OTA_ResRetrieveRS -> ReservationsList -> ... -> RatePlan (added element Commission)
+                       GuestRequests:   OTA_ResRetrieveRS -> ReservationsList -> ... -> CardNumber (added attributes EncryptedValue and EncryptionMethod) 
+                       GuestRequests:   OTA_ResRetrieveRS -> ReservationsList -> ... -> RoomStay > RoomTypes (made optional)
+
+                       SimplePackages section removed
+
+                       Inventory has become Inventory/Basic (Push) and Inventory/HotelInfo (Push):
+                                        OTA_HotelDescriptiveContentNotifRQ (major changes, one being that empty GuestRooms elements are now allowed by Luca Rainone)
+
+                       Inventory/Basic (Pull) and Inventory/HotelInfo (Pull) added
+ 
+                       RatePlans:       OTA_HotelRatePlanNotifRQ -> RatePlans -> RatePlan -> BookingRules -> ... -> LengthOfStay (added allowed values to attribute MinMaxMessageType)
+                       RatePlans:       OTA_HotelRatePlanNotifRQ -> RatePlans -> RatePlan -> Supplements -> Supplement (added element PrerequisiteInventory)
+                       RatePlans:       OTA_HotelRatePlanNotifRQ -> RatePlans -> RatePlan -> Supplements -> Supplement -> Description (major changes)
+                       RatePlans:       OTA_HotelRatePlanNotifRQ -> RatePlans -> RatePlan -> Offers -> Offer (major changes)
+                       RatePlans:       OTA_HotelRatePlanNotifRQ -> RatePlans -> RatePlan -> Description (major changes)
+                       RatePlans:       OTA_HotelRatePlanNotifRQ -> RatePlans -> RatePlan -> ... -> BaseByGuestAmt (NumberOfGuests and Type are optional now to allow static rates)
+
+                       BaseRates section added
+
+    v. 2015-07b 1.4 - weaken the schema for Inventory (to prepare for upcoming release that will support Inventory deltas):
+
+                      - the RoomAmenityCode attribute becomes optional to allow empty Amenity elements 
+                      - the MultimediaDescription element can be empty
+
+    v. 2015-07b 1.3 - RatePlans > RatePlan > Description > TextFormat can now also be "HTML" (besides "PlainText")
+
+    v. 2015-07b 1.2 - added optional attributes RatePlanID and RatePlanQualifier to RatePlan
+                      for the new OTA_HotelRatePlanNotif_accept_RatePlanJoin capability
+
+    v. 2015-07b 1.1 - added def_invTypeCode_string type (string with up to 8 chars) used for the following attributes that identify room categories:
+
+                      FreeRooms:     OTA_HotelAvailNotifRQ -> AvailStatusMessages -> AvailStatusMessage -> StatusApplicationControl -> InvTypeCode
+                      GuestRequests: OTA_ResRetrieveRS -> ReservationList -> HotelReservation -> RoomStays -> RoomStay -> RoomTypes > RoomType -> RoomTypeCode
+                      Inventory:     OTA_HotelDescriptiveContentNotifRQ -> HotelDescriptiveContents -> HotelDescriptiveContent -> FacilityInfo -> GuestRooms -> GuestRoom -> Code
+                      RatePlan:      OTA_HotelRatePlanNotifRQ -> RatePlans -> RatePlan -> BookingRules -> BookingRule -> Code
+                      RatePlan:      OTA_HotelRatePlanNotifRQ -> RatePlans -> RatePlan -> Rates -> Rate -> InvTypeCode
+
+    v. 2015-07b 1.0 - RatePlans > RatePlan > Rates > Rate > BaseByGuestAmts > AmountAfterTax
+                      must be > 0.0 (was: >= 0.0)
+
+     v. 2015-07 2.8 - Inventory: fixed the checks for the HotelDescriptiveContent attributes
+
+     v. 2015-07 2.7 - Inventory: reconciled with the definitions given in the updated document
+
+     v. 2015-07 2.6 - added section for New Inventory (exact name pending)
+
+     v. 2015-07 2.5 - made sub-elements of HotelReservation > ... > Customer > Address {0,1} optional
+
+     v. 2015-07 2.4 - added a choice of 'Modify' for ResStatus
+
+     v. 2015-07 2.3 - added MinCount attribute to Offer>>Guest
+
+     v. 2015-07 2.2 - changes to Supplement: a few attributes are removed and many attributes are made optional
+
+     v. 2015-07 2.1 - RatePlans/Supplements: changed format of description
+
+     v. 2015-07 2.0 - GuestRequests: ResGuests >> Customer: attributes Gender and Language are now optional
+
+     v. 2015-07 1.9 - allow Warnings in OTA_NotifReportRQ messages
+
+     v. 2015-07 1.8 - GuestRequests: use CardNumber -> PlainText instead of the Remark attribute of
+                      PaymentCard under Guarantee; add BasicPropertyInfo element at the end of the 
+                      ResGlobalInfo block for OTA-2015A compatiblity
+
+     v. 2015-07 1.7 - allowed more than one HotelReservationID
+
+     v. 2015-07 1.6 - RatePlans: allow optional PrerequisiteInventory element under Supplement element
+
+     v. 2015-07 1.5 - Inventory: removed Amenities and added optional Room -> RoomTypeCode
+
+     v. 2015-07 1.4 - HotelReservationID -> ResID_Type is not limited to 13 anymore
+
+     v. 2015-07 1.3 - new section in RoomStays: Guarantee -> GuaranteesAccepted -> GuaranteeAccepted -> PaymentCard
+
+     v. 2015-07 1.2 - new section in ResGlobalInfo: Profiles -> ProfileInfo -> Profile -> CompanyInfo
+
+     v. 2015-07 1.1 - HotelReservation > RoomStays > RoomStay > RoomTypes > RoomType is now
+                      mandatory and has a new optional attribute RoomClassificationCode
+
+     v. 2015-07 1.0 - OTA_NotifReportRS besides Success, now also allows Error responses 
+
+     v. 2014-04 1.5 - [fixed] InvCode attribute in Supplement changed from def_int_ge0 to def_nonempty_string
+
+     v. 2014-04 1.4 - [strictness improvement] made BaseByGuestAmt->NumberOfGuests attribute mandatory for
+                      RatePlans and SimplePackages, made BaseByGuestAmt->Type attribute mandatory for RatePlans
+
+     v. 2014-04 1.3 - [improvement] RatePlans: remove RatePlan->Rate attributes that are not allowed
+                      (problem inherited from the xsd version where Rate is shared with SimplePackages
+
+     v. 2014-04 1.2 - [fixed] RatePlans: optional Rate attributes RateTimeUnit and UnitMultiplier added
+
+     v. 2014-04 1.1 - [fixed] GuestRequests: Email->Remark is an optional attribute
+                    - [fixed] GuestRequests: ReservationsList can be empty
+
+     v. 2014-04 1.0 - complete rewrite for 2014-04
+
+-->
+
+<rng:grammar     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        ns="http://www.opentravel.org/OTA/2003/05"
+           datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+
+  <rng:start>
+    <rng:choice>
+
+
+      <!-- ******************************************************************************* -->
+      <!-- * Handshake                                                                     -->
+      <!-- ******************************************************************************* -->
+
+      <!-- Handshake: OTA_PingRQ -->
+
+      <rng:element name="OTA_PingRQ">
+
+        <rng:element name="EchoData">
+          <rng:ref name="def_nonempty_string"/>
+        </rng:element>
+
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="TimeStamp"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+
+      </rng:element>
+
+      <!-- Handshake: OTA_PingRS -->
+
+      <rng:element name="OTA_PingRS">
+
+        <rng:choice>
+     
+          <!-- choice: Errors -->
+     
+          <rng:element name="Errors">
+            <rng:oneOrMore>
+              <rng:element name="Error">
+                <rng:attribute name="Type">
+                  <rng:choice>
+                    <rng:value type="string">11</rng:value>
+                    <rng:value type="string">13</rng:value>
+                  </rng:choice>
+                </rng:attribute>
+                <rng:optional>
+                  <rng:attribute name="Code">
+                    <rng:ref name="def_int_ge0"/>
+                  </rng:attribute>
+                </rng:optional>
+                <rng:optional>
+                  <rng:attribute name="Status">
+                    <rng:value type="string">ALPINEBITS_HANDSHAKE</rng:value>
+                  </rng:attribute>
+                </rng:optional>
+                <rng:text/>
+              </rng:element>
+            </rng:oneOrMore>
+          </rng:element>
+     
+          <!-- choice: Success + Warnings + EchoData -->
+     
+          <rng:group>
+            <rng:element name="Success">
+              <rng:empty/>
+            </rng:element>
+            <rng:optional>
+              <rng:element name="Warnings">
+                <rng:oneOrMore>
+                  <rng:element name="Warning">
+                    <rng:attribute name="Type">
+                      <rng:ref name="def_int_gt0"/>
+                    </rng:attribute>
+                    <rng:optional>
+                      <rng:attribute name="Status">
+                        <rng:value type="string">ALPINEBITS_HANDSHAKE</rng:value>
+                      </rng:attribute>
+                    </rng:optional>
+                    <rng:text/>
+                  </rng:element>
+                </rng:oneOrMore>
+              </rng:element>
+            </rng:optional>
+            <rng:element name="EchoData">
+              <rng:ref name="def_nonempty_string"/>
+            </rng:element>
+          </rng:group>
+
+        </rng:choice>
+
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="TimeStamp"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+
+      </rng:element>
+
+
+      <!-- ******************************************************************************* -->
+      <!-- * Activities                                                                    -->
+      <!-- ******************************************************************************* -->
+
+      <!-- Activities: OTA_HotelPostEventNotifRQ -->
+
+      <rng:element name="OTA_HotelPostEventNotifRQ">
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+        <rng:element name="EventReports">
+          <rng:oneOrMore>
+            <rng:element name="EventReport">
+
+              <!-- EventSites -->
+              
+              <rng:element name="EventSites">
+                <rng:element name="EventSite">
+                  <rng:optional>
+                    <rng:attribute name="HotelName">
+                      <rng:ref name="def_nonempty_string"/>
+                    </rng:attribute>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:attribute name="HotelCode">
+                      <rng:ref name="def_one_to_sixteen_chars_string"/>
+                    </rng:attribute>
+                  </rng:optional>
+                  <rng:element name="Event_ID">
+                    <rng:attribute name="Type">
+                      <rng:value type="string">18</rng:value>
+                    </rng:attribute>
+                    <rng:attribute name="ID_Context">
+                      <rng:ref name="def_nonempty_string"/>
+                    </rng:attribute>
+                      <rng:attribute name="ID">
+                    <rng:ref name="def_nonempty_string"/>
+                    </rng:attribute>
+                  </rng:element>
+                </rng:element>
+              </rng:element>
+
+              <!-- GeneralEventInfo -->
+              <rng:element name="GeneralEventInfo">
+                <rng:optional>
+                  <rng:attribute name="Acronym">
+                    <rng:data type="string">
+                      <rng:param name="minLength">1</rng:param>
+                    </rng:data>
+                  </rng:attribute>
+                </rng:optional>
+                <rng:optional>
+                  <rng:attribute name="URL">
+                    <rng:data type="anyURI">
+                      <rng:param name="pattern">https?://.+</rng:param>
+                    </rng:data>
+                  </rng:attribute>
+                </rng:optional>
+                <rng:optional>
+                  <rng:attribute name="Type">
+                    <rng:data type="string">
+                      <rng:param name="minLength">1</rng:param>
+                    </rng:data>
+                  </rng:attribute>
+                </rng:optional>
+                <rng:optional>
+                  <rng:element name="EventContacts">
+                    <rng:oneOrMore>
+                      <rng:element name="EventContact">
+                        <rng:optional>
+                          <rng:attribute name="Role">
+                          <rng:data type="string">
+                          <rng:param name="minLength">1</rng:param>
+                          </rng:data>
+                          </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                          <rng:element name="PersonName">
+                          <rng:optional>
+                          <rng:element name="GivenName">
+                          <rng:ref name="def_nonempty_string"/>
+                          </rng:element>
+                          </rng:optional>
+                          <rng:element name="Surname">
+                          <rng:ref name="def_nonempty_string"/>
+                          </rng:element>
+                          </rng:element>
+                        </rng:optional>
+                        <rng:optional>
+                          <rng:element name="URL">
+                          <rng:attribute name="Type">
+                          <rng:value type="string">Image</rng:value>
+                          </rng:attribute>
+                          <rng:ref name="def_nonempty_string"/>
+                          </rng:element>
+                        </rng:optional>
+                        <rng:optional>
+                          <rng:element name="EmployeeInfo">
+                          <rng:optional>
+                          <rng:attribute name="EmployeeId">
+                          <rng:data type="string">
+                          <rng:param name="minLength">1</rng:param>
+                          <rng:param name="maxLength">16</rng:param>
+                          </rng:data>
+                          </rng:attribute>
+                          </rng:optional>
+                          </rng:element>
+                        </rng:optional>
+                      </rng:element>
+                    </rng:oneOrMore>
+                  </rng:element>
+                </rng:optional>
+                <rng:optional>
+                  <rng:element name="AttendeeInfo">
+                    <rng:attribute name="PreRegisteredQuantity">
+                      <rng:data type="nonNegativeInteger">
+                        <rng:param name="pattern">[0-9]+</rng:param>
+                      </rng:data>
+                    </rng:attribute>
+                    <rng:attribute name="TotalQuantity">
+                      <rng:data type="nonNegativeInteger">
+                        <rng:param name="pattern">[0-9]+</rng:param>
+                      </rng:data>
+                    </rng:attribute>
+                  </rng:element>
+                </rng:optional>
+                <rng:optional>
+                  <rng:element name="Dates">
+                    <rng:oneOrMore>
+                      <rng:element name="Date">
+                        <rng:optional>
+                          <rng:attribute name="End">
+                            <rng:data type="string">
+                            <rng:param name="minLength">1</rng:param>
+                            </rng:data>
+                          </rng:attribute>
+                        </rng:optional>
+                        <rng:attribute name="Start">
+                          <rng:data type="string">
+                            <rng:param name="minLength">1</rng:param>
+                          </rng:data>
+                        </rng:attribute>
+                        <rng:optional>
+                          <rng:element name="EndDateWindow">
+                            <rng:attribute name="LatestDate">
+                            <rng:data type="string">
+                            <rng:param name="minLength">1</rng:param>
+                            </rng:data>
+                            </rng:attribute>
+                          </rng:element>
+                        </rng:optional>
+                        <rng:optional>
+                          <rng:element name="LocationCategories">
+                            <rng:optional>
+                              <rng:element name="Location">
+                              <rng:attribute name="AreaID">
+                              <rng:data type="string">
+                              <rng:param name="minLength">1</rng:param>
+                              </rng:data>
+                              </rng:attribute>
+                              </rng:element>
+                            </rng:optional>
+                            <rng:oneOrMore>
+                              <rng:element name="Category">
+                              <rng:attribute name="Language">
+                              <rng:data type="language">
+                              <rng:param name="pattern">[a-z][a-z]</rng:param>
+                              </rng:data>
+                              </rng:attribute>
+                              <rng:ref name="def_nonempty_string"/>
+                              </rng:element>
+                            </rng:oneOrMore>
+                          </rng:element>
+                        </rng:optional>
+                      </rng:element>
+                    </rng:oneOrMore>
+                  </rng:element>
+                </rng:optional>
+                <rng:optional>
+                  <rng:element name="Comments">
+                    <rng:oneOrMore>
+                      <rng:element name="Comment">
+                        <rng:attribute name="Name">
+                          <choice>
+                          <rng:value type="string">Category</rng:value>
+                          <rng:value type="string">Description</rng:value>
+                          <rng:value type="string">Gallery</rng:value>
+                          <rng:value type="string">Title</rng:value>
+                          </choice>
+                        </rng:attribute>
+                        <rng:zeroOrMore>
+                          <rng:element name="Text">
+                          <rng:optional>
+                          <rng:attribute name="Language">
+                          <rng:data type="language">
+                          <rng:param name="pattern">[a-z][a-z]</rng:param>
+                          </rng:data>
+                          </rng:attribute>
+                          </rng:optional>
+                          <rng:ref name="def_nonempty_string"/>
+                          </rng:element>
+                        </rng:zeroOrMore>
+                        <rng:zeroOrMore>
+                          <rng:element name="Image">
+                          <rng:ref name="def_nonempty_string"/>
+                          </rng:element>
+                        </rng:zeroOrMore>
+                      </rng:element>
+                    </rng:oneOrMore>
+                  </rng:element>
+                </rng:optional>
+              </rng:element>
+
+
+
+            </rng:element>
+          </rng:oneOrMore>
+        </rng:element>
+      </rng:element>
+
+      <!-- Activities: OTA_HotelPostEventNotifRS -->
+
+      <rng:element name="OTA_HotelPostEventNotifRS">
+
+        <rng:ref name="def_generic_response"/>
+
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="TimeStamp"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+
+      </rng:element>
+
+
+      <!-- ******************************************************************************* -->
+      <!-- * FreeRooms                                                                     -->
+      <!-- ******************************************************************************* -->
+
+      <!-- FreeRooms: OTA_HotelInvCountNotifRQ -->
+
+      <rng:element name="OTA_HotelInvCountNotifRQ">
+
+        <!-- UniqueID {0,1} -->
+
+        <rng:optional>
+          <rng:element name="UniqueID">
+
+            <rng:attribute name="Type">
+              <rng:choice>
+                <rng:value type="string">16</rng:value>
+                <rng:value type="string">35</rng:value>
+              </rng:choice>
+            </rng:attribute>
+            <rng:attribute name="ID"/> <!-- an ID is required by OTA, we ignore the value -->
+            <rng:attribute name="Instance">
+              <rng:value type="string">CompleteSet</rng:value>
+            </rng:attribute>
+
+          </rng:element>
+        </rng:optional>
+
+        <!-- Inventories {1} -->
+
+        <rng:element name="Inventories">
+
+          <rng:oneOrMore>
+            <rng:choice>
+              <rng:attribute name="HotelCode">
+                <rng:ref name="def_one_to_sixteen_chars_string"/>
+              </rng:attribute>
+              <rng:attribute name="HotelName">
+                <rng:ref name="def_nonempty_string"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:oneOrMore>
+
+          <!-- Inventories > Inventory (1,} -->
+
+          <rng:oneOrMore>
+            <rng:element name="Inventory">
+
+              <!-- Inventory is either empty or contains one StatusApplicationControl element -->
+
+              <rng:optional>
+                <rng:element name="StatusApplicationControl">
+                  <rng:attribute name="Start">
+                    <rng:ref name="def_date"/>
+                  </rng:attribute>
+                  <rng:attribute name="End">
+                    <rng:ref name="def_date"/>
+                  </rng:attribute>
+                  <rng:optional>
+                    <rng:attribute name="InvTypeCode">
+                      <rng:ref name="def_invTypeCode_string"/>
+                    </rng:attribute>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:attribute name="InvCode">
+                      <rng:ref name="def_nonempty_string"/>
+                    </rng:attribute>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:attribute name="AllInvCode">
+                      <rng:ref name="def_bool"/>
+                    </rng:attribute>
+                  </rng:optional>
+                </rng:element>
+              </rng:optional>
+
+              <rng:optional>
+                <rng:element name="InvCounts">
+                  <rng:element name="InvCount">
+                    <rng:attribute name="CountType">
+                      <rng:choice>
+                        <rng:value>2</rng:value>
+                        <rng:value>6</rng:value>
+                        <rng:value>9</rng:value>
+                      </rng:choice>
+                    </rng:attribute>
+                    <rng:attribute name="Count">
+                      <rng:ref name="def_int_ge0"/>
+                    </rng:attribute>
+                  </rng:element>
+                </rng:element>
+              </rng:optional>
+
+            </rng:element>
+          </rng:oneOrMore>
+
+        </rng:element>
+
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+
+      </rng:element>
+
+      <!-- FreeRooms: OTA_HotelInvCountNotifRS -->
+
+      <rng:element name="OTA_HotelInvCountNotifRS">
+
+        <rng:ref name="def_generic_response"/>
+
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="TimeStamp"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+
+      </rng:element>
+
+
+      <!-- ******************************************************************************* -->
+      <!-- * GuestRequests                                                                 -->
+      <!-- ******************************************************************************* -->
+
+      <!-- GuestRequests (push): OTA_HotelResNotifRQ -->
+
+      <rng:element name="OTA_HotelResNotifRQ">
+        <rng:element name="HotelReservations">
+          <rng:ref name="def_hotelreservation"/>
+        </rng:element>
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="TimeStamp"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+      </rng:element>
+
+      <!-- GuestRequests (push): OTA_HotelResNotifRS -->
+
+      <rng:element name="OTA_HotelResNotifRS">
+
+        <rng:choice>
+
+          <!-- choice: Errors {1} -->
+
+          <rng:element name="Errors">
+
+            <!-- Errors > Error {1,} -->
+
+            <rng:oneOrMore>
+              <rng:element name="Error">
+
+                <rng:attribute name="Type">
+                  <rng:choice>
+                    <rng:value type="string">11</rng:value>
+                    <rng:value type="string">13</rng:value>
+                  </rng:choice>
+                </rng:attribute>
+                <rng:optional>
+                  <rng:attribute name="Code">
+                    <rng:ref name="def_int_ge0"/>
+                  </rng:attribute>
+                </rng:optional>
+                <rng:optional>
+                  <rng:attribute name="Status">
+                    <rng:ref name="def_send_complete"/>
+                  </rng:attribute>
+                </rng:optional>
+
+                <rng:text/>
+
+              </rng:element>
+
+            </rng:oneOrMore>
+          </rng:element>
+
+          <!-- choice: Success {1} + Warnings {0,1} + HotelReservations {0,1} -->
+
+          <rng:group>
+
+            <rng:element name="Success">
+              <rng:empty/>
+            </rng:element>
+
+            <rng:optional>
+              <rng:element name="Warnings">
+            
+                <!-- Warnings > Warning {1,} -->
+     
+                <rng:oneOrMore>
+                  <rng:element name="Warning">
+              
+                    <rng:attribute name="Type">
+                      <rng:ref name="def_int_gt0"/>
+                    </rng:attribute>
+     
+                    <rng:optional>
+                      <rng:attribute name="Code">
+                        <rng:ref name="def_int_ge0"/>
+                      </rng:attribute>
+                    </rng:optional>
+
+                     <rng:optional>
+                      <rng:attribute name="RecordID">
+                        <rng:ref name="def_nonempty_string"/>
+                      </rng:attribute>
+                    </rng:optional>
+     
+                    <rng:optional>
+                      <rng:attribute name="Status">
+                        <rng:ref name="def_send_complete"/>
+                      </rng:attribute>
+                    </rng:optional>
+     
+                    <rng:text/>
+              
+                  </rng:element>
+                </rng:oneOrMore>
+     
+              </rng:element>
+            </rng:optional>
+
+            <rng:optional>
+          
+              <rng:element name="HotelReservations">
+          
+                <rng:oneOrMore>
+                  <rng:element name="HotelReservation">
+          
+                    <rng:element name="UniqueID">
+          
+                      <rng:attribute name="Type">
+                        <rng:choice>
+                          <rng:value>14</rng:value>
+                          <rng:value>15</rng:value>
+                        </rng:choice>
+                      </rng:attribute>
+                      <rng:attribute name="ID">
+                        <rng:ref name="def_nonempty_string"/>
+                      </rng:attribute>
+          
+                    </rng:element>
+          
+                  </rng:element>
+                </rng:oneOrMore>
+          
+              </rng:element>
+          
+            </rng:optional>
+
+          </rng:group>
+
+        </rng:choice>
+
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="TimeStamp"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+
+      </rng:element>
+
+      <!-- GuestRequests: OTA_NotifReportRS -->
+
+      <rng:element name="OTA_NotifReportRS">
+
+        <rng:choice>
+
+          <!-- choice: Errors {1} -->
+
+          <rng:element name="Errors">
+
+            <!-- Errors > Error {1,} -->
+
+            <rng:oneOrMore>
+              <rng:element name="Error">
+
+                <rng:attribute name="Type">
+                  <rng:choice>
+                    <rng:value type="string">11</rng:value>
+                    <rng:value type="string">13</rng:value>
+                  </rng:choice>
+                </rng:attribute>
+                <rng:optional>
+                  <rng:attribute name="Code">
+                    <rng:ref name="def_int_ge0"/>
+                  </rng:attribute>
+                </rng:optional>
+                <rng:optional>
+                  <rng:attribute name="Status">
+                    <rng:ref name="def_send_complete"/>
+                  </rng:attribute>
+                </rng:optional>
+
+                <rng:text/>
+
+              </rng:element>
+
+            </rng:oneOrMore>
+
+          </rng:element>
+
+          <!-- choice: Success {1}, Warnings{0,} -->
+
+          <rng:group>
+
+            <rng:element name="Success">
+              <rng:empty/>
+            </rng:element>
+
+            <rng:optional>
+              <rng:element name="Warnings">
+            
+                <!-- Warnings > Warning {1,} -->
+       
+                <rng:oneOrMore>
+                  <rng:element name="Warning">
+              
+                    <rng:attribute name="Type">
+                      <rng:ref name="def_int_gt0"/>
+                    </rng:attribute>
+       
+                    <rng:optional>
+                      <rng:attribute name="Code">
+                        <rng:ref name="def_int_ge0"/>
+                      </rng:attribute>
+                    </rng:optional>
+
+                    <rng:optional>
+                      <rng:attribute name="RecordID">
+                        <rng:ref name="def_nonempty_string"/>
+                      </rng:attribute>
+                    </rng:optional>
+
+                    <rng:optional>
+                      <rng:attribute name="Status">
+                        <rng:ref name="def_send_complete"/>
+                      </rng:attribute>
+                    </rng:optional>
+       
+                    <rng:text/>
+              
+                  </rng:element>
+                </rng:oneOrMore>
+       
+              </rng:element>
+            </rng:optional>
+          
+          </rng:group>
+
+        </rng:choice>
+
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="TimeStamp"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+ 
+      </rng:element>
+
+      <!-- GuestRequests: OTA_ReadRQ -->
+
+      <rng:element name="OTA_ReadRQ">
+
+        <rng:element name="ReadRequests">
+    
+          <rng:element name="HotelReadRequest">
+        
+            <rng:optional>
+              <rng:element name="SelectionCriteria">
+          
+                <rng:attribute name="Start">
+                  <rng:ref name="def_datetime"/>
+                </rng:attribute>
+          
+              </rng:element>
+            </rng:optional>
+
+            <rng:oneOrMore>
+              <rng:choice>
+                <rng:attribute name="HotelCode">
+                  <rng:ref name="def_one_to_sixteen_chars_string"/>
+                </rng:attribute>
+                <rng:attribute name="HotelName">
+                  <rng:ref name="def_nonempty_string"/>
+                </rng:attribute>
+              </rng:choice>
+            </rng:oneOrMore>
+
+          </rng:element>
+
+        </rng:element>
+
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="TimeStamp"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+  
+      </rng:element>
+
+      <!-- GuestRequests: OTA_ResRetrieveRS -->
+
+      <rng:element name="OTA_ResRetrieveRS">
+        <rng:choice>
+
+          <!-- choice: Errors {1} -->
+
+          <rng:element name="Errors">
+
+            <!-- Errors > Error {1,} -->
+
+            <rng:oneOrMore>
+              <rng:element name="Error">
+
+                <rng:attribute name="Type">
+                  <rng:choice>
+                    <rng:value type="string">11</rng:value>
+                    <rng:value type="string">13</rng:value>
+                  </rng:choice>
+                </rng:attribute>
+                <rng:optional>
+                  <rng:attribute name="Code">
+                    <rng:ref name="def_int_ge0"/>
+                  </rng:attribute>
+                </rng:optional>
+                <rng:optional>
+                  <rng:attribute name="Status">
+                    <rng:ref name="def_send_complete"/>
+                  </rng:attribute>
+                </rng:optional>
+
+                <rng:text/>
+
+              </rng:element>
+
+            </rng:oneOrMore>
+          </rng:element>
+
+          <!-- choice: Success {1} + Warnings {0,1} + ReservationsList {1} -->
+
+          <rng:group>
+
+            <rng:element name="Success">
+              <rng:empty/>
+            </rng:element>
+
+            <rng:optional>
+              <rng:element name="Warnings">
+            
+                <!-- Warnings > Warning {1,} -->
+     
+                <rng:oneOrMore>
+                  <rng:element name="Warning">
+              
+                    <rng:attribute name="Type">
+                      <rng:ref name="def_int_gt0"/>
+                    </rng:attribute>
+     
+                    <rng:optional>
+                      <rng:attribute name="Code">
+                        <rng:ref name="def_int_ge0"/>
+                      </rng:attribute>
+                    </rng:optional>
+
+                     <rng:optional>
+                      <rng:attribute name="RecordID">
+                        <rng:ref name="def_nonempty_string"/>
+                      </rng:attribute>
+                    </rng:optional>
+     
+                    <rng:optional>
+                      <rng:attribute name="Status">
+                        <rng:ref name="def_send_complete"/>
+                      </rng:attribute>
+                    </rng:optional>
+     
+                    <rng:text/>
+              
+                  </rng:element>
+                </rng:oneOrMore>
+     
+              </rng:element>
+            </rng:optional>
+
+            <rng:element name="ReservationsList">
+              <rng:ref name="def_hotelreservation"/>
+            </rng:element>
+
+          </rng:group>
+
+        </rng:choice>
+
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="TimeStamp"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+
+      </rng:element>
+
+      <!-- GuestRequests: OTA_NotifReportRQ -->
+
+      <rng:element name="OTA_NotifReportRQ">
+
+        <rng:element name="Success">
+          <rng:empty/>
+        </rng:element>
+
+        <rng:optional>
+          <rng:element name="Warnings">
+        
+            <!-- Warnings > Warning {1,} -->
+
+            <rng:oneOrMore>
+              <rng:element name="Warning">
+          
+                <rng:attribute name="Type">
+                  <rng:ref name="def_int_gt0"/>
+                </rng:attribute>
+
+                <rng:attribute name="Code">
+                  <rng:ref name="def_int_gt0"/>
+                </rng:attribute>
+
+                <rng:optional>
+                  <rng:attribute name="Status">
+                    <rng:ref name="def_send_complete"/>
+                  </rng:attribute>
+                </rng:optional>
+
+                <rng:attribute name="RecordID">
+                  <rng:ref name="def_nonempty_string"/>
+                </rng:attribute>
+
+                <rng:text/>
+          
+              </rng:element>
+            </rng:oneOrMore>
+
+          </rng:element>
+        </rng:optional>
+
+        <rng:optional>
+          <rng:element name="NotifDetails">
+
+            <rng:element name="HotelNotifReport">
+
+              <rng:element name="HotelReservations">
+
+                <rng:oneOrMore>
+                  <rng:element name="HotelReservation">
+
+                    <rng:element name="UniqueID">
+
+                      <rng:attribute name="Type">
+                        <rng:choice>
+                          <rng:value>14</rng:value>
+                          <rng:value>15</rng:value>
+                        </rng:choice>
+                      </rng:attribute>
+                      <rng:attribute name="ID">
+                        <rng:ref name="def_nonempty_string"/>
+                      </rng:attribute>
+
+                    </rng:element>
+
+                  </rng:element>
+                </rng:oneOrMore>
+
+              </rng:element>
+
+            </rng:element>
+
+          </rng:element>
+
+        </rng:optional>
+
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="TimeStamp"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+
+      </rng:element>
+
+      <!-- GuestRequests: OTA_NotifReportRS -->
+
+      <rng:element name="OTA_NotifReportRS">
+
+        <rng:choice>
+
+          <!-- choice: Errors {1} -->
+
+          <rng:element name="Errors">
+
+            <!-- Errors > Error {1,} -->
+
+            <rng:oneOrMore>
+              <rng:element name="Error">
+
+                <rng:attribute name="Type">
+                  <rng:choice>
+                    <rng:value type="string">11</rng:value>
+                    <rng:value type="string">13</rng:value>
+                  </rng:choice>
+                </rng:attribute>
+                <rng:optional>
+                  <rng:attribute name="Code">
+                    <rng:ref name="def_int_ge0"/>
+                  </rng:attribute>
+                </rng:optional>
+                <rng:optional>
+                  <rng:attribute name="Status">
+                    <rng:ref name="def_send_complete"/>
+                  </rng:attribute>
+                </rng:optional>
+
+                <rng:text/>
+
+              </rng:element>
+
+            </rng:oneOrMore>
+
+          </rng:element>
+
+          <!-- choice: Success {1} -->
+
+          <rng:element name="Success">
+            <rng:empty/>
+          </rng:element>
+
+        </rng:choice>
+
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="TimeStamp"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+ 
+      </rng:element>
+
+
+      <!-- ******************************************************************************* -->
+      <!-- * Inventory/Basic (Push) and Inventory/HotelInfo (Push)                         -->
+      <!-- ******************************************************************************* -->
+
+      <!-- Inventory: OTA_HotelDescriptiveContentNotifRQ -->
+
+      <rng:element name="OTA_HotelDescriptiveContentNotifRQ">
+
+        <rng:ref name="def_hoteldescriptivecontents"/>
+        
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="TimeStamp"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+
+      </rng:element>
+
+      <!-- Inventory: OTA_HotelDescriptiveContentNotifRS -->
+
+      <rng:element name="OTA_HotelDescriptiveContentNotifRS">
+
+        <rng:ref name="def_generic_response"/>
+
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="TimeStamp"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+
+      </rng:element>
+
+
+      <!-- ******************************************************************************* -->
+      <!-- * Inventory/Basic (Pull) and Inventory/HotelInfo (Pull)                         -->
+      <!-- ******************************************************************************* -->
+
+      <!-- Inventory: OTA_HotelDescriptiveInfoRQ -->
+
+      <rng:element name="OTA_HotelDescriptiveInfoRQ">
+
+        <rng:element name="HotelDescriptiveInfos">
+
+          <rng:element name="HotelDescriptiveInfo">
+            <rng:oneOrMore>
+              <rng:choice>
+                <rng:attribute name="HotelCode">
+                  <rng:ref name="def_one_to_sixteen_chars_string"/>
+                </rng:attribute>
+                <rng:attribute name="HotelName">
+                  <rng:ref name="def_nonempty_string"/>
+                </rng:attribute>
+              </rng:choice>
+            </rng:oneOrMore>
+          </rng:element>
+
+        </rng:element>
+
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="TimeStamp"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+
+      </rng:element>
+       
+      <!-- Inventory: OTA_HotelDescriptiveInfoRS -->
+
+      <rng:element name="OTA_HotelDescriptiveInfoRS">
+
+        <rng:choice>
+
+          <!-- choice: Errors {1} -->
+       
+          <rng:element name="Errors">
+        
+            <!-- Errors > Error {1,} -->
+       
+            <rng:oneOrMore>
+              <rng:element name="Error">
+       
+                <rng:attribute name="Type">
+                  <rng:choice>
+                    <rng:value type="string">11</rng:value>
+                    <rng:value type="string">13</rng:value>
+                  </rng:choice>
+                </rng:attribute>
+                <rng:optional>
+                  <rng:attribute name="Code">
+                    <rng:ref name="def_int_ge0"/>
+                  </rng:attribute>
+                </rng:optional>
+                <rng:optional>
+                  <rng:attribute name="Status">
+                    <rng:ref name="def_send_complete"/>
+                  </rng:attribute>
+                </rng:optional>
+       
+                <rng:text/>
+       
+              </rng:element>
+            </rng:oneOrMore>
+       
+          </rng:element>
+       
+          <!-- choice: Success {1} + Warnings {0, } + HotelDescriptiveContents {1} -->
+       
+          <rng:group>
+       
+            <rng:element name="Success">
+              <rng:empty/>
+            </rng:element>
+      
+            <rng:optional>
+              <rng:element name="Warnings">
+            
+                <!-- Warnings > Warning {1,} -->
+          
+                <rng:oneOrMore>
+                  <rng:element name="Warning">
+              
+                    <rng:attribute name="Type">
+                      <rng:ref name="def_int_gt0"/>
+                    </rng:attribute>
+          
+                    <rng:optional>
+                      <rng:attribute name="RecordID">
+                        <rng:ref name="def_nonempty_string"/>
+                      </rng:attribute>
+                    </rng:optional>
+          
+                    <rng:optional>
+                      <rng:attribute name="Status">
+                        <rng:ref name="def_send_complete"/>
+                      </rng:attribute>
+                    </rng:optional>
+          
+                    <rng:text/>
+              
+                  </rng:element>
+                </rng:oneOrMore>
+          
+              </rng:element>
+            </rng:optional>
+
+            <rng:ref name="def_hoteldescriptivecontents"/>
+      
+          </rng:group>
+
+        </rng:choice>
+
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="TimeStamp"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+
+      </rng:element>
+
+ 
+      <!-- ******************************************************************************* -->
+      <!-- * RatePlans                                                                     -->
+      <!-- ******************************************************************************* -->
+
+      <!-- RatePlans: OTA_HotelRatePlanNotifRQ  --> 
+
+      <rng:element name="OTA_HotelRatePlanNotifRQ">
+
+        <!-- UniqueID {0,1} -->
+
+        <rng:optional>
+          <rng:element name="UniqueID">
+
+            <rng:attribute name="Type">
+              <rng:value type="string">16</rng:value>
+            </rng:attribute>
+            <rng:attribute name="ID"/> <!-- an ID is required by OTA, we ignore the value -->
+            <rng:attribute name="Instance">
+              <rng:value type="string">CompleteSet</rng:value>
+            </rng:attribute>
+
+          </rng:element>
+        </rng:optional>
+
+        <!-- RatePlans {1} -->
+
+        <rng:ref name="def_rateplans"/>
+
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="TimeStamp"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+
+      </rng:element>
+
+      <!-- RatePlans: OTA_HotelRatePlanNotifRS -->
+
+      <rng:element name="OTA_HotelRatePlanNotifRS">
+
+        <rng:ref name="def_generic_response"/>
+
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="TimeStamp"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+
+      </rng:element>
+
+
+      <!-- ******************************************************************************* -->
+      <!-- * BaseRates                                                                     -->
+      <!-- ******************************************************************************* -->
+
+      <!-- BaseRates: OTA_HotelRatePlanRQ --> 
+
+      <rng:element name="OTA_HotelRatePlanRQ">
+
+        <!-- RatePlans {1} -->
+
+        <rng:element name="RatePlans">
+
+          <!-- RatePlans > RatePlan {1} -->
+
+          <rng:element name="RatePlan">
+
+            <rng:oneOrMore>
+              <rng:choice>
+
+                <rng:element name="DateRange">
+                  <rng:optional>
+                    <rng:attribute name="Start">
+                      <rng:ref name="def_date"/>
+                    </rng:attribute>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:attribute name="End">
+                      <rng:ref name="def_date"/>
+                    </rng:attribute>
+                  </rng:optional>
+                </rng:element>
+
+                <rng:element name="RatePlanCandidates">
+                  <rng:oneOrMore>
+                    <rng:element name="RatePlanCandidate">
+                      <rng:optional>
+                         <rng:attribute name="RatePlanCode">
+                           <rng:ref name="def_nonempty_string"/>
+                         </rng:attribute>
+                      </rng:optional>
+                      <rng:optional>
+                         <rng:attribute name="RatePlanID">
+                           <rng:ref name="def_nonempty_string"/>
+                         </rng:attribute>
+                      </rng:optional>
+                    </rng:element>
+                  </rng:oneOrMore>
+                </rng:element>
+
+                <rng:element name="HotelRef">
+                  <rng:optional>
+                     <rng:attribute name="HotelCode">
+                       <rng:ref name="def_one_to_sixteen_chars_string"/>
+                     </rng:attribute>
+                   </rng:optional>
+                  <rng:optional>
+                     <rng:attribute name="HotelName">
+                       <rng:ref name="def_nonempty_string"/>
+                     </rng:attribute>
+                  </rng:optional>
+                </rng:element>
+
+              </rng:choice>
+            </rng:oneOrMore>
+ 
+          </rng:element> <!-- close RatePlan -->
+
+        </rng:element> <!-- close RatePlans -->
+
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="TimeStamp"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+
+      </rng:element> 
+
+      <!-- BaseRates: OTA_HotelRatePlanRS -->
+
+      <rng:element name="OTA_HotelRatePlanRS">
+
+        <rng:choice>
+
+          <!-- choice: Errors {1} -->
+       
+          <rng:element name="Errors">
+        
+            <!-- Errors > Error {1,} -->
+       
+            <rng:oneOrMore>
+              <rng:element name="Error">
+       
+                <rng:attribute name="Type">
+                  <rng:choice>
+                    <rng:value type="string">11</rng:value>
+                    <rng:value type="string">13</rng:value>
+                  </rng:choice>
+                </rng:attribute>
+                <rng:optional>
+                  <rng:attribute name="Code">
+                    <rng:ref name="def_int_ge0"/>
+                  </rng:attribute>
+                </rng:optional>
+                <rng:optional>
+                  <rng:attribute name="Status">
+                    <rng:ref name="def_send_complete"/>
+                  </rng:attribute>
+                </rng:optional>
+       
+                <rng:text/>
+       
+              </rng:element>
+            </rng:oneOrMore>
+       
+          </rng:element>
+       
+          <!-- choice: Success {1} + Warnings {0, } + RatePlans {1} -->
+       
+          <rng:group>
+       
+            <rng:element name="Success">
+              <rng:empty/>
+            </rng:element>
+
+            <rng:optional>
+              <rng:element name="Warnings">
+            
+                <!-- Warnings > Warning {1,} -->
+          
+                <rng:oneOrMore>
+                  <rng:element name="Warning">
+              
+                    <rng:attribute name="Type">
+                      <rng:ref name="def_int_gt0"/>
+                    </rng:attribute>
+          
+                    <rng:optional>
+                      <rng:attribute name="RecordID">
+                        <rng:ref name="def_nonempty_string"/>
+                      </rng:attribute>
+                    </rng:optional>
+          
+                    <rng:optional>
+                      <rng:attribute name="Status">
+                        <rng:ref name="def_send_complete"/>
+                      </rng:attribute>
+                    </rng:optional>
+          
+                    <rng:text/>
+              
+                  </rng:element>
+                </rng:oneOrMore>
+          
+              </rng:element>
+            </rng:optional>
+       
+            <rng:ref name="def_rateplans"/>
+      
+          </rng:group>
+
+        </rng:choice>
+
+        <rng:attribute name="Version"/>
+        <rng:optional>
+          <rng:attribute name="TimeStamp"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:attribute name="xsi:schemaLocation"/>
+        </rng:optional>
+
+      </rng:element>
+ 
+    </rng:choice>
+  </rng:start>
+
+
+  <!-- ******************************************************************************* -->
+  <!-- * common definition of HotelReservation used in GuestRequests                   -->
+  <!-- ******************************************************************************* -->
+
+  <rng:define name="def_hotelreservation">
+
+    <!-- HotelReservation {0,} -->
+
+    <rng:zeroOrMore>
+      <rng:element name="HotelReservation">
+
+        <!-- HotelReservation > UniqueID {1} -->
+
+        <rng:element name="UniqueID">
+
+          <rng:attribute name="Type">
+            <rng:choice>
+              <rng:value>14</rng:value>
+              <rng:value>15</rng:value>
+            </rng:choice>
+          </rng:attribute>
+
+          <rng:attribute name="ID">
+            <rng:ref name="def_nonempty_string"/>
+          </rng:attribute>
+
+        </rng:element>
+
+        <!-- HotelReservation > RoomStays {0,1} -->
+
+        <rng:optional>
+          <rng:element name="RoomStays">
+
+            <!-- HotelReservation > RoomStays > RoomStay {1,} -->
+
+            <rng:oneOrMore>
+              <rng:element name="RoomStay">
+
+                <!-- HotelReservation > RoomStays > RoomStay > RoomTypes {0,1} -->
+
+                <rng:optional>
+                  <rng:element name="RoomTypes">
+
+                    <!-- HotelReservation > RoomStays > RoomStay > RoomTypes > RoomType {1} -->
+
+                    <rng:element name="RoomType">
+                      <rng:optional>
+                        <rng:attribute name="RoomTypeCode">
+                          <rng:ref name="def_invTypeCode_string"/>
+                        </rng:attribute>
+                      </rng:optional>
+                      <rng:optional>
+                        <rng:attribute name="RoomClassificationCode">
+                          <rng:ref name="def_int_ge0"/>
+                        </rng:attribute>
+                      </rng:optional>
+                      <rng:optional>
+                        <rng:attribute name="RoomType">
+                          <rng:choice>
+                            <rng:value>1</rng:value>
+                            <rng:value>2</rng:value>
+                            <rng:value>3</rng:value>
+                            <rng:value>4</rng:value>
+                            <rng:value>5</rng:value>
+                            <rng:value>6</rng:value>
+                            <rng:value>7</rng:value>
+                            <rng:value>8</rng:value>
+                            <rng:value>9</rng:value>
+                          </rng:choice>
+                        </rng:attribute>
+                      </rng:optional>
+                    </rng:element>
+               
+                  </rng:element>
+                </rng:optional>
+
+                <!-- HotelReservation > RoomStays > RoomStay > RatePlans {0,1} -->
+
+                <rng:optional>
+                  <rng:element name="RatePlans">
+
+                    <!-- HotelReservation > RoomStays > RoomStay > RatePlans > RatePlan {1} -->
+
+                    <rng:element name="RatePlan">
+
+                      <!-- HotelReservation > RoomStays > RoomStay > RatePlans > RatePlan > Commission {0,1} -->
+
+                      <rng:optional>
+                        <rng:element name="Commission">
+                          <rng:choice>
+
+                            <!-- Commission has either attribute "Percent" ... -->
+
+                            <rng:attribute name="Percent">
+                              <rng:ref name="def_int_ge0"/>
+                            </rng:attribute>
+
+                            <!-- ... or subelement "CommissionPayableAmount" -->
+
+                            <rng:element name="CommissionPayableAmount">
+                              <rng:attribute name="Amount">
+                                <rng:ref name="def_decimal_ge0"/>
+                              </rng:attribute>
+                              <rng:attribute name="CurrencyCode">
+                                <rng:ref name="def_three_char_string"/>
+                              </rng:attribute>
+                            </rng:element>
+
+                          </rng:choice>
+                        </rng:element>
+                      </rng:optional>
+
+                      <!-- HotelReservation > RoomStays > RoomStay > RatePlans > RatePlan > MealsIncluded {0,1} -->
+
+                      <rng:optional>
+                        <rng:element name="MealsIncluded">
+
+                          <rng:attribute name="MealPlanIndicator">
+                            <rng:choice>
+                              <rng:value>1</rng:value>
+                              <rng:value>true</rng:value>
+                            </rng:choice>
+                          </rng:attribute>
+                          <rng:attribute name="MealPlanCodes">
+                            <rng:choice>
+                              <rng:value>1</rng:value>
+                              <rng:value>3</rng:value>
+                              <rng:value>10</rng:value>
+                              <rng:value>12</rng:value>
+                              <rng:value>14</rng:value>
+                            </rng:choice>
+                          </rng:attribute>
+
+                        </rng:element>
+                      </rng:optional>
+
+                      <rng:optional>
+                        <rng:attribute name="RatePlanCode">
+                          <rng:ref name="def_nonempty_string"/>
+                        </rng:attribute>
+                      </rng:optional>
+
+                    </rng:element>
+
+                  </rng:element>
+
+                </rng:optional>
+
+                <!-- HotelReservation > RoomStays > RoomStay > GuestCounts {0,1} -->
+
+                <rng:optional>
+                  <rng:element name="GuestCounts">
+
+                    <!-- HotelReservation > RoomStays > RoomStay > GuestCounts > GuestCount {1,} -->
+
+                    <rng:oneOrMore>
+                      <rng:element name="GuestCount">
+
+                        <rng:attribute name="Count">
+                          <rng:ref name="def_int_gt0"/>
+                        </rng:attribute>
+                        <rng:optional>
+                          <rng:attribute name="Age">
+                            <rng:ref name="def_int_ge0"/>
+                          </rng:attribute>
+                        </rng:optional>
+
+                      </rng:element>
+                    </rng:oneOrMore>
+
+                  </rng:element>
+                </rng:optional>
+
+                <!-- HotelReservation > RoomStays > RoomStay > TimeSpan {1} -->
+
+                <rng:element name="TimeSpan">
+
+                  <!-- HotelReservation > RoomStays > RoomStay > TimeSpan > StartDateWindow {0,1} -->
+
+                  <rng:optional>
+                    <rng:element name="StartDateWindow">
+
+                      <rng:attribute name="EarliestDate">
+                        <rng:ref name="def_date"/>
+                      </rng:attribute>
+                      <rng:attribute name="LatestDate">
+                        <rng:ref name="def_date"/>
+                      </rng:attribute>
+
+                    </rng:element>
+                  </rng:optional>
+
+                  <rng:optional>
+                    <rng:attribute name="Start">
+                      <rng:ref name="def_date"/>
+                    </rng:attribute>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:attribute name="End">
+                      <rng:ref name="def_date"/>
+                    </rng:attribute>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:attribute name="Duration">
+                      <rng:data type="string">
+                        <rng:param name="pattern">P[0-9]+N</rng:param>
+                      </rng:data>
+                    </rng:attribute>
+                  </rng:optional>
+
+                </rng:element>
+
+                <!-- HotelReservation > RoomStays > RoomStay > Guarantee {0,1} -->
+
+                <rng:optional>
+                  <rng:element name="Guarantee">
+                    <rng:element name="GuaranteesAccepted">
+                      <rng:element name="GuaranteeAccepted">
+
+                        <rng:element name="PaymentCard">
+
+                          <rng:attribute name="CardCode">
+                            <rng:data type="string">
+                              <rng:param name="pattern">[A-Z][A-Z]?</rng:param>
+                            </rng:data>
+                          </rng:attribute>
+                          <rng:attribute name="ExpireDate">
+                            <rng:data type="string">
+                              <rng:param name="pattern">[0-9][0-9][0-9][0-9]</rng:param>
+                            </rng:data>
+                          </rng:attribute>
+
+                          <rng:element name="CardHolderName">
+                            <rng:ref name="def_nonempty_string"/>
+                          </rng:element>
+
+                          <rng:element name="CardNumber">
+
+                            <rng:choice>
+
+                              <rng:element name="PlainText">
+                                <rng:ref name="def_nonempty_string"/>
+                              </rng:element>
+
+                              <rng:group>
+                                <rng:attribute name="EncryptedValue">
+                                  <rng:ref name="def_nonempty_string"/>
+                                </rng:attribute>
+                                <rng:attribute name="EncryptionMethod">
+                                  <rng:ref name="def_nonempty_string"/>
+                                </rng:attribute>
+                              </rng:group>
+
+                            </rng:choice>
+
+                          </rng:element>
+
+                        </rng:element>
+
+                      </rng:element>
+                    </rng:element>
+                  </rng:element>
+                </rng:optional>
+
+                <!-- HotelReservation > RoomStays > RoomStay > Total {0,1} -->
+
+                <rng:optional>
+                  <rng:element name="Total">
+
+                    <rng:attribute name="AmountAfterTax">
+                      <rng:ref name="def_decimal_ge0"/>
+                    </rng:attribute>
+                    <rng:attribute name="CurrencyCode">
+                      <rng:ref name="def_three_char_string"/>
+                    </rng:attribute>
+
+                  </rng:element>
+                </rng:optional>
+
+                <rng:optional>
+                  <rng:attribute name="RoomStayGroupID">
+                    <rng:ref name="def_nonempty_string"/>
+                  </rng:attribute>
+                </rng:optional>
+              </rng:element>
+            </rng:oneOrMore>
+
+          </rng:element>
+        </rng:optional>
+
+        <!-- HotelReservation > ResGuests {0, 1} -->
+
+        <rng:optional>
+          <rng:element name="ResGuests">
+            <rng:element name="ResGuest">
+              <rng:element name="Profiles">
+                <rng:element name="ProfileInfo">
+                  <rng:element name="Profile">
+
+                    <!-- HotelReservation > ... > Customer {1} -->
+
+                    <rng:element name="Customer">
+
+                      <!-- HotelReservation > ... > Customer > PersonName {1} -->
+
+                      <rng:element name="PersonName">
+
+                        <rng:optional>
+                          <rng:element name="NamePrefix">
+                            <rng:ref name="def_nonempty_string"/>
+                          </rng:element>
+                        </rng:optional>
+                        <rng:element name="GivenName">
+                          <rng:ref name="def_nonempty_string"/>
+                        </rng:element>
+                        <rng:element name="Surname">
+                          <rng:ref name="def_nonempty_string"/>
+                        </rng:element>
+                        <rng:optional>
+                          <rng:element name="NameTitle">
+                            <rng:ref name="def_nonempty_string"/>
+                          </rng:element>
+
+                        </rng:optional>
+                      </rng:element>
+
+                      <!-- HotelReservation > ... > Customer > Telephone {0,} -->
+
+                      <rng:zeroOrMore>
+                        <rng:element name="Telephone">
+
+                          <rng:attribute name="PhoneTechType">
+                            <rng:data type="string">
+                              <rng:param name="pattern">(1|3|5)</rng:param>
+                            </rng:data>
+                          </rng:attribute>
+                          <rng:attribute name="PhoneNumber">
+                            <rng:data type="string">
+                              <rng:param name="pattern">\+?[0-9]+</rng:param>
+                            </rng:data>
+                          </rng:attribute>
+
+                        </rng:element>
+                      </rng:zeroOrMore>
+
+                      <!-- HotelReservation > ... > Customer > Email {0,1} -->
+
+                      <rng:optional>
+                        <rng:element name="Email">
+                          <rng:ref name="def_email_string"/>
+                          <rng:optional>
+                            <rng:attribute name="Remark">
+                              <rng:data type="string">
+                                <rng:param name="pattern">newsletter:(no|yes)</rng:param>
+                              </rng:data>
+                            </rng:attribute>
+                          </rng:optional>
+
+                        </rng:element>
+                      </rng:optional>
+
+                      <!-- HotelReservation > ... > Customer > Address {0,1} -->
+
+                      <rng:optional>
+                        <rng:element name="Address">
+
+                          <rng:optional>
+                            <rng:element name="AddressLine">
+                              <rng:ref name="def_nonempty_string"/>
+                            </rng:element>
+                          </rng:optional>
+
+                          <rng:optional>
+                            <rng:element name="CityName">
+                              <rng:ref name="def_nonempty_string"/>
+                            </rng:element>
+                          </rng:optional>
+
+                          <rng:optional>
+                            <rng:element name="PostalCode">
+                              <rng:ref name="def_nonempty_string"/>
+                            </rng:element>
+                          </rng:optional>
+
+                          <rng:optional>
+                            <rng:element name="CountryName">
+                              <rng:attribute name="Code">
+                                <rng:data type="string">
+                                  <rng:param name="pattern">[A-Z][A-Z]</rng:param>
+                                </rng:data>
+                              </rng:attribute>
+                            </rng:element>
+                          </rng:optional>
+
+                          <rng:optional>
+                            <rng:attribute name="Remark">
+                              <rng:data type="string">
+                                <rng:param name="pattern">catalog:(no|yes)</rng:param>
+                              </rng:data>
+                            </rng:attribute>
+                          </rng:optional>
+
+                        </rng:element>
+                      </rng:optional>
+
+                      <rng:optional>
+                        <rng:attribute name="Gender">
+                          <rng:data type="string">
+                            <rng:param name="pattern">(Unknown|Male|Female)</rng:param>
+                          </rng:data>
+                        </rng:attribute>
+                      </rng:optional>
+                      <rng:optional>
+                        <rng:attribute name="BirthDate">
+                          <rng:ref name="def_date"/>
+                        </rng:attribute>
+                      </rng:optional>
+                      <rng:optional>
+                        <rng:attribute name="Language">
+                          <rng:data type="language">
+                            <rng:param name="pattern">[a-z][a-z]</rng:param>
+                          </rng:data>
+                        </rng:attribute>
+                      </rng:optional>
+
+                    </rng:element>
+                  </rng:element>
+                </rng:element>
+              </rng:element>
+            </rng:element>
+          </rng:element>
+        </rng:optional>
+
+        <!-- HotelReservation > ResGlobalInfo {0,1} -->
+
+        <rng:optional>
+          <rng:element name="ResGlobalInfo">
+
+            <!-- HotelReservation > ResGlobalInfo > Comments {0,1} -->
+
+            <rng:optional>
+              <rng:element name="Comments">
+
+                <!-- HotelReservation > ResGlobalInfo > Comment {1,} (actually {1,2} but Relax-NG cannot do this) -->
+
+                <rng:oneOrMore>
+                  <rng:element name="Comment">
+               
+                    <rng:choice>
+                      <rng:zeroOrMore>
+               
+                        <rng:element name="ListItem">
+                          <rng:ref name="def_nonempty_string"/>
+                          <rng:attribute name="ListItem">
+                            <rng:ref name="def_int_ge0"/>
+                          </rng:attribute>
+                          <rng:attribute name="Language">
+                            <rng:data type="language">
+                              <rng:param name="pattern">[a-z][a-z]</rng:param>
+                            </rng:data>
+                          </rng:attribute>
+               
+                        </rng:element>
+                      </rng:zeroOrMore>
+               
+                      <rng:optional>
+                        <rng:element name="Text">
+                          <rng:ref name="def_nonempty_string"/>
+                        </rng:element>
+                      </rng:optional>
+               
+                    </rng:choice>
+               
+                    <rng:attribute name="Name">
+                      <rng:choice>
+                        <rng:value>included services</rng:value>
+                        <rng:value>customer comment</rng:value>
+                      </rng:choice>
+                    </rng:attribute>
+               
+                  </rng:element>
+                </rng:oneOrMore>
+
+              </rng:element>
+            </rng:optional>
+
+            <!-- HotelReservation > ResGlobalInfo > SpecialRequest {1,} -->
+
+            <rng:optional>
+              <rng:element name="SpecialRequests">
+                <rng:oneOrMore>
+                  <rng:element name="SpecialRequest">
+
+                    <rng:attribute name="CodeContext">
+                      <rng:choice>
+                        <rng:value>ALPINEBITS</rng:value>
+                        <rng:value>HOTEL</rng:value>
+                      </rng:choice>
+                    </rng:attribute>
+
+                    <rng:attribute name="RequestCode">
+                      <rng:ref name="def_nonempty_string"/>
+                    </rng:attribute>
+
+                    <rng:optional>
+                      <rng:element name="Text">
+                        <rng:attribute name="TextFormat">
+                          <rng:choice>
+                            <rng:value>PlainText</rng:value>
+                          </rng:choice>
+                        </rng:attribute>
+                        <rng:data type="string"/>
+                      </rng:element>
+                    </rng:optional>
+
+                  </rng:element>
+                </rng:oneOrMore>
+              </rng:element>
+            </rng:optional>
+
+            <!-- HotelReservation > ResGlobalInfo > CancelPenalties {0,1} -->
+
+            <rng:optional>
+              <rng:element name="CancelPenalties">
+                <rng:element name="CancelPenalty">
+                  <rng:element name="PenaltyDescription">
+                    <rng:element name="Text">
+                      <rng:ref name="def_nonempty_string"/>
+                    </rng:element>
+                  </rng:element>
+                </rng:element>
+              </rng:element>
+            </rng:optional>
+
+            <!-- HotelReservation > ResGlobalInfo > HotelReservationIDs {0,1} -->
+
+            <rng:optional>
+              <rng:element name="HotelReservationIDs">
+
+                <rng:oneOrMore>
+                  <rng:element name="HotelReservationID">
+                
+                    <rng:attribute name="ResID_Type">
+                        <rng:ref name="def_int_gt0"/>
+                    </rng:attribute>
+                    <rng:optional>
+                      <rng:attribute name="ResID_Value">
+                        <rng:ref name="def_nonempty_string"/>
+                      </rng:attribute>
+                    </rng:optional>
+                    <rng:optional>
+                      <rng:attribute name="ResID_Source">
+                        <rng:ref name="def_nonempty_string"/>
+                      </rng:attribute>
+                    </rng:optional>
+                    <rng:optional>
+                      <rng:attribute name="ResID_SourceContext">
+                        <rng:ref name="def_nonempty_string"/>
+                      </rng:attribute>
+                    </rng:optional>
+                
+                  </rng:element>
+                </rng:oneOrMore>
+
+              </rng:element>
+            </rng:optional>
+
+            <!-- HotelReservation > ResGlobalInfo > Profiles {0,1} -->
+
+            <rng:optional>
+              <rng:element name="Profiles">
+                <rng:element name="ProfileInfo">
+                  <rng:element name="Profile">
+                
+                    <rng:attribute name="ProfileType">
+                      <rng:choice>
+                        <rng:value>4</rng:value>
+                      </rng:choice>
+                    </rng:attribute>
+                
+                    <rng:element name="CompanyInfo">
+                
+                        <rng:element name="CompanyName">
+                          <rng:ref name="def_nonempty_string"/>
+                          <rng:attribute name="Code">
+                            <rng:ref name="def_nonempty_string"/>
+                          </rng:attribute>
+                          <rng:attribute name="CodeContext">
+                            <rng:ref name="def_nonempty_string"/>
+                          </rng:attribute>
+                        </rng:element>
+                
+                        <rng:optional>
+                          <rng:element name="AddressInfo">
+                            <rng:element name="AddressLine">
+                              <rng:ref name="def_nonempty_string"/>
+                            </rng:element>
+                            <rng:element name="CityName">
+                              <rng:ref name="def_nonempty_string"/>
+                            </rng:element>
+                            <rng:element name="PostalCode">
+                              <rng:ref name="def_nonempty_string"/>
+                            </rng:element>
+                            <rng:element name="CountryName">
+                              <rng:attribute name="Code">
+                                <rng:data type="string">
+                                  <rng:param name="pattern">[A-Z][A-Z]</rng:param>
+                                </rng:data>
+                              </rng:attribute>
+                            </rng:element>
+                          </rng:element>
+                        </rng:optional>
+                
+                        <rng:optional>
+                          <rng:element name="TelephoneInfo">
+                            <rng:attribute name="PhoneTechType">
+                              <rng:data type="string">
+                                <rng:param name="pattern">(1|3|5)</rng:param>
+                              </rng:data>
+                            </rng:attribute>
+                            <rng:attribute name="PhoneNumber">
+                              <rng:data type="string">
+                                <rng:param name="pattern">\+?[0-9]+</rng:param>
+                              </rng:data>
+                            </rng:attribute>
+                          </rng:element>
+                        </rng:optional>
+                        <rng:optional>
+                          <rng:element name="Email">
+                            <rng:ref name="def_email_string"/>
+                          </rng:element>
+                        </rng:optional>
+                
+                    </rng:element>
+                
+                  </rng:element>
+                </rng:element>
+
+              </rng:element>
+            </rng:optional>
+
+            <rng:element name="BasicPropertyInfo">
+              <rng:optional>
+                 <rng:attribute name="HotelCode">
+                   <rng:ref name="def_one_to_sixteen_chars_string"/>
+                 </rng:attribute>
+               </rng:optional>
+              <rng:optional>
+                 <rng:attribute name="HotelName">
+                   <rng:ref name="def_nonempty_string"/>
+                 </rng:attribute>
+              </rng:optional>
+            </rng:element>
+
+          </rng:element>
+        </rng:optional>
+
+        <rng:attribute name="CreateDateTime">
+          <rng:ref name="def_datetime"/>
+        </rng:attribute>
+        
+        <rng:optional>
+          <rng:attribute name="LastModifyDateTime">
+            <rng:ref name="def_datetime"/>
+          </rng:attribute>
+        </rng:optional>
+
+        <rng:attribute name="ResStatus">
+          <rng:choice>
+            <rng:value>Requested</rng:value>
+            <rng:value>Reserved</rng:value>
+            <rng:value>Cancelled</rng:value>
+            <rng:value>Modify</rng:value>
+          </rng:choice>
+        </rng:attribute>
+        <rng:optional>
+          <rng:attribute name="RoomStayReservation">
+            <rng:ref name="def_bool"/>
+          </rng:attribute>
+        </rng:optional>
+
+      </rng:element>
+    </rng:zeroOrMore>
+
+  </rng:define>
+
+
+
+  <!-- ******************************************************************************* -->
+  <!-- * common definition for HotelDescriptiveContents element as used                -->
+  <!-- * in the Inventory types Inventory/HotelInfo (Push) and Inventory/Basic (Push)  -->
+  <!-- ******************************************************************************* -->
+
+  <rng:define name="def_hoteldescriptivecontents">
+
+    <rng:element name="HotelDescriptiveContents">
+
+      <rng:element name="HotelDescriptiveContent">
+
+          <!-- HotelInfo -->
+
+          <rng:optional>
+            <rng:element name="HotelInfo">
+              <rng:optional>
+                <rng:attribute name="HotelStatusCode">
+                  <rng:data type="positiveInteger">
+                    <rng:param name="pattern">[0-9]+</rng:param>
+                  </rng:data>
+                </rng:attribute>
+              </rng:optional>
+              <rng:optional>
+                <rng:element name="CategoryCodes">
+                  <rng:element name="HotelCategory">
+                    <rng:attribute name="CodeDetail">
+                      <rng:data type="string">
+                        <rng:param name="minLength">1</rng:param>
+                      </rng:data>
+                    </rng:attribute>
+                    <rng:optional>
+                      <rng:attribute name="Code">
+                        <rng:data type="string">
+                        <rng:param name="minLength">1</rng:param>
+                        </rng:data>
+                      </rng:attribute>
+                    </rng:optional>
+                  </rng:element>
+                </rng:element>
+              </rng:optional>
+              <rng:optional>
+                <rng:element name="Descriptions">
+                  <rng:element name="MultimediaDescriptions">
+                    <rng:oneOrMore>
+                      <rng:element name="MultimediaDescription">
+                        <rng:optional>
+                        <rng:attribute name="InfoCode">
+                        <rng:choice>
+                        <rng:value type="positiveInteger">1</rng:value>
+                        <rng:value type="positiveInteger">23</rng:value>
+                        <rng:value type="positiveInteger">24</rng:value>
+                        <rng:value type="positiveInteger">17</rng:value>
+                        </rng:choice>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:choice>
+                        <rng:element name="TextItems">
+                        <rng:zeroOrMore>
+                        <rng:element name="TextItem">
+                        <rng:optional>
+                        <rng:attribute name="CopyrightNotice">
+                        <rng:data type="string">
+                        <rng:param name="minLength">1</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:attribute name="SourceID">
+                        <rng:data type="string">
+                        <rng:param name="minLength">1</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:oneOrMore>
+                        <rng:element name="Description">
+                        <rng:attribute name="TextFormat">
+                        <rng:choice>
+
+                        <rng:value type="string">PlainText</rng:value>
+
+                        <rng:value type="string">HTML</rng:value>
+                        </rng:choice>
+                        </rng:attribute>
+                        <rng:attribute name="Language">
+                        <rng:data type="language">
+
+                        <rng:param name="pattern">[a-z][a-z]</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        <rng:ref name="def_nonempty_string"/>
+                        </rng:element>
+                        </rng:oneOrMore>
+                        </rng:element>
+                        </rng:zeroOrMore>
+                        </rng:element>
+                        <rng:empty/>
+                        <rng:element name="ImageItems">
+                        <rng:oneOrMore>
+                        <rng:element name="ImageItem">
+                        <rng:attribute name="Category">
+                        <rng:choice>
+                        <rng:value type="positiveInteger">22</rng:value>
+                        <rng:value type="positiveInteger">1</rng:value>
+                        <rng:value type="positiveInteger">12</rng:value>
+                        <rng:value type="positiveInteger">2</rng:value>
+                        <rng:value type="positiveInteger">4</rng:value>
+                        <rng:value type="positiveInteger">15</rng:value>
+                        </rng:choice>
+                        </rng:attribute>
+                        <rng:element name="ImageFormat">
+                        <rng:optional>
+                        <rng:attribute name="ApplicableEnd">
+                        <rng:data type="string">
+
+                        <rng:param name="pattern">--[0-1][0-9]-[0-3][0-9]</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:attribute name="ApplicableStart">
+                        <rng:data type="string">
+
+                        <rng:param name="pattern">--[0-1][0-9]-[0-3][0-9]</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:attribute name="Title">
+                        <rng:data type="string">
+
+                        <rng:param name="minLength">1</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:attribute name="SourceID">
+                        <rng:data type="string">
+
+                        <rng:param name="minLength">1</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:attribute name="CopyrightNotice">
+                        <rng:data type="string">
+
+                        <rng:param name="minLength">1</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:element name="URL">
+                        <rng:ref name="def_url_string"/>
+                        </rng:element>
+                        </rng:element>
+                        <rng:zeroOrMore>
+                        <rng:element name="Description">
+                        <rng:attribute name="TextFormat">
+                        <rng:choice>
+
+                        <rng:value type="string">PlainText</rng:value>
+
+                        <rng:value type="string">HTML</rng:value>
+                        </rng:choice>
+                        </rng:attribute>
+                        <rng:attribute name="Language">
+                        <rng:data type="language">
+
+                        <rng:param name="pattern">[a-z][a-z]</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        <rng:ref name="def_nonempty_string"/>
+                        </rng:element>
+                        </rng:zeroOrMore>
+                        </rng:element>
+                        </rng:oneOrMore>
+                        </rng:element>
+                        <rng:element name="VideoItems">
+                        <rng:oneOrMore>
+                        <rng:element name="VideoItem">
+                        <rng:attribute name="Category">
+                        <rng:choice>
+                        <rng:value type="positiveInteger">22</rng:value>
+                        <rng:value type="positiveInteger">1</rng:value>
+                        <rng:value type="positiveInteger">12</rng:value>
+                        <rng:value type="positiveInteger">2</rng:value>
+                        <rng:value type="positiveInteger">4</rng:value>
+                        <rng:value type="positiveInteger">20</rng:value>
+                        </rng:choice>
+                        </rng:attribute>
+                        <rng:element name="VideoFormat">
+                        <rng:optional>
+                        <rng:attribute name="ApplicableStart">
+                        <rng:data type="string">
+
+                        <rng:param name="pattern">[0-1][0-9]-[0-3][0-9]</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:attribute name="Title">
+                        <rng:data type="string">
+
+                        <rng:param name="minLength">1</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:attribute name="SourceID">
+                        <rng:data type="string">
+
+                        <rng:param name="minLength">1</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:attribute name="CopyrightNotice">
+                        <rng:data type="string">
+
+                        <rng:param name="minLength">1</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:element name="URL">
+                        <rng:ref name="def_url_string"/>
+                        </rng:element>
+                        </rng:element>
+                        <rng:zeroOrMore>
+                        <rng:element name="Description">
+                        <rng:attribute name="TextFormat">
+                        <rng:choice>
+
+                        <rng:value type="string">PlainText</rng:value>
+
+                        <rng:value type="string">HTML</rng:value>
+                        </rng:choice>
+                        </rng:attribute>
+                        <rng:attribute name="Language">
+                        <rng:data type="language">
+
+                        <rng:param name="pattern">[a-z][a-z]</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        <rng:ref name="def_nonempty_string"/>
+                        </rng:element>
+                        </rng:zeroOrMore>
+                        </rng:element>
+                        </rng:oneOrMore>
+                        </rng:element>
+                        </rng:choice>
+                      </rng:element>
+                    </rng:oneOrMore>
+                  </rng:element>
+                </rng:element>
+              </rng:optional>
+              <rng:optional>
+                <rng:element name="Position">
+                  <rng:optional>
+                    <rng:attribute name="Longitude">
+                      <rng:data type="decimal"/>
+                    </rng:attribute>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:attribute name="Latitude">
+                      <rng:data type="decimal"/>
+                    </rng:attribute>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:attribute name="AltitudeUnitOfMeasureCode">
+                      <rng:value type="string">3</rng:value>
+                    </rng:attribute>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:attribute name="Altitude">
+                      <rng:data type="decimal"/>
+                    </rng:attribute>
+                  </rng:optional>
+                </rng:element>
+              </rng:optional>
+              <rng:optional>
+                <rng:element name="Services">
+                  <rng:zeroOrMore>
+                    <rng:element name="Service">
+                      <rng:optional>
+                        <rng:attribute name="Included">
+                        <rng:data type="boolean">
+                        <rng:param name="pattern">\S+</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                      </rng:optional>
+                      <rng:optional>
+                        <rng:attribute name="ProximityCode">
+                        <rng:data type="positiveInteger">
+                        <rng:param name="pattern">[0-9]+</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                      </rng:optional>
+                      <rng:optional>
+                        <rng:attribute name="MealPlanCode">
+                          <rng:choice>
+                            <rng:value>12</rng:value>
+                          </rng:choice>
+                        </rng:attribute>
+                      </rng:optional>
+                      <rng:attribute name="Code">
+                        <rng:data type="positiveInteger">
+                        <rng:param name="pattern">[0-9]+</rng:param>
+                        </rng:data>
+                      </rng:attribute>
+                      <rng:optional>
+                        <rng:element name="Features">
+                        <rng:zeroOrMore>
+                        <rng:element name="Feature">
+                        <rng:attribute name="AccessibleCode">
+                        <rng:data type="positiveInteger">
+                        <rng:param name="pattern">[0-9]+</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:element>
+                        </rng:zeroOrMore>
+                        </rng:element>
+                      </rng:optional>
+                    </rng:element>
+                  </rng:zeroOrMore>
+                </rng:element>
+              </rng:optional>
+            </rng:element>
+
+          </rng:optional>
+
+          <!-- FacilityInfo (Inventory/Basic (push)) --> 
+
+          <rng:optional>
+            <rng:element name="FacilityInfo">
+       
+                <rng:element name="GuestRooms">
+                  
+                  <rng:zeroOrMore>
+                    <rng:choice>
+       
+                      <!-- basic content + basic descriptions + optionally additional description -->
+                      <rng:element name="GuestRoom">
+       
+                        <rng:element name="TypeRoom">
+                          <rng:optional>
+                            <rng:attribute name="StandardOccupancy">
+                              <rng:ref name="def_int_gt0"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="RoomClassificationCode">
+                              <rng:ref name="def_int_ge0"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="RoomID">
+                              <rng:ref name="def_nonempty_string"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="Size">
+                              <rng:ref name="def_int_ge0"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="RoomType">
+                              <rng:choice>
+                                <rng:value>1</rng:value>
+                                <rng:value>2</rng:value>
+                                <rng:value>3</rng:value>
+                                <rng:value>4</rng:value>
+                                <rng:value>5</rng:value>
+                                <rng:value>6</rng:value>
+                                <rng:value>7</rng:value>
+                                <rng:value>8</rng:value>
+                                <rng:value>9</rng:value>
+                              </rng:choice>
+                            </rng:attribute>
+                          </rng:optional>
+                        </rng:element>
+
+                        <rng:optional>
+                          <rng:element name="Amenities">
+                            <rng:oneOrMore>
+                              <rng:element name="Amenity">
+                                  <rng:optional>
+                                    <rng:attribute name="RoomAmenityCode">
+                                      <rng:ref name="def_int_gt0"/>
+                                    </rng:attribute>
+                                  </rng:optional>
+                              </rng:element>
+                            </rng:oneOrMore>
+                          </rng:element>
+                        </rng:optional>
+       
+                        <rng:optional>
+                          <rng:element name="MultimediaDescriptions">
+       
+                            <rng:oneOrMore>
+       
+                              <rng:choice>
+       
+                                <!-- basic description: Long name + Description -->
+                                <rng:element name="MultimediaDescription">
+       
+                                  <rng:optional>
+                                    <rng:element name="TextItems">
+                                      <rng:element name="TextItem">
+                                        <rng:zeroOrMore>
+                                          <rng:element name="Description">
+                                            <rng:ref name="def_nonempty_string"/>
+                                            <rng:attribute name="TextFormat">
+                                              <rng:choice>
+                                                <rng:value>PlainText</rng:value>
+                                                <rng:value>HTML</rng:value>
+                                              </rng:choice>
+                                            </rng:attribute>
+                                            <rng:attribute name="Language">
+                                              <rng:data type="language">
+                                                <rng:param name="pattern">[a-z][a-z]</rng:param>
+                                              </rng:data>
+                                            </rng:attribute>
+                                          </rng:element>
+                                        </rng:zeroOrMore>
+                                      </rng:element>
+                                    </rng:element>
+                                  </rng:optional>
+       
+                                  <rng:optional>
+                                    <rng:attribute name="InfoCode">
+                                      <rng:choice>
+                                        <rng:value>1</rng:value>
+                                        <rng:value>25</rng:value>
+                                      </rng:choice>
+                                    </rng:attribute>
+                                  </rng:optional>
+       
+                                </rng:element>
+       
+                                <!-- basic description: Pictures -->
+                                <rng:element name="MultimediaDescription">
+       
+                                  <rng:optional>
+                                    <rng:element name="ImageItems">
+
+                                      <rng:oneOrMore>
+                                        <rng:element name="ImageItem">
+                                          <rng:element name="ImageFormat">
+                                            <rng:element name="URL">
+                                              <rng:ref name="def_url_string"/>
+                                            </rng:element>
+                                            <rng:optional>
+                                              <rng:attribute name="CopyrightNotice">
+                                                <rng:ref name="def_nonempty_string"/>
+                                              </rng:attribute>
+                                            </rng:optional>
+                                          </rng:element>
+                                      
+                                          <rng:zeroOrMore>
+                                            <rng:element name="Description">
+                                              <rng:ref name="def_nonempty_string"/>
+                                              <rng:attribute name="TextFormat">
+                                                <rng:choice>
+                                                  <rng:value>PlainText</rng:value>
+                                                  <rng:value>HTML</rng:value>
+                                                </rng:choice>
+                                              </rng:attribute>
+                                              <rng:attribute name="Language">
+                                                <rng:data type="language">
+                                                  <rng:param name="pattern">[a-z][a-z]</rng:param>
+                                                </rng:data>
+                                              </rng:attribute>
+                                            </rng:element>
+                                          </rng:zeroOrMore>
+                                      
+                                          <rng:attribute name="Category">
+                                            <rng:ref name="def_int_gt0"/>
+                                          </rng:attribute>
+
+                                        </rng:element>
+                                      </rng:oneOrMore>
+
+                                    </rng:element>
+                                  </rng:optional>
+       
+                                  <rng:optional>
+                                    <rng:attribute name="InfoCode">
+                                      <rng:choice>
+                                        <rng:value>23</rng:value>
+                                      </rng:choice>
+                                    </rng:attribute>
+                                  </rng:optional>
+       
+                                </rng:element>
+       
+                                <!-- additional description -->
+                                <rng:element name="MultimediaDescription">
+       
+                                  <rng:optional>
+                                    <rng:element name="ImageItems">
+                                  
+                                      <rng:oneOrMore>
+                                        <rng:element name="ImageItem">
+                                          <rng:element name="ImageFormat">
+                                            <rng:element name="URL">
+                                              <rng:ref name="def_url_string"/>
+                                            </rng:element>
+                                            <rng:optional>
+                                              <rng:attribute name="CopyrightNotice">
+                                                <rng:ref name="def_nonempty_string"/>
+                                              </rng:attribute>
+                                            </rng:optional>
+                                          </rng:element>
+                                  
+                                          <rng:zeroOrMore>
+                                            <rng:element name="Description">
+                                              <rng:ref name="def_nonempty_string"/>
+                                              <rng:attribute name="TextFormat">
+                                                <rng:choice>
+                                                  <rng:value>PlainText</rng:value>
+                                                  <rng:value>HTML</rng:value>
+                                                </rng:choice>
+                                              </rng:attribute>
+                                              <rng:attribute name="Language">
+                                                <rng:data type="language">
+                                                  <rng:param name="pattern">[a-z][a-z]</rng:param>
+                                                </rng:data>
+                                              </rng:attribute>
+                                            </rng:element>
+                                          </rng:zeroOrMore>
+                                  
+                                          <rng:attribute name="Category">
+                                            <rng:ref name="def_int_gt0"/>
+                                          </rng:attribute>
+                                        </rng:element>
+                                      </rng:oneOrMore>
+                                  
+                                    </rng:element>
+                                  </rng:optional>
+       
+                                </rng:element>
+       
+                              </rng:choice>
+                            </rng:oneOrMore>
+       
+                          </rng:element>
+                        </rng:optional>
+       
+                        <rng:attribute name="Code">
+                          <rng:ref name="def_invTypeCode_string"/>
+                        </rng:attribute>
+                        <rng:optional>
+                          <rng:attribute name="MaxOccupancy">
+                            <rng:ref name="def_int_gt0"/>
+                          </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                          <rng:attribute name="MinOccupancy">
+                            <rng:ref name="def_int_gt0"/>
+                          </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                          <rng:attribute name="MaxChildOccupancy">
+                            <rng:ref name="def_int_gt0"/>
+                          </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                          <rng:attribute name="ID">
+                            <rng:ref name="def_invTypeCode_string"/>
+                          </rng:attribute>
+                        </rng:optional>
+
+                      </rng:element>
+       
+                      <!-- additional detail only -->
+                      <rng:element name="GuestRoom">
+       
+                        <rng:element name="MultimediaDescriptions">
+                          <rng:element name="MultimediaDescription">
+                            <rng:element name="ImageItems">
+       
+                              <rng:oneOrMore>
+                                <rng:element name="ImageItem">
+                                  <rng:element name="ImageFormat">
+                                    <rng:element name="URL">
+                                      <rng:ref name="def_url_string"/>
+                                    </rng:element>
+                                    <rng:optional>
+                                      <rng:attribute name="CopyrightNotice">
+                                        <rng:ref name="def_nonempty_string"/>
+                                      </rng:attribute>
+                                    </rng:optional>
+                                  </rng:element>
+       
+                                  <rng:zeroOrMore>
+                                    <rng:element name="Description">
+                                      <rng:ref name="def_nonempty_string"/>
+                                      <rng:attribute name="TextFormat">
+                                        <rng:choice>
+                                          <rng:value>PlainText</rng:value>
+                                          <rng:value>HTML</rng:value>
+                                        </rng:choice>
+                                      </rng:attribute>
+                                      <rng:attribute name="Language">
+                                        <rng:data type="language">
+                                          <rng:param name="pattern">[a-z][a-z]</rng:param>
+                                        </rng:data>
+                                      </rng:attribute>
+                                    </rng:element>
+                                  </rng:zeroOrMore>
+       
+                                  <rng:attribute name="Category">
+                                    <rng:ref name="def_int_gt0"/>
+                                  </rng:attribute>
+                                </rng:element>
+                              </rng:oneOrMore>
+       
+                            </rng:element>
+                          </rng:element>
+                        </rng:element>
+       
+                      <rng:attribute name="Code">
+                        <rng:ref name="def_nonempty_string"/>
+                      </rng:attribute>
+                      </rng:element>
+       
+                      <!-- room list -->
+                      <rng:element name="GuestRoom">
+                        <rng:element name="TypeRoom">
+                          <rng:attribute name="RoomID">
+                            <rng:ref name="def_nonempty_string"/>
+                          </rng:attribute>
+                        </rng:element>
+                      <rng:attribute name="Code">
+                        <rng:ref name="def_nonempty_string"/>
+                      </rng:attribute>
+                      </rng:element>
+       
+                    </rng:choice>
+                  </rng:zeroOrMore>
+                  
+                </rng:element>
+            </rng:element>
+          </rng:optional>
+       
+          <!-- Policies -->
+
+          <rng:optional>
+            <rng:element name="Policies">
+              <rng:oneOrMore>
+                <rng:element name="Policy">
+                  <rng:optional>
+                    <rng:element name="CancelPolicy">
+                      <rng:element name="CancelPenalty">
+                        <rng:element name="PenaltyDescription">
+                        <rng:oneOrMore>
+                        <rng:element name="Text">
+                        <rng:attribute name="TextFormat">
+                        <rng:choice>
+                        <rng:value type="string">PlainText</rng:value>
+                        <rng:value type="string">HTML</rng:value>
+                        </rng:choice>
+                        </rng:attribute>
+                        <rng:attribute name="Language">
+                        <rng:data type="language">
+                        <rng:param name="pattern">[a-z][a-z]</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        <rng:ref name="def_nonempty_string"/>
+                        </rng:element>
+                        </rng:oneOrMore>
+                        </rng:element>
+                      </rng:element>
+                    </rng:element>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:element name="CheckoutCharges">
+                      <rng:element name="CheckoutCharge">
+                        <rng:optional>
+                        <rng:attribute name="DecimalPlaces">
+                        <rng:data type="positiveInteger">
+                        <rng:param name="pattern">[0-9]+</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:attribute name="CurrencyCode">
+                        <rng:data type="string">
+                        <rng:param name="minLength">3</rng:param>
+                        <rng:param name="maxLength">3</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:attribute name="Amount">
+                        <rng:data type="decimal">
+                        <rng:param name="minInclusive">0</rng:param>
+                        <rng:param name="pattern">[0-9]*\.?[0-9]*</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:element name="Description">
+                        <rng:oneOrMore>
+                        <rng:element name="Text">
+                        <rng:attribute name="TextFormat">
+                        <rng:choice>
+                        <rng:value type="string">PlainText</rng:value>
+                        <rng:value type="string">HTML</rng:value>
+                        </rng:choice>
+                        </rng:attribute>
+                        <rng:attribute name="Language">
+                        <rng:data type="language">
+                        <rng:param name="pattern">[a-z][a-z]</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        <rng:ref name="def_nonempty_string"/>
+                        </rng:element>
+                        </rng:oneOrMore>
+                        </rng:element>
+                      </rng:element>
+                    </rng:element>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:element name="PetsPolicies">
+                      <rng:element name="PetsPolicy">
+                        <rng:optional>
+                        <rng:attribute name="DecimalPlaces">
+                        <rng:data type="positiveInteger">
+                        <rng:param name="pattern">[0-9]+</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:attribute name="CurrencyCode">
+                        <rng:data type="string">
+                        <rng:param name="minLength">3</rng:param>
+                        <rng:param name="maxLength">3</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:attribute name="ChargeCode">
+                        <rng:data type="positiveInteger">
+                        <rng:param name="pattern">[0-9]+</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:attribute name="NonRefundableFee">
+                        <rng:data type="decimal">
+                        <rng:param name="minInclusive">0</rng:param>
+                        <rng:param name="pattern">[0-9]*\.?[0-9]*</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:attribute name="MaxPetQuantity">
+                        <rng:data type="nonNegativeInteger">
+                        <rng:param name="pattern">[0-9]+</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:element name="Description">
+                        <rng:oneOrMore>
+                        <rng:element name="Text">
+                        <rng:attribute name="TextFormat">
+                        <rng:choice>
+                        <rng:value type="string">PlainText</rng:value>
+                        <rng:value type="string">HTML</rng:value>
+                        </rng:choice>
+                        </rng:attribute>
+                        <rng:attribute name="Language">
+                        <rng:data type="language">
+                        <rng:param name="pattern">[a-z][a-z]</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        <rng:ref name="def_nonempty_string"/>
+                        </rng:element>
+                        </rng:oneOrMore>
+                        </rng:element>
+                      </rng:element>
+                    </rng:element>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:element name="TaxPolicies">
+                      <rng:element name="TaxPolicy">
+                        <rng:optional>
+                        <rng:attribute name="ChargeUnit">
+                        <rng:value type="string">21</rng:value>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:attribute name="ChargeFrequency">
+                        <rng:value type="string">1</rng:value>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:attribute name="Code">
+                        <rng:value type="string">3</rng:value>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:attribute name="DecimalPlaces">
+                        <rng:data type="positiveInteger">
+                        <rng:param name="pattern">[0-9]+</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:attribute name="CurrencyCode">
+                        <rng:data type="string">
+                        <rng:param name="minLength">3</rng:param>
+                        <rng:param name="maxLength">3</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:attribute name="Amount">
+                        <rng:data type="decimal">
+                        <rng:param name="minInclusive">0</rng:param>
+                        <rng:param name="pattern">[0-9]*\.?[0-9]*</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:element name="TaxDescription">
+                        <rng:oneOrMore>
+                        <rng:element name="Text">
+                        <rng:attribute name="TextFormat">
+                        <rng:choice>
+                        <rng:value type="string">PlainText</rng:value>
+                        <rng:value type="string">HTML</rng:value>
+                        </rng:choice>
+                        </rng:attribute>
+                        <rng:attribute name="Language">
+                        <rng:data type="language">
+                        <rng:param name="pattern">[a-z][a-z]</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        <rng:ref name="def_nonempty_string"/>
+                        </rng:element>
+                        </rng:oneOrMore>
+                        </rng:element>
+                      </rng:element>
+                    </rng:element>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:element name="GuaranteePaymentPolicy">
+                      <rng:element name="GuaranteePayment">
+                        <rng:element name="AcceptedPayments">
+                        <rng:oneOrMore>
+                        <rng:element name="AcceptedPayment">
+                        <rng:optional>
+                        <rng:element name="BankAcct">
+                        <rng:element name="BankAcctName">
+                        <rng:ref name="def_nonempty_string"/>
+                        </rng:element>
+                        <rng:element name="BankAcctNumber">
+                        <rng:element name="PlainText">
+                        <rng:ref name="def_nonempty_string"/>
+                        </rng:element>
+                        </rng:element>
+                        <rng:element name="BankID">
+                        <rng:element name="PlainText">
+                        <rng:ref name="def_nonempty_string"/>
+                        </rng:element>
+                        </rng:element>
+                        </rng:element>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:element name="Cash">
+                        <rng:attribute name="CashIndicator">
+                        <rng:data type="boolean">
+                        <rng:param name="pattern">\S+</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:element>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:element name="PaymentCard">
+                        <rng:optional>
+                        <rng:attribute name="CardCode">
+                        <rng:data type="string">
+          
+                        <rng:param name="minLength">1</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:element name="CardType">
+                        <rng:ref name="def_nonempty_string"/>
+                        </rng:element>
+                        </rng:optional>
+                        </rng:element>
+                        </rng:optional>
+                        </rng:element>
+                        </rng:oneOrMore>
+                        </rng:element>
+                        <rng:optional>
+                        <rng:element name="AmountPercent">
+                        <rng:attribute name="Percent">
+                        <rng:data type="decimal">
+                        <rng:param name="minExclusive">0</rng:param>
+                        <rng:param name="pattern">[0-9]*\.?[0-9]*</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:element>
+                        </rng:optional>
+                        <rng:optional>
+                        <rng:element name="Deadline">
+                        <rng:attribute name="OffsetUnitMultiplier">
+                        <rng:data type="nonNegativeInteger">
+                        <rng:param name="pattern">[0-9]+</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        <rng:attribute name="OffsetTimeUnit">
+                        <rng:data type="string">
+                        <rng:param name="minLength">1</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        <rng:attribute name="OffsetDropTime">
+                        <rng:data type="string">
+                        <rng:param name="minLength">1</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                        </rng:element>
+                        </rng:optional>
+                      </rng:element>
+                    </rng:element>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:element name="PolicyInfo">
+                      <rng:optional>
+                        <rng:attribute name="MinGuestAge">
+                        <rng:data type="nonNegativeInteger">
+                        <rng:param name="pattern">[0-9]+</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                      </rng:optional>
+                      <rng:optional>
+                        <rng:attribute name="CheckOutTime">
+                        <rng:data type="string">
+                        <rng:param name="pattern">[0-2][0-9]:[0-5][0-9]:[0-5][0-9]</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                      </rng:optional>
+                      <rng:optional>
+                        <rng:attribute name="CheckInTime">
+                        <rng:data type="string">
+                        <rng:param name="pattern">[0-2][0-9]:[0-5][0-9]:[0-5][0-9]</rng:param>
+                        </rng:data>
+                        </rng:attribute>
+                      </rng:optional>
+                    </rng:element>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:element name="StayRequirements">
+                      <rng:oneOrMore>
+                        <rng:element name="StayRequirement">
+                          <rng:optional>
+                            <rng:attribute name="End">
+                              <rng:data type="string">
+                                <rng:param name="pattern">[0-2][0-9]:[0-5][0-9]:[0-5][0-9]</rng:param>
+                              </rng:data>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="Start">
+                              <rng:data type="string">
+                                <rng:param name="pattern">[0-2][0-9]:[0-5][0-9]:[0-5][0-9]</rng:param>
+                              </rng:data>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="StayContext">
+                              <rng:choice>
+                                <rng:value type="string">Checkout</rng:value>
+                                <rng:value type="string">Checkin</rng:value>
+                              </rng:choice>
+                            </rng:attribute>
+                          </rng:optional>
+                        </rng:element>
+                      </rng:oneOrMore>
+                    </rng:element>
+                  </rng:optional>
+                </rng:element>
+              </rng:oneOrMore>
+            </rng:element>
+          </rng:optional>
+
+          <!-- AffiliationInfo -->
+
+          <rng:optional>
+            <rng:element name="AffiliationInfo">
+              <rng:element name="Awards">
+                <rng:oneOrMore>
+                  <rng:element name="Award">
+                    <rng:optional>
+                      <rng:attribute name="OfficialAppointmentInd">
+                        <rng:data type="boolean">
+                        <rng:param name="pattern">\S+</rng:param>
+                        </rng:data>       
+                      </rng:attribute>
+                    </rng:optional>
+                    <rng:optional>
+                      <rng:attribute name="RatingSymbol">
+                        <rng:data type="string">
+                        <rng:param name="minLength">1</rng:param>
+                        </rng:data>       
+                      </rng:attribute>
+                    </rng:optional>
+                    <rng:attribute name="Provider">
+                      <rng:data type="string">
+                        <rng:param name="minLength">1</rng:param>
+                      </rng:data>     
+                    </rng:attribute>
+                    <rng:attribute name="Rating">
+                      <rng:data type="decimal">
+                        <rng:param name="minInclusive">0</rng:param>
+                        <rng:param name="pattern">[0-9]*\.?[0-9]*</rng:param>
+                      </rng:data>     
+                    </rng:attribute>
+                  </rng:element>
+                </rng:oneOrMore>
+              </rng:element>
+            </rng:element>
+          </rng:optional>
+
+          <!-- ContactInfos -->
+
+          <rng:optional>
+            <rng:element name="ContactInfos">
+                <rng:element name="ContactInfo">
+
+                  <rng:optional>
+                    <rng:element name="Addresses">
+                      <rng:oneOrMore>
+                        <rng:element name="Address">
+                            <rng:attribute name="Language">
+                              <rng:data type="language">
+                                <rng:param name="pattern">[a-z][a-z]</rng:param>
+                              </rng:data>
+                            </rng:attribute>
+                            <rng:element name="AddressLine">
+                              <rng:ref name="def_nonempty_string"/>
+                            </rng:element>
+                            <rng:element name="CityName">
+                              <rng:ref name="def_nonempty_string"/>
+                            </rng:element>
+                            <rng:element name="PostalCode">
+                              <rng:ref name="def_nonempty_string"/>
+                            </rng:element>
+                            <rng:optional>
+                              <rng:element name="StateProv">
+                                <rng:attribute name="StateCode">
+                                  <rng:ref name="def_nonempty_string"/>
+                                </rng:attribute>
+                              </rng:element>
+                            </rng:optional>
+                            <rng:optional>
+                              <rng:element name="CountryName">
+                                <rng:attribute name="Code">
+                                  <rng:data type="string">
+                                    <rng:param name="pattern">[A-Z][A-Z]</rng:param>
+                                  </rng:data>
+                                </rng:attribute>
+                              </rng:element>
+                            </rng:optional>
+                        </rng:element>
+                      </rng:oneOrMore>
+                    </rng:element>
+                  </rng:optional>
+
+                  <rng:optional>
+                    <rng:element name="Phones">
+                      <rng:oneOrMore>
+                        <rng:element name="Phone">
+                          <rng:attribute name="PhoneTechType">
+                            <rng:ref name="def_nonempty_string"/>
+                          </rng:attribute>
+                          <rng:attribute name="PhoneNumber">
+                            <rng:data type="string">
+                              <rng:param name="pattern">\+?[0-9]+</rng:param>
+                            </rng:data>
+                          </rng:attribute>
+                        </rng:element>
+                      </rng:oneOrMore>
+                    </rng:element>
+                  </rng:optional>
+
+                  <rng:optional>
+                    <rng:element name="Emails">
+                      <rng:oneOrMore>
+                        <rng:element name="Email">
+                          <rng:attribute name="EmailType">
+                            <rng:ref name="def_nonempty_string"/>
+                          </rng:attribute>
+                          <rng:ref name="def_email_string"/>
+                        </rng:element>
+                        </rng:oneOrMore>
+                    </rng:element>
+                  </rng:optional>
+
+                  <rng:optional>
+                    <rng:element name="URLs">
+                      <rng:oneOrMore>
+                        <rng:element name="URL">
+                            <rng:ref name="def_nonempty_string"/>
+                            <rng:optional>
+                              <rng:attribute name="ID">
+                                <rng:ref name="def_uppercase_string"/>
+                              </rng:attribute>
+                            </rng:optional>
+                        </rng:element>
+                      </rng:oneOrMore>
+                    </rng:element>
+                  </rng:optional>
+
+                  <rng:optional>
+                    <rng:element name="CompanyName">
+                      <rng:ref name="def_any_string"/>
+                    </rng:element>
+                  </rng:optional>
+
+                  <rng:attribute name="Location">
+                    <rng:choice>
+                      <rng:value>6</rng:value>
+                    </rng:choice>
+                  </rng:attribute>
+
+              </rng:element>
+            </rng:element>
+          </rng:optional>
+
+        <rng:oneOrMore>
+          <rng:choice>
+            <rng:attribute name="HotelCode">
+              <rng:ref name="def_one_to_sixteen_chars_string"/>
+            </rng:attribute>
+            <rng:attribute name="HotelName">
+              <rng:ref name="def_nonempty_string"/>
+            </rng:attribute>
+            <rng:attribute name="HotelCityCode">
+              <rng:ref name="def_nonempty_string"/>
+            </rng:attribute>
+            <rng:attribute name="AreaID">
+              <rng:ref name="def_nonempty_string"/>
+            </rng:attribute>
+          </rng:choice>
+        </rng:oneOrMore>
+
+      </rng:element>
+        
+    </rng:element>
+
+  </rng:define>
+
+
+  <!-- ******************************************************************************* -->
+  <!-- * common definition for RatePlans element as used                               -->
+  <!-- * in RatePlans and BaseRates                                                    -->
+  <!-- ******************************************************************************* -->
+
+  <rng:define name="def_rateplans">
+
+    <rng:element name="RatePlans">
+
+      <!-- RatePlans > RatePlan {1,} -->
+
+      <rng:oneOrMore>
+        <rng:element name="RatePlan">
+
+          <!-- RatePlans > RatePlan > BookingRules {0,1} -->
+
+          <rng:optional>
+            <rng:element name="BookingRules">
+
+              <rng:oneOrMore>
+                <rng:element name="BookingRule">
+
+                  <rng:optional>
+                    <rng:element name="LengthsOfStay">
+
+                      <rng:oneOrMore>
+                        <rng:element name="LengthOfStay">
+
+                          <rng:attribute name="Time">
+                            <rng:ref name="def_decimal_ge0"/>
+                          </rng:attribute>
+                          <rng:attribute name="TimeUnit">
+                            <rng:value type="string">Day</rng:value>
+                          </rng:attribute>
+                          <rng:attribute name="MinMaxMessageType">
+                            <rng:choice>
+                              <rng:value>SetMinLOS</rng:value>
+                              <rng:value>SetForwardMinStay</rng:value>
+                              <rng:value>SetMaxLOS</rng:value>
+                              <rng:value>SetForwardMaxStay</rng:value>
+                            </rng:choice>
+                          </rng:attribute>
+
+                        </rng:element>
+                      </rng:oneOrMore>
+
+                    </rng:element>
+                  </rng:optional>
+
+                  <rng:optional>
+                    <rng:element name="DOW_Restrictions">
+
+                      <rng:optional>
+                        <rng:element name="ArrivalDaysOfWeek">
+
+                          <rng:optional>
+                            <rng:attribute name="Mon">
+                              <rng:ref name="def_bool"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="Tue">
+                              <rng:ref name="def_bool"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="Weds">
+                              <rng:ref name="def_bool"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="Thur">
+                              <rng:ref name="def_bool"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="Fri">
+                              <rng:ref name="def_bool"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="Sat">
+                              <rng:ref name="def_bool"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="Sun">
+                              <rng:ref name="def_bool"/>
+                            </rng:attribute>
+                          </rng:optional>
+
+                        </rng:element>
+                      </rng:optional>
+
+                      <rng:optional>
+                        <rng:element name="DepartureDaysOfWeek">
+
+                          <rng:optional>
+                            <rng:attribute name="Mon">
+                              <rng:ref name="def_bool"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="Tue">
+                              <rng:ref name="def_bool"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="Weds">
+                              <rng:ref name="def_bool"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="Thur">
+                              <rng:ref name="def_bool"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="Fri">
+                              <rng:ref name="def_bool"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="Sat">
+                              <rng:ref name="def_bool"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="Sun">
+                              <rng:ref name="def_bool"/>
+                            </rng:attribute>
+                          </rng:optional>
+
+                        </rng:element>
+                      </rng:optional>
+
+                    </rng:element>
+                  </rng:optional>
+
+                  <rng:optional>
+                    <rng:element name="RestrictionStatus">
+
+                      <rng:optional>
+                        <rng:attribute name="Restriction">
+                          <rng:choice>
+                            <rng:value>Master</rng:value>
+                          </rng:choice>
+                        </rng:attribute>
+                      </rng:optional>
+                      <rng:optional>
+                        <rng:attribute name="Status">
+                          <rng:choice>
+                            <rng:value>Open</rng:value>
+                            <rng:value>Close</rng:value>
+                          </rng:choice>
+                        </rng:attribute>
+                      </rng:optional>
+
+                    </rng:element>
+                  </rng:optional>
+
+                  <rng:optional>
+                    <rng:attribute name="CodeContext">
+                      <rng:choice>
+                        <rng:value>ROOMTYPE</rng:value>
+                      </rng:choice>
+                    </rng:attribute>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:attribute name="Code">
+                      <rng:ref name="def_invTypeCode_string"/>
+                    </rng:attribute>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:attribute name="Start">
+                      <rng:ref name="def_date"/>
+                    </rng:attribute>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:attribute name="End">
+                      <rng:ref name="def_date"/>
+                    </rng:attribute>
+                  </rng:optional>
+                </rng:element>
+              </rng:oneOrMore>
+
+            </rng:element>
+          </rng:optional>
+
+          <!-- RatePlans > RatePlan > Rates {0,1} -->
+
+          <rng:optional>
+            <rng:element name="Rates">
+
+              <rng:oneOrMore>
+                <rng:element name="Rate">
+
+                  <rng:optional>
+                    <rng:element name="BaseByGuestAmts">
+
+                      <rng:oneOrMore>
+                        <rng:element name="BaseByGuestAmt">
+
+                          <rng:optional>
+                            <rng:attribute name="NumberOfGuests">
+                              <rng:ref name="def_int_gt0"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="AmountAfterTax">
+                              <rng:ref name="def_decimal_gt0"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="CurrencyCode">
+                              <rng:ref name="def_three_char_string"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="Type">
+                              <rng:choice>
+                                <rng:value>7</rng:value>
+                                <rng:value>25</rng:value>
+                              </rng:choice>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="AgeQualifyingCode">
+                              <rng:ref name="def_int_gt0"/>
+                            </rng:attribute>
+                          </rng:optional>
+
+                        </rng:element>
+                      </rng:oneOrMore>
+
+                    </rng:element>
+                  </rng:optional>
+
+                  <rng:optional>
+                    <rng:element name="AdditionalGuestAmounts">
+
+                      <rng:oneOrMore>
+                        <rng:element name="AdditionalGuestAmount">
+
+                          <rng:optional>
+                            <rng:attribute name="Amount">
+                              <rng:ref name="def_decimal_ge0"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="AgeQualifyingCode">
+                              <rng:ref name="def_int_gt0"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="MinAge">
+                              <rng:ref name="def_int_gt0"/>
+                            </rng:attribute>
+                          </rng:optional>
+                          <rng:optional>
+                            <rng:attribute name="MaxAge">
+                              <rng:ref name="def_int_gt0"/>
+                            </rng:attribute>
+                          </rng:optional>
+
+                        </rng:element>
+                      </rng:oneOrMore>
+
+                    </rng:element>
+                  </rng:optional>
+
+                  <rng:optional>
+                    <rng:element name="MealsIncluded">
+
+                      <rng:optional>
+                        <rng:attribute name="MealPlanCodes">
+                          <rng:choice>
+                            <rng:value>1</rng:value>
+                            <rng:value>3</rng:value>
+                            <rng:value>10</rng:value>
+                            <rng:value>12</rng:value>
+                            <rng:value>14</rng:value>
+                          </rng:choice>
+                        </rng:attribute>
+                      </rng:optional>
+                      <rng:optional>
+                        <rng:attribute name="MealPlanIndicator">
+                          <rng:choice>
+                            <rng:value>1</rng:value>
+                            <rng:value>true</rng:value>
+                          </rng:choice>
+                        </rng:attribute>
+                      </rng:optional>
+
+                    </rng:element>
+                  </rng:optional>
+
+                  <rng:optional>
+                    <rng:attribute name="Start">
+                      <rng:ref name="def_date"/>
+                    </rng:attribute>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:attribute name="End">
+                      <rng:ref name="def_date"/>
+                    </rng:attribute>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:attribute name="RateTimeUnit">
+                      <rng:choice>
+                        <rng:value type="string">Day</rng:value>
+                      </rng:choice>
+                    </rng:attribute>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:attribute name="UnitMultiplier">
+                      <rng:ref name="def_int_gt0"/>
+                    </rng:attribute>
+                  </rng:optional>
+                  <rng:optional>
+                    <rng:attribute name="InvTypeCode">
+                      <rng:ref name="def_invTypeCode_string"/>
+                    </rng:attribute>
+                  </rng:optional>
+
+                </rng:element>
+              </rng:oneOrMore>
+
+            </rng:element>
+          </rng:optional>
+
+          <!-- RatePlans > RatePlan > Supplements {0,1} -->
+
+          <rng:optional>
+            <rng:element name="Supplements">
+
+              <rng:oneOrMore>
+                <rng:element name="Supplement">
+
+                  <rng:optional>
+                    <rng:choice>
+                      <rng:element name="PrerequisiteInventory">
+                        <rng:attribute name="InvCode">
+                          <rng:data type="string">
+                              <rng:param name="pattern">[01]{7}</rng:param>
+                            </rng:data>
+                        </rng:attribute>
+                        <rng:attribute name="InvType">
+                          <rng:choice>
+                            <rng:value>ALPINEBITSDOW</rng:value>
+                          </rng:choice>
+                        </rng:attribute>
+                      </rng:element>
+                      <rng:element name="PrerequisiteInventory">
+                        <rng:attribute name="InvCode">
+                          <rng:ref name="def_invTypeCode_string"/>
+                        </rng:attribute>
+                        <rng:attribute name="InvType">
+                          <rng:choice>
+                            <rng:value>ROOMTYPE</rng:value>
+                          </rng:choice>
+                        </rng:attribute>
+                      </rng:element>
+                    </rng:choice>
+                  </rng:optional>
+
+                  <!-- RatePlans > RatePlan > Supplements > Supplement > Description {0,} (actually {0,5} but Relax-NG cannot do this) -->
+           
+                  <rng:zeroOrMore>
+                    <rng:element name="Description">
+           
+                      <rng:oneOrMore>
+                        <rng:choice>
+           
+                          <rng:element name="ListItem">
+                            <rng:ref name="def_nonempty_string"/>
+                          </rng:element>
+                        
+                          <rng:element name="Image">
+                            <rng:ref name="def_url_string"/>
+                          </rng:element>
+           
+                          <rng:element name="Text">
+                            <rng:ref name="def_nonempty_string"/>
+                            <rng:attribute name="TextFormat">
+                              <rng:choice>
+                                <rng:value>PlainText</rng:value>
+                                <rng:value>HTML</rng:value>
+                              </rng:choice>
+                            </rng:attribute>
+                            <rng:optional>
+                              <rng:attribute name="Language">
+                                <rng:data type="language">
+                                  <rng:param name="pattern">[a-z][a-z]</rng:param>
+                                </rng:data>
+                              </rng:attribute>
+                            </rng:optional>
+                          </rng:element>
+           
+                          <rng:element name="URL">
+                            <rng:ref name="def_url_string"/>
+                          </rng:element>
+           
+                        </rng:choice>
+                      </rng:oneOrMore>
+           
+                      <rng:attribute name="Name">
+                        <rng:choice>
+                          <rng:value>title</rng:value>
+                          <rng:value>intro</rng:value>
+                          <rng:value>description</rng:value>
+                          <rng:value>gallery</rng:value>
+                          <rng:value>codelist</rng:value>
+                        </rng:choice>
+                      </rng:attribute>
+           
+                    </rng:element>
+                  </rng:zeroOrMore>
+
+                  <rng:optional>
+                    <rng:attribute name="AddToBasicRateIndicator">
+                      <rng:choice>
+                        <rng:value>1</rng:value>
+                        <rng:value>true</rng:value>
+                      </rng:choice>
+                    </rng:attribute>
+                  </rng:optional>
+
+                  <rng:optional>
+                    <rng:attribute name="ChargeTypeCode">
+                      <rng:choice>
+                        <rng:value>1</rng:value>
+                        <rng:value>12</rng:value>
+                        <rng:value>18</rng:value>
+                        <rng:value>19</rng:value>
+                        <rng:value>20</rng:value>
+                        <rng:value>21</rng:value>
+                        <rng:value>24</rng:value>
+                      </rng:choice>
+                    </rng:attribute>
+                  </rng:optional>
+               
+                  <rng:optional>
+                    <rng:attribute name="Amount">
+                      <rng:ref name="def_decimal_ge0"/>
+                    </rng:attribute>
+                  </rng:optional>
+
+                  <rng:optional>
+                    <rng:attribute name="InvType">
+                      <rng:choice>
+                        <rng:value>EXTRA</rng:value>
+                        <rng:value>ALPINEBITSEXTRA</rng:value>
+                      </rng:choice>
+                    </rng:attribute>
+                  </rng:optional>
+
+                  <rng:optional>
+                    <rng:attribute name="InvCode">
+                      <rng:ref name="def_nonempty_string"/>
+                    </rng:attribute>
+                  </rng:optional>
+
+                  <rng:optional>
+                    <rng:attribute name="MandatoryIndicator">
+                      <rng:ref name="def_bool"/>
+                    </rng:attribute>
+                  </rng:optional>
+
+                  <rng:optional>
+                    <rng:attribute name="Start">
+                      <rng:ref name="def_date"/>
+                    </rng:attribute>
+                  </rng:optional>
+
+                  <rng:optional>
+                    <rng:attribute name="End">
+                      <rng:ref name="def_date"/>
+                    </rng:attribute>
+                  </rng:optional>
+
+                </rng:element>
+              </rng:oneOrMore>
+
+            </rng:element>
+          </rng:optional>
+
+          <!-- RatePlans > RatePlan > Offers {0,1}  -->
+
+          <rng:optional>
+            <rng:element name="Offers">
+
+              <rng:oneOrMore>
+                <rng:element name="Offer">
+
+                  <rng:zeroOrMore>
+                    <rng:element name="OfferRules">
+
+                      <rng:element name="OfferRule">
+
+                        <rng:optional>
+                          <rng:element name="LengthsOfStay">
+                      
+                            <rng:oneOrMore>
+                              <rng:element name="LengthOfStay">
+                      
+                                <rng:attribute name="Time">
+                                  <rng:ref name="def_decimal_ge0"/>
+                                </rng:attribute>
+                                <rng:attribute name="TimeUnit">
+                                  <rng:value type="string">Day</rng:value>
+                                </rng:attribute>
+                                <rng:attribute name="MinMaxMessageType">
+                                  <rng:choice>
+                                    <rng:value>SetMinLOS</rng:value>
+                                    <rng:value>SetMaxLOS</rng:value>
+                                  </rng:choice>
+                                </rng:attribute>
+                      
+                              </rng:element>
+                            </rng:oneOrMore>
+                      
+                          </rng:element>
+                        </rng:optional>
+                      
+                        <rng:optional>
+                          <rng:element name="DOW_Restrictions">
+                      
+                            <rng:optional>
+                              <rng:element name="ArrivalDaysOfWeek">
+                      
+                                <rng:optional>
+                                  <rng:attribute name="Mon">
+                                    <rng:ref name="def_bool"/>
+                                  </rng:attribute>
+                                </rng:optional>
+                                <rng:optional>
+                                  <rng:attribute name="Tue">
+                                    <rng:ref name="def_bool"/>
+                                  </rng:attribute>
+                                </rng:optional>
+                                <rng:optional>
+                                  <rng:attribute name="Weds">
+                                    <rng:ref name="def_bool"/>
+                                  </rng:attribute>
+                                </rng:optional>
+                                <rng:optional>
+                                  <rng:attribute name="Thur">
+                                    <rng:ref name="def_bool"/>
+                                  </rng:attribute>
+                                </rng:optional>
+                                <rng:optional>
+                                  <rng:attribute name="Fri">
+                                    <rng:ref name="def_bool"/>
+                                  </rng:attribute>
+                                </rng:optional>
+                                <rng:optional>
+                                  <rng:attribute name="Sat">
+                                    <rng:ref name="def_bool"/>
+                                  </rng:attribute>
+                                </rng:optional>
+                                <rng:optional>
+                                  <rng:attribute name="Sun">
+                                    <rng:ref name="def_bool"/>
+                                  </rng:attribute>
+                                </rng:optional>
+                      
+                              </rng:element>
+                            </rng:optional>
+                      
+                            <rng:optional>
+                              <rng:element name="DepartureDaysOfWeek">
+                      
+                                <rng:optional>
+                                  <rng:attribute name="Mon">
+                                    <rng:ref name="def_bool"/>
+                                  </rng:attribute>
+                                </rng:optional>
+                                <rng:optional>
+                                  <rng:attribute name="Tue">
+                                    <rng:ref name="def_bool"/>
+                                  </rng:attribute>
+                                </rng:optional>
+                                <rng:optional>
+                                  <rng:attribute name="Weds">
+                                    <rng:ref name="def_bool"/>
+                                  </rng:attribute>
+                                </rng:optional>
+                                <rng:optional>
+                                  <rng:attribute name="Thur">
+                                    <rng:ref name="def_bool"/>
+                                  </rng:attribute>
+                                </rng:optional>
+                                <rng:optional>
+                                  <rng:attribute name="Fri">
+                                    <rng:ref name="def_bool"/>
+                                  </rng:attribute>
+                                </rng:optional>
+                                <rng:optional>
+                                  <rng:attribute name="Sat">
+                                    <rng:ref name="def_bool"/>
+                                  </rng:attribute>
+                                </rng:optional>
+                                <rng:optional>
+                                  <rng:attribute name="Sun">
+                                    <rng:ref name="def_bool"/>
+                                  </rng:attribute>
+                                </rng:optional>
+                      
+                              </rng:element>
+                            </rng:optional>
+                      
+                          </rng:element>
+                        </rng:optional>
+                    
+                        <rng:zeroOrMore>
+                          <rng:element name="Occupancy">
+                      
+                            <rng:attribute name="AgeQualifyingCode">
+                              <rng:choice>
+                                <rng:value>8</rng:value>
+                                <rng:value>10</rng:value>
+                              </rng:choice>
+                            </rng:attribute>
+
+                            <rng:optional>
+                              <rng:attribute name="MinAge">
+                                <rng:ref name="def_int_gt0"/>
+                              </rng:attribute>
+                            </rng:optional>
+
+                            <rng:optional>
+                              <rng:attribute name="MaxAge">
+                                <rng:ref name="def_int_gt0"/>
+                              </rng:attribute>
+                            </rng:optional>
+
+                            <rng:optional>
+                              <rng:attribute name="MinOccupancy">
+                                <rng:ref name="def_int_ge0"/>
+                              </rng:attribute>
+                            </rng:optional>
+
+                            <rng:optional>
+                              <rng:attribute name="MaxOccupancy">
+                                <rng:ref name="def_int_gt0"/>
+                              </rng:attribute>
+                            </rng:optional>
+ 
+                          </rng:element>
+                        </rng:zeroOrMore>
+                      
+                        <rng:optional>
+                          <rng:attribute name="MinAdvancedBookingOffset">
+                            <rng:data type="string">
+                              <rng:param name="pattern">P[0-9]+D</rng:param>
+                            </rng:data>
+                          </rng:attribute>
+                        </rng:optional>
+ 
+                        <rng:optional>
+                          <rng:attribute name="MaxAdvancedBookingOffset">
+                            <rng:data type="string">
+                              <rng:param name="pattern">P[0-9]+D</rng:param>
+                            </rng:data>
+                          </rng:attribute>
+                        </rng:optional>
+
+                       </rng:element>
+                    </rng:element>
+                  </rng:zeroOrMore>
+
+                  <rng:optional>
+                    <rng:element name="Discount">
+                
+                      <rng:attribute name="Percent">
+                        <rng:value type="string">100</rng:value>
+                      </rng:attribute>
+                      <rng:optional>
+                        <rng:attribute name="NightsRequired">
+                          <rng:ref name="def_int_gt0"/>
+                        </rng:attribute>
+                      </rng:optional>
+                      <rng:optional>
+                        <rng:attribute name="NightsDiscounted">
+                          <rng:ref name="def_int_gt0"/>
+                        </rng:attribute>
+                      </rng:optional>
+                      <rng:optional>
+                        <rng:attribute name="DiscountPattern">
+                          <rng:data type="string">
+                            <rng:param name="pattern">0*1*</rng:param>
+                          </rng:data>
+                        </rng:attribute>
+                      </rng:optional>
+                
+                    </rng:element>
+                  </rng:optional>
+
+                  <rng:optional>
+                    <rng:element name="Guests">
+
+                      <rng:element name="Guest">
+
+                        <rng:attribute name="AgeQualifyingCode">
+                          <rng:ref name="def_int_gt0"/>
+                        </rng:attribute>
+                        <rng:attribute name="MaxAge">
+                          <rng:ref name="def_int_gt0"/>
+                        </rng:attribute>
+                        <rng:attribute name="MinCount">
+                          <rng:ref name="def_int_ge0"/>
+                        </rng:attribute>
+                        <rng:attribute name="FirstQualifyingPosition">
+                          <rng:choice>
+                            <rng:value>1</rng:value>
+                          </rng:choice>
+                        </rng:attribute>
+                        <rng:attribute name="LastQualifyingPosition">
+                          <rng:ref name="def_int_gt0"/>
+                        </rng:attribute>
+
+                      </rng:element> 
+
+                    </rng:element> 
+                  </rng:optional>
+
+                </rng:element>  <!-- close Offer -->
+              </rng:oneOrMore>
+
+            </rng:element>  <!-- close Offers -->
+          </rng:optional>
+
+          <!-- RatePlans > RatePlan > Description {0,} (actually {0,5} but Relax-NG cannot do this) -->
+
+          <rng:zeroOrMore>
+            <rng:element name="Description">
+
+              <rng:oneOrMore>
+                <rng:choice>
+
+                  <rng:element name="ListItem">
+                    <rng:ref name="def_nonempty_string"/>
+                  </rng:element>
+                
+                  <rng:element name="Image">
+                    <rng:ref name="def_url_string"/>
+                  </rng:element>
+
+                  <rng:element name="Text">
+                    <rng:ref name="def_nonempty_string"/>
+                    <rng:attribute name="TextFormat">
+                      <rng:choice>
+                        <rng:value>PlainText</rng:value>
+                        <rng:value>HTML</rng:value>
+                      </rng:choice>
+                    </rng:attribute>
+                    <rng:optional>
+                      <rng:attribute name="Language">
+                        <rng:data type="language">
+                          <rng:param name="pattern">[a-z][a-z]</rng:param>
+                        </rng:data>
+                      </rng:attribute>
+                    </rng:optional>
+                  </rng:element>
+
+                  <rng:element name="URL">
+                    <rng:ref name="def_url_string"/>
+                  </rng:element>
+
+                </rng:choice>
+              </rng:oneOrMore>
+
+              <rng:attribute name="Name">
+                <rng:choice>
+                  <rng:value>title</rng:value>
+                  <rng:value>intro</rng:value>
+                  <rng:value>description</rng:value>
+                  <rng:value>gallery</rng:value>
+                  <rng:value>codelist</rng:value>
+                </rng:choice>
+              </rng:attribute>
+
+            </rng:element>
+          </rng:zeroOrMore>
+ 
+          <rng:optional>
+            <rng:attribute name="RatePlanNotifType">
+              <rng:choice>
+                <rng:value>Overlay</rng:value>
+                <rng:value>New</rng:value>
+                <rng:value>Remove</rng:value>
+              </rng:choice>
+            </rng:attribute>
+          </rng:optional>
+          <rng:optional>
+            <rng:attribute name="CurrencyCode">
+              <rng:ref name="def_three_char_string"/>
+            </rng:attribute>
+          </rng:optional>
+          <rng:optional>
+            <rng:attribute name="RatePlanCode">
+              <rng:ref name="def_nonempty_string"/>
+            </rng:attribute>
+          </rng:optional>
+          <rng:optional>
+            <rng:attribute name="RatePlanType">
+              <rng:choice>
+                <rng:value>12</rng:value>
+              </rng:choice>
+            </rng:attribute>
+          </rng:optional>
+          <rng:optional>
+            <rng:attribute name="RatePlanCategory">
+              <rng:ref name="def_nonempty_string"/>
+            </rng:attribute>
+          </rng:optional>
+          <rng:optional>
+            <rng:attribute name="RatePlanID">
+              <rng:ref name="def_nonempty_string"/>
+            </rng:attribute>
+          </rng:optional>
+          <rng:optional>
+            <rng:attribute name="RatePlanQualifier">
+              <rng:ref name="def_bool"/>
+            </rng:attribute>
+          </rng:optional>
+
+        </rng:element>
+      </rng:oneOrMore>
+
+      <rng:oneOrMore>
+        <rng:choice>
+          <rng:attribute name="HotelCode">
+            <rng:ref name="def_one_to_sixteen_chars_string"/>
+          </rng:attribute>
+          <rng:attribute name="HotelName">
+            <rng:ref name="def_nonempty_string"/>
+          </rng:attribute>
+        </rng:choice>
+      </rng:oneOrMore>
+
+    </rng:element>
+
+  </rng:define>
+
+
+  <!-- ******************************************************************************* -->
+  <!-- * common definition for success/advisory/warning/error responses                -->
+  <!-- ******************************************************************************* -->
+
+  <rng:define name="def_generic_response">
+    <rng:choice>
+
+      <!-- choice: Errors {1} -->
+
+      <rng:element name="Errors">
+    
+        <!-- Errors > Error {1,} -->
+
+        <rng:oneOrMore>
+          <rng:element name="Error">
+
+            <rng:attribute name="Type">
+              <rng:choice>
+                <rng:value type="string">11</rng:value>
+                <rng:value type="string">13</rng:value>
+              </rng:choice>
+            </rng:attribute>
+            <rng:optional>
+              <rng:attribute name="Code">
+                <rng:ref name="def_int_ge0"/>
+              </rng:attribute>
+            </rng:optional>
+            <rng:optional>
+              <rng:attribute name="Status">
+                <rng:ref name="def_send_complete"/>
+              </rng:attribute>
+            </rng:optional>
+
+            <rng:text/>
+
+          </rng:element>
+        </rng:oneOrMore>
+
+      </rng:element>
+
+      <!-- choice: Success {1} + Warnings {0,1} -->
+
+      <rng:group>
+
+        <rng:element name="Success">
+          <rng:empty/>
+        </rng:element>
+
+        <rng:optional>
+          <rng:element name="Warnings">
+        
+            <!-- Warnings > Warning {1,} -->
+
+            <rng:oneOrMore>
+              <rng:element name="Warning">
+          
+                <rng:attribute name="Type">
+                  <rng:ref name="def_int_gt0"/>
+                </rng:attribute>
+
+                <rng:optional>
+                  <rng:attribute name="RecordID">
+                    <rng:ref name="def_nonempty_string"/>
+                  </rng:attribute>
+                </rng:optional>
+
+                <rng:optional>
+                  <rng:attribute name="Status">
+                    <rng:ref name="def_send_complete"/>
+                  </rng:attribute>
+                </rng:optional>
+
+                <rng:text/>
+          
+              </rng:element>
+            </rng:oneOrMore>
+
+          </rng:element>
+        </rng:optional>
+
+      </rng:group>
+
+    </rng:choice>
+  </rng:define>
+
+
+  <!-- ******************************************************************************* -->
+  <!-- * common definition for recurring, simple types                                 -->
+  <!-- ******************************************************************************* -->
+
+  <!-- The keywords to request complete set responses. -->
+
+  <rng:define name="def_send_complete">
+    <rng:choice>
+      <rng:value type="string">ALPINEBITS_SEND_FREEROOMS</rng:value>
+      <rng:value type="string">ALPINEBITS_SEND_RATEPLANS</rng:value>
+      <rng:value type="string">ALPINEBITS_SEND_INVENTORY</rng:value>
+    </rng:choice>
+  </rng:define>
+
+  <!-- A generic non-empty string type. -->
+
+  <rng:define name="def_nonempty_string">
+    <rng:data type="string">
+      <rng:param name="minLength">1</rng:param>
+    </rng:data>
+  </rng:define>
+
+  <!-- A generic string type. -->
+
+  <rng:define name="def_any_string">
+    <rng:data type="string">
+      <rng:param name="minLength">0</rng:param>
+    </rng:data>
+  </rng:define>
+
+  <!-- A generic non-empty uppercase string type. -->
+
+  <rng:define name="def_uppercase_string">
+    <rng:data type="string">
+      <rng:param name="pattern">[A-Z]+</rng:param>
+    </rng:data>
+  </rng:define>
+
+  <!-- A generic string type containing an @ char, like an email address. -->
+
+  <rng:define name="def_email_string">
+    <rng:data type="string">
+      <rng:param name="pattern">\S+@\S+</rng:param>
+    </rng:data>
+  </rng:define>
+
+  <!-- A generic string type starting with http:// or https:// --> 
+
+  <rng:define name="def_url_string">
+    <rng:data type="string">
+      <rng:param name="pattern">https?://.+</rng:param>
+    </rng:data>
+  </rng:define>
+
+  <!-- String type defining room category codes (like InvTypeCode)  -->
+
+  <rng:define name="def_invTypeCode_string">
+    <rng:data type="string">
+      <rng:param name="minLength">1</rng:param>
+      <rng:param name="maxLength">8</rng:param>
+    </rng:data>
+  </rng:define>
+
+  <!-- A generic string type with 3 characters. -->
+
+  <rng:define name="def_three_char_string">
+    <rng:data type="string">
+      <rng:param name="minLength">3</rng:param>
+      <rng:param name="maxLength">3</rng:param>
+    </rng:data>
+  </rng:define>
+
+  <!-- A generic string type with 1 to 16 characters (defintion taken from OTA2015A). -->
+
+  <rng:define name="def_one_to_sixteen_chars_string">
+    <rng:data type="string">
+      <rng:param name="minLength">1</rng:param>
+      <rng:param name="maxLength">16</rng:param>
+    </rng:data>
+  </rng:define>
+
+  <!-- A generic integer > 0 type. -->
+
+  <rng:define name="def_int_gt0">
+    <rng:data type="positiveInteger">
+      <rng:param name="pattern">[0-9]+</rng:param>
+    </rng:data>
+  </rng:define>
+
+  <!-- A generic integer >= 0 type. -->
+
+  <rng:define name="def_int_ge0">
+    <rng:data type="nonNegativeInteger">
+      <rng:param name="pattern">[0-9]+</rng:param>
+    </rng:data>
+  </rng:define>
+
+  <!-- A generic decimal >= 0 type. -->
+
+  <rng:define name="def_decimal_ge0">
+    <rng:data type="decimal">
+      <rng:param name="minInclusive">0.0</rng:param>
+      <rng:param name="pattern">[0-9]*\.?[0-9]*</rng:param>
+    </rng:data>
+  </rng:define>
+
+  <!-- A generic decimal > 0 type. -->
+
+  <rng:define name="def_decimal_gt0">
+    <rng:data type="decimal">
+      <rng:param name="minExclusive">0.0</rng:param>
+      <rng:param name="pattern">[0-9]*\.?[0-9]*</rng:param>
+    </rng:data>
+  </rng:define>
+
+  <!-- A generic date type. -->
+
+  <rng:define name="def_date">
+    <rng:data type="date">
+      <rng:param name="pattern">\S+</rng:param>
+    </rng:data>
+  </rng:define>
+
+  <!-- A generic datetime type. -->
+
+  <rng:define name="def_datetime">
+    <rng:data type="dateTime">
+      <rng:param name="pattern">\S+</rng:param>
+    </rng:data>
+  </rng:define>
+
+  <!-- A generic boolean type (1,true,0,false). -->
+
+  <rng:define name="def_bool">
+    <rng:data type="boolean">
+      <rng:param name="pattern">\S+</rng:param>
+    </rng:data>
+  </rng:define>
+
+  <!-- Anything. -->
+
+  <rng:define name="def_anything">
+    <rng:interleave>
+      <rng:zeroOrMore>
+        <rng:element>
+          <rng:anyName/>
+          <rng:zeroOrMore>
+            <rng:ref name="def_anything"/>
+          </rng:zeroOrMore>
+          <rng:zeroOrMore>
+            <rng:ref name="def_any_attribute"/>
+          </rng:zeroOrMore>
+        </rng:element>
+      </rng:zeroOrMore>
+    <rng:text/>
+    </rng:interleave>
+  </rng:define>
+
+  <rng:define name="def_any_attribute">
+    <rng:attribute>
+      <rng:anyName/>
+    </rng:attribute>
+  </rng:define>
+
+</rng:grammar>
