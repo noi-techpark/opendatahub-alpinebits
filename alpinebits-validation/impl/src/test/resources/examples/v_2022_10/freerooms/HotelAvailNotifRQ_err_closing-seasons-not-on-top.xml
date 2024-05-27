@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+<OTA_HotelInvCountNotifRQ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xmlns="http://www.opentravel.org/OTA/2003/05"
+                          Version="4"
+                          xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_HotelInvCountNotifRQ.xsd">
+    <UniqueID Type="16" ID="1" Instance="CompleteSet"/>
+    <Inventories HotelCode="123" HotelName="Frangart Inn">
+        <Inventory>
+            <StatusApplicationControl Start="2020-08-01" End="2020-08-10" InvTypeCode="DOUBLE"/>
+            <InvCounts>
+                <InvCount CountType="2" Count="3"/>
+            </InvCounts>
+        </Inventory>
+        <Inventory>
+            <StatusApplicationControl Start="2020-08-31" End="2020-09-30" AllInvCode="true"/>
+        </Inventory>
+    </Inventories>
+</OTA_HotelInvCountNotifRQ>

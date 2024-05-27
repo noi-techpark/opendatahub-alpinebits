@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+<OTA_HotelInvCountNotifRQ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                       xmlns="http://www.opentravel.org/OTA/2003/05"
+                       Version="3.000"
+                       xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_HotelInvCountNotifRQ.xsd">
+    <UniqueID Type="16" ID="1" Instance="CompleteSet"/>
+    <!-- Err: Expecting one of HotelCode or HotelName to be not null, but both of them are null -->
+    <Inventories>
+        <!-- Need Inventory element for valid XML -->
+        <Inventory/>
+    </Inventories>
+</OTA_HotelInvCountNotifRQ>
