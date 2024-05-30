@@ -26,11 +26,11 @@ public class ImageItemValidator implements Validator<ImageItem, Void> {
     public static final String ELEMENT_NAME = Names.IMAGE_ITEM;
 
     private static final Validator<ImageItem, Void> VALIDATION_DELEGATE =
-            new it.bz.opendatahub.alpinebits.validation.schema.v_2017_10.inventory.ImageItemValidator();
+            new it.bz.opendatahub.alpinebits.validation.schema.v_2020_10.inventory.ImageItemValidator();
 
     @Override
     public void validate(ImageItem imageItem, Void ctx, ValidationPath path) {
-        // Delegate validation to AlpineBits 2017 implementation,
+        // Delegate validation to AlpineBits 2020 implementation,
         // since the validation remains the same
         VALIDATION_DELEGATE.validate(imageItem, ctx, path);
     }

@@ -10,9 +10,7 @@
 
 package it.bz.opendatahub.alpinebits.validation.schema.v_2022_10.freerooms;
 
-import it.bz.opendatahub.alpinebits.validation.ErrorMessage;
 import it.bz.opendatahub.alpinebits.validation.Names;
-import it.bz.opendatahub.alpinebits.validation.ValidationHelper;
 import it.bz.opendatahub.alpinebits.validation.ValidationPath;
 import it.bz.opendatahub.alpinebits.validation.Validator;
 import it.bz.opendatahub.alpinebits.xml.schema.ota.StatusApplicationControlType;
@@ -27,27 +25,14 @@ public class ClosingSeasonStatusApplicationControlValidator implements Validator
 
     public static final String ELEMENT_NAME = Names.STATUS_APPLICATION_CONTROL;
 
-    private static final ValidationHelper VALIDATOR = ValidationHelper.withClientDataError();
+    private static final Validator<StatusApplicationControlType, Void> VALIDATION_DELEGATE =
+            new it.bz.opendatahub.alpinebits.validation.schema.v_2020_10.freerooms.ClosingSeasonStatusApplicationControlValidator();
 
     @Override
     public void validate(StatusApplicationControlType statusApplicationControl, Void ctx, ValidationPath path) {
-        VALIDATOR.expectNotNull(statusApplicationControl, ErrorMessage.EXPECT_STATUS_APPLICATION_CONTROL_TO_BE_NOT_NULL, path);
+        // Delegate validation to AlpineBits 2020 implementation,
+        // since the validation remains the same
 
-        VALIDATOR.expectNotNull(
-                statusApplicationControl.getStart(),
-                ErrorMessage.EXPECT_START_TO_BE_NOT_NULL,
-                path.withAttribute(Names.START)
-        );
-        VALIDATOR.expectNotNull(
-                statusApplicationControl.getEnd(),
-                ErrorMessage.EXPECT_END_TO_BE_NOT_NULL,
-                path.withAttribute(Names.END)
-        );
-        VALIDATOR.expectEquals(
-                statusApplicationControl.isAllInvCode(),
-                true,
-                ErrorMessage.EXPECT_CLOSING_SEASON_TO_HAVE_ALL_INV_CODE_SET_TO_TRUE,
-                path.withAttribute(Names.ALL_INV_CODE)
-        );
+        VALIDATION_DELEGATE.validate(statusApplicationControl, ctx, path);
     }
 }

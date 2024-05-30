@@ -27,11 +27,11 @@ public class GuestRoomsValidator implements Validator<GuestRooms, InventoryConte
     public static final String ELEMENT_NAME = Names.GUEST_ROOMS;
 
     private static final Validator<GuestRooms, InventoryContext> VALIDATION_DELEGATE =
-            new it.bz.opendatahub.alpinebits.validation.schema.v_2017_10.inventory.GuestRoomsValidator();
+            new it.bz.opendatahub.alpinebits.validation.schema.v_2020_10.inventory.GuestRoomsValidator();
 
     @Override
     public void validate(GuestRooms guestRooms, InventoryContext ctx, ValidationPath path) {
-        // Delegate validation to AlpineBits 2017 implementation,
+        // Delegate validation to AlpineBits 2020 implementation,
         // since the validation remains the same
         VALIDATION_DELEGATE.validate(guestRooms, ctx, path);
     }

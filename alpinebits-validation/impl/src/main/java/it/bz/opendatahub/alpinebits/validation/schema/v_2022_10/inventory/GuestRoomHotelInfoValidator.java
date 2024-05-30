@@ -23,11 +23,11 @@ import it.bz.opendatahub.alpinebits.xml.schema.ota.FacilityInfoType.GuestRooms.G
 public class GuestRoomHotelInfoValidator implements Validator<GuestRoom, Void> {
 
     private static final Validator<GuestRoom, Void> VALIDATION_DELEGATE =
-            new it.bz.opendatahub.alpinebits.validation.schema.v_2017_10.inventory.GuestRoomHotelInfoValidator();
+            new it.bz.opendatahub.alpinebits.validation.schema.v_2020_10.inventory.GuestRoomHotelInfoValidator();
 
     @Override
     public void validate(GuestRoom guestRoom, Void ctx, ValidationPath path) {
-        // Delegate validation to AlpineBits 2017 implementation,
+        // Delegate validation to AlpineBits 2020 implementation,
         // since the validation remains the same
         VALIDATION_DELEGATE.validate(guestRoom, ctx, path);
     }

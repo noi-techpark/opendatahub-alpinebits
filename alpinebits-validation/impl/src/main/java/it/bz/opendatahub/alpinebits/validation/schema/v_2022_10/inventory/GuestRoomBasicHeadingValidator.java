@@ -36,11 +36,11 @@ import it.bz.opendatahub.alpinebits.xml.schema.ota.FacilityInfoType.GuestRooms.G
 public class GuestRoomBasicHeadingValidator implements Validator<GuestRoom, InventoryContext> {
 
     private static final Validator<GuestRoom, InventoryContext> VALIDATION_DELEGATE =
-            new it.bz.opendatahub.alpinebits.validation.schema.v_2017_10.inventory.GuestRoomBasicHeadingValidator();
+            new it.bz.opendatahub.alpinebits.validation.schema.v_2020_10.inventory.GuestRoomBasicHeadingValidator();
 
     @Override
     public void validate(GuestRoom guestRoom, InventoryContext ctx, ValidationPath path) {
-        // Delegate validation to AlpineBits 2017 implementation,
+        // Delegate validation to AlpineBits 2020 implementation,
         // since the validation remains the same
         VALIDATION_DELEGATE.validate(guestRoom, ctx, path);
     }

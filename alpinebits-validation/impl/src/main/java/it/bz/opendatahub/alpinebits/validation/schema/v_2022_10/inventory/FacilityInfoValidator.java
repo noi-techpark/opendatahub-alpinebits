@@ -27,12 +27,13 @@ public class FacilityInfoValidator implements Validator<FacilityInfoType, Invent
     public static final String ELEMENT_NAME = Names.FACILITY_INFO;
 
     private static final Validator<FacilityInfoType, InventoryContext> VALIDATION_DELEGATE =
-            new it.bz.opendatahub.alpinebits.validation.schema.v_2017_10.inventory.FacilityInfoValidator();
+            new it.bz.opendatahub.alpinebits.validation.schema.v_2020_10.inventory.FacilityInfoValidator();
 
     @Override
     public void validate(FacilityInfoType facilityInfo, InventoryContext ctx, ValidationPath path) {
-        // Delegate validation to AlpineBits 2017 implementation,
+        // Delegate validation to AlpineBits 2020 implementation,
         // since the validation remains the same
+
         VALIDATION_DELEGATE.validate(facilityInfo, ctx, path);
     }
 }

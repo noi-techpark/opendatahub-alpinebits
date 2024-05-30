@@ -10,13 +10,10 @@
 
 package it.bz.opendatahub.alpinebits.validation.schema.v_2022_10.inventory;
 
-import it.bz.opendatahub.alpinebits.validation.ErrorMessage;
 import it.bz.opendatahub.alpinebits.validation.Names;
-import it.bz.opendatahub.alpinebits.validation.ValidationHelper;
 import it.bz.opendatahub.alpinebits.validation.ValidationPath;
 import it.bz.opendatahub.alpinebits.validation.Validator;
 import it.bz.opendatahub.alpinebits.validation.context.inventory.InventoryContext;
-import it.bz.opendatahub.alpinebits.validation.utils.ListUtil;
 import it.bz.opendatahub.alpinebits.xml.schema.ota.OTAHotelDescriptiveContentNotifRQ.HotelDescriptiveContents;
 
 /**
@@ -29,20 +26,15 @@ public class HotelDescriptiveContentsValidator implements Validator<HotelDescrip
 
     public static final String ELEMENT_NAME = Names.HOTEL_DESCRIPTIVE_CONTENTS;
 
-    private static final ValidationHelper VALIDATOR = ValidationHelper.withClientDataError();
-
-    private final HotelDescriptiveContentValidator hotelDescriptiveContentValidator = new HotelDescriptiveContentValidator();
+    private static final Validator<HotelDescriptiveContents, InventoryContext> VALIDATION_DELEGATE =
+            new it.bz.opendatahub.alpinebits.validation.schema.v_2020_10.inventory.HotelDescriptiveContentsValidator();
 
     @Override
     public void validate(HotelDescriptiveContents hotelDescriptiveContents, InventoryContext ctx, ValidationPath path) {
-        VALIDATOR.expectNotNull(hotelDescriptiveContents, ErrorMessage.EXPECT_HOTEL_DESCRIPTIVE_CONTENTS_TO_BE_NOT_NULL, path);
-        VALIDATOR.expectNotNull(ctx, ErrorMessage.EXPECT_CONTEXT_TO_BE_NOT_NULL);
+        // Delegate validation to AlpineBits 2020 implementation,
+        // since the validation remains the same
 
-        this.hotelDescriptiveContentValidator.validate(
-                ListUtil.extractFirst(hotelDescriptiveContents.getHotelDescriptiveContents()),
-                ctx,
-                path.withElement(HotelDescriptiveContentValidator.ELEMENT_NAME)
-        );
+        VALIDATION_DELEGATE.validate(hotelDescriptiveContents, ctx, path);
     }
 
 }

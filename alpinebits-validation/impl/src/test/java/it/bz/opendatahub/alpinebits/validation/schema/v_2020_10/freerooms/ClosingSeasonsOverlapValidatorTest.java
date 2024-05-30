@@ -15,6 +15,7 @@ import it.bz.opendatahub.alpinebits.validation.Names;
 import it.bz.opendatahub.alpinebits.validation.SimpleValidationPath;
 import it.bz.opendatahub.alpinebits.validation.ValidationException;
 import it.bz.opendatahub.alpinebits.validation.ValidationPath;
+import it.bz.opendatahub.alpinebits.validation.schema.common.freerooms.ClosingSeasonsOverlapPeriod;
 import it.bz.opendatahub.alpinebits.xml.schema.ota.BaseInvCountType;
 import it.bz.opendatahub.alpinebits.xml.schema.ota.StatusApplicationControlType;
 import org.testng.annotations.Test;
@@ -33,10 +34,10 @@ public class ClosingSeasonsOverlapValidatorTest {
     @Test
     public void testValidate_ShouldThrow_WhenClosingSeasonsOverlap() {
         // Closing seasons p1 and p3 overlap
-        ClosingSeasonsOverlapValidator.Period p1 = new ClosingSeasonsOverlapValidator.Period("2022-01-01", "2022-01-04");
-        ClosingSeasonsOverlapValidator.Period p2 = new ClosingSeasonsOverlapValidator.Period("2022-01-04", "2022-01-10");
-        ClosingSeasonsOverlapValidator.Period p3 = new ClosingSeasonsOverlapValidator.Period("2022-01-02", "2022-01-06");
-        ClosingSeasonsOverlapValidator.Period p4 = new ClosingSeasonsOverlapValidator.Period("2022-02-07", "2022-02-14");
+        ClosingSeasonsOverlapPeriod p1 = new ClosingSeasonsOverlapPeriod("2022-01-01", "2022-01-04");
+        ClosingSeasonsOverlapPeriod p2 = new ClosingSeasonsOverlapPeriod("2022-01-04", "2022-01-10");
+        ClosingSeasonsOverlapPeriod p3 = new ClosingSeasonsOverlapPeriod("2022-01-02", "2022-01-06");
+        ClosingSeasonsOverlapPeriod p4 = new ClosingSeasonsOverlapPeriod("2022-02-07", "2022-02-14");
         BaseInvCountType inventory1 = this.buildValidInventoryForClosingSeason(p1);
         BaseInvCountType inventory2 = this.buildValidInventoryForClosingSeason(p2);
         BaseInvCountType inventory3 = this.buildValidInventoryForClosingSeason(p3);
@@ -57,10 +58,10 @@ public class ClosingSeasonsOverlapValidatorTest {
 
     @Test
     public void testValidate_ShouldAcceptNonOverlappingPeriods() {
-        ClosingSeasonsOverlapValidator.Period p1 = new ClosingSeasonsOverlapValidator.Period("2022-01-01", "2022-01-04");
-        ClosingSeasonsOverlapValidator.Period p2 = new ClosingSeasonsOverlapValidator.Period("2022-01-04", "2022-01-06");
-        ClosingSeasonsOverlapValidator.Period p3 = new ClosingSeasonsOverlapValidator.Period("2022-02-07", "2022-02-14");
-        ClosingSeasonsOverlapValidator.Period p4 = new ClosingSeasonsOverlapValidator.Period("2022-08-01", "2022-08-21");
+        ClosingSeasonsOverlapPeriod p1 = new ClosingSeasonsOverlapPeriod("2022-01-01", "2022-01-04");
+        ClosingSeasonsOverlapPeriod p2 = new ClosingSeasonsOverlapPeriod("2022-01-04", "2022-01-06");
+        ClosingSeasonsOverlapPeriod p3 = new ClosingSeasonsOverlapPeriod("2022-02-07", "2022-02-14");
+        ClosingSeasonsOverlapPeriod p4 = new ClosingSeasonsOverlapPeriod("2022-08-01", "2022-08-21");
         BaseInvCountType inventory1 = this.buildValidInventoryForClosingSeason(p1);
         BaseInvCountType inventory2 = this.buildValidInventoryForClosingSeason(p2);
         BaseInvCountType inventory3 = this.buildValidInventoryForClosingSeason(p3);
@@ -73,7 +74,7 @@ public class ClosingSeasonsOverlapValidatorTest {
         assertTrue(true);
     }
 
-    private BaseInvCountType buildValidInventoryForClosingSeason(ClosingSeasonsOverlapValidator.Period period) {
+    private BaseInvCountType buildValidInventoryForClosingSeason(ClosingSeasonsOverlapPeriod period) {
         StatusApplicationControlType statusApplicationControl = new StatusApplicationControlType();
         statusApplicationControl.setStart(period.getStart().toString());
         statusApplicationControl.setEnd(period.getEnd().toString());

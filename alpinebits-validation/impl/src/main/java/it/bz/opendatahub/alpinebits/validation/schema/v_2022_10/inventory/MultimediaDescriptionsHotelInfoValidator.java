@@ -26,11 +26,11 @@ public class MultimediaDescriptionsHotelInfoValidator implements Validator<Multi
     public static final String ELEMENT_NAME = Names.MULTIMEDIA_DESCRIPTIONS;
 
     private static final Validator<MultimediaDescriptionsType, Void> VALIDATION_DELEGATE =
-            new it.bz.opendatahub.alpinebits.validation.schema.v_2017_10.inventory.MultimediaDescriptionsHotelInfoValidator();
+            new it.bz.opendatahub.alpinebits.validation.schema.v_2020_10.inventory.MultimediaDescriptionsHotelInfoValidator();
 
     @Override
     public void validate(MultimediaDescriptionsType multimediaDescriptions, Void ctx, ValidationPath path) {
-        // Delegate validation to AlpineBits 2017 implementation,
+        // Delegate validation to AlpineBits 2020 implementation,
         // since the validation remains the same
         VALIDATION_DELEGATE.validate(multimediaDescriptions, ctx, path);
     }

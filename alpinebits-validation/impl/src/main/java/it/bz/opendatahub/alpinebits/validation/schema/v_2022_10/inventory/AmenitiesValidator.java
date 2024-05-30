@@ -26,12 +26,13 @@ public class AmenitiesValidator implements Validator<Amenities, Void> {
     public static final String ELEMENT_NAME = Names.AMENITIES;
 
     private static final Validator<Amenities, Void> VALIDATION_DELEGATE =
-            new it.bz.opendatahub.alpinebits.validation.schema.v_2017_10.inventory.AmenitiesValidator();
+            new it.bz.opendatahub.alpinebits.validation.schema.v_2020_10.inventory.AmenitiesValidator();
 
     @Override
     public void validate(Amenities amenities, Void ctx, ValidationPath path) {
-        // Delegate validation to AlpineBits 2017 implementation,
+        // Delegate validation to AlpineBits 2020 implementation,
         // since the validation remains the same
+
         VALIDATION_DELEGATE.validate(amenities, ctx, path);
     }
 }

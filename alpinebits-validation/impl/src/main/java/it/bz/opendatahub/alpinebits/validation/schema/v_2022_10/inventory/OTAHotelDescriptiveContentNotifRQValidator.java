@@ -10,10 +10,7 @@
 
 package it.bz.opendatahub.alpinebits.validation.schema.v_2022_10.inventory;
 
-import it.bz.opendatahub.alpinebits.validation.ErrorMessage;
 import it.bz.opendatahub.alpinebits.validation.Names;
-import it.bz.opendatahub.alpinebits.validation.SimpleValidationPath;
-import it.bz.opendatahub.alpinebits.validation.ValidationHelper;
 import it.bz.opendatahub.alpinebits.validation.ValidationPath;
 import it.bz.opendatahub.alpinebits.validation.Validator;
 import it.bz.opendatahub.alpinebits.validation.context.inventory.InventoryContext;
@@ -30,9 +27,8 @@ public class OTAHotelDescriptiveContentNotifRQValidator
 
     public static final String ELEMENT_NAME = Names.OTA_HOTEL_DESCRIPTIVE_CONTENT_NOTIF_RQ;
 
-    private static final ValidationHelper VALIDATOR = ValidationHelper.withClientDataError();
-
-    private final HotelDescriptiveContentsValidator hotelDescriptiveContentsValidator = new HotelDescriptiveContentsValidator();
+    private static final Validator<OTAHotelDescriptiveContentNotifRQ, InventoryContext> VALIDATION_DELEGATE =
+            new it.bz.opendatahub.alpinebits.validation.schema.v_2020_10.inventory.OTAHotelDescriptiveContentNotifRQValidator();
 
     @Override
     public void validate(
@@ -40,21 +36,10 @@ public class OTAHotelDescriptiveContentNotifRQValidator
             InventoryContext ctx,
             ValidationPath unused
     ) {
-        // Initialize validation path
-        ValidationPath path = SimpleValidationPath.fromPath(ELEMENT_NAME);
+        // Delegate validation to AlpineBits 2020 implementation,
+        // since the validation remains the same
 
-        VALIDATOR.expectNotNull(
-                hotelDescriptiveContentNotifRQ,
-                ErrorMessage.EXPECT_HOTEL_DESCRIPTIVE_CONTENT_NOTIF_RQ_TO_BE_NOT_NULL,
-                path
-        );
-        VALIDATOR.expectNotNull(ctx, ErrorMessage.EXPECT_CONTEXT_TO_BE_NOT_NULL);
-
-        this.hotelDescriptiveContentsValidator.validate(
-                hotelDescriptiveContentNotifRQ.getHotelDescriptiveContents(),
-                ctx,
-                path.withElement(HotelDescriptiveContentsValidator.ELEMENT_NAME)
-        );
+        VALIDATION_DELEGATE.validate(hotelDescriptiveContentNotifRQ, ctx, unused);
     }
 
 }

@@ -26,12 +26,13 @@ public class StatusApplicationControlValidator implements Validator<StatusApplic
     public static final String ELEMENT_NAME = Names.STATUS_APPLICATION_CONTROL;
 
     private static final Validator<StatusApplicationControlType, Void> VALIDATION_DELEGATE =
-            new it.bz.opendatahub.alpinebits.validation.schema.v_2017_10.freerooms.StatusApplicationControlValidator();
+            new it.bz.opendatahub.alpinebits.validation.schema.v_2020_10.freerooms.StatusApplicationControlValidator();
 
     @Override
     public void validate(StatusApplicationControlType statusApplicationControl, Void ctx, ValidationPath path) {
-        // Delegate validation to AlpineBits 2017 implementation,
+        // Delegate validation to AlpineBits 2020 implementation,
         // since the validation remains the same
+
         VALIDATION_DELEGATE.validate(statusApplicationControl, ctx, path);
     }
 }

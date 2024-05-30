@@ -72,7 +72,7 @@ public class ClosingSeasonsOverlapValidator implements Validator<List<BaseInvCou
         }
     }
 
-    static class Period {
+    private static class Period {
         private final LocalDate start;
         private final LocalDate end;
 

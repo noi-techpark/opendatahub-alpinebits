@@ -26,11 +26,11 @@ public class TextItemValidator implements Validator<TextItem, Void> {
     public static final String ELEMENT_NAME = Names.TEXT_ITEM;
 
     private static final Validator<TextItem, Void> VALIDATION_DELEGATE =
-            new it.bz.opendatahub.alpinebits.validation.schema.v_2017_10.inventory.TextItemValidator();
+            new it.bz.opendatahub.alpinebits.validation.schema.v_2020_10.inventory.TextItemValidator();
 
     @Override
     public void validate(TextItem textItem, Void ctx, ValidationPath path) {
-        // Delegate validation to AlpineBits 2017 implementation,
+        // Delegate validation to AlpineBits 2020 implementation,
         // since the validation remains the same
         VALIDATION_DELEGATE.validate(textItem, ctx, path);
     }
