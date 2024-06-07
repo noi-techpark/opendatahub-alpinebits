@@ -118,6 +118,12 @@ public final class AlpineBitsCapability {
      */
     public static final String FREE_ROOMS_HOTEL_INV_COUNT_NOTIF_ACCEPT_CLOSING_SEASONS = "OTA_HotelInvCountNotif_accept_closing_seasons";
 
+    /**
+     * For room availability notifications (FreeRooms), the actor handles complete set
+     * (FreeRooms from AlpineBits 2020-10 going on).
+     */
+    public static final String FREE_ROOMS_HOTEL_INV_COUNT_NOTIF_ACCEPT_COMPLETE_SET = "OTA_HotelInvCountNotif_accept_complete_set";
+
     // GuestRequests
 
     /**
