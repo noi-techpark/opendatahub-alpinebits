@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+<OTA_HotelPostEventNotifRQ
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.opentravel.org/OTA/2003/05"
+        xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_HotelPostEventNotifRQ.xsd"
+        Version="8.000">
+
+    <EventReports>
+        <EventReport>
+            <EventSites>
+                <EventSite HotelCode="00001" HotelName="TestHotel" >
+                    <Event_ID Type="18" ID="41654" ID_Context="providerNameSrl" />
+                </EventSite>
+            </EventSites>
+            <GeneralEventInfo />
+        </EventReport>
+        <EventReport>
+            <EventSites>
+                <EventSite HotelCode="00001" HotelName="TestHotel" >
+                    <Event_ID Type="18" ID="41655" ID_Context="providerNameSrl" />
+                </EventSite>
+            </EventSites>
+            <GeneralEventInfo />
+        </EventReport>
+        
+    </EventReports>
+    
+</OTA_HotelPostEventNotifRQ>

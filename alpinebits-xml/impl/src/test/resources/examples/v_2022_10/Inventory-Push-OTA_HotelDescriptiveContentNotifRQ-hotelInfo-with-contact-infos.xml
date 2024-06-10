@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+<OTA_HotelDescriptiveContentNotifRQ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                    xmlns="http://www.opentravel.org/OTA/2003/05"
+                                    xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_HotelDescriptiveContentNotifRQ.xsd"
+                                    Version="8.000">
+
+    <HotelDescriptiveContents>
+
+        <HotelDescriptiveContent HotelCode="123" HotelName="Frangart Inn">
+
+            <ContactInfos>
+                
+                <!-- Location must be "6" ("Hotel direct contact" according to OTA code table for type codes (CON)) -->
+                <ContactInfo Location="6">
+                    <URLs>
+                        <URL ID="WEBSITE">httpss://www.alpinebits.org/</URL>
+                        <URL ID="FACEBOOK">httpss://www.facebook.com/alpinebits/</URL>
+                        <URL ID="TWITTER">httpss://twitter.com/hashtag/alpinebits</URL>            
+                        <URL ID="TRUSTYOU">id:12345678-1nvalid</URL>
+                        <URL ID="YOUTUBE">httpss://www.youtube.com/user/AlpineBits</URL>
+                    </URLs>
+                </ContactInfo>
+                
+            </ContactInfos>
+
+        </HotelDescriptiveContent>
+
+    </HotelDescriptiveContents>
+
+</OTA_HotelDescriptiveContentNotifRQ>

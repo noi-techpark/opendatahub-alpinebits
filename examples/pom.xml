@@ -12,12 +12,12 @@ SPDX-License-Identifier: CC0-1.0
     <parent>
         <groupId>it.bz.opendatahub.alpinebits</groupId>
         <artifactId>alpinebits-root</artifactId>
-        <version>2.1.1</version>
+        <version>3.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>examples-root</artifactId>
-    <version>2.1.1</version>
+    <version>3.0.0</version>
 
     <packaging>pom</packaging>
     <name>AlpineBits examples - root</name>
@@ -32,8 +32,6 @@ SPDX-License-Identifier: CC0-1.0
     <properties>
         <!-- Skip Sonar analysis for examples module -->
         <sonar.skip>true</sonar.skip>
-
-        <jackson.version>2.11.1</jackson.version>
 
         <maven-war-plugin.version>3.2.2</maven-war-plugin.version>
         <cargo-maven2-plugin.version>1.6.11</cargo-maven2-plugin.version>

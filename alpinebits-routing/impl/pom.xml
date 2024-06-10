@@ -12,12 +12,12 @@ SPDX-License-Identifier: CC0-1.0
     <parent>
         <groupId>it.bz.opendatahub.alpinebits</groupId>
         <artifactId>alpinebits-routing</artifactId>
-        <version>2.1.1</version>
+        <version>3.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>alpinebits-routing-impl</artifactId>
-    <version>2.1.1</version>
+    <version>3.0.0</version>
 
     <name>AlpineBits routing impl</name>
 

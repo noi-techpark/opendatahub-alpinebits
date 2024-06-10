@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+<OTA_HotelResNotifRQ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xmlns="http://www.opentravel.org/OTA/2003/05"
+                     xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_HotelResNotifRQ.xsd"
+                     Version="1.000">
+
+    <HotelReservations>
+
+        <HotelReservation ResStatus="Reserved" CreateDateTime="2023-03-21T11:00:00+01:00">
+            <UniqueID Type="14" ID="6b34fe24ac999999"/>
+        </HotelReservation>
+
+        <HotelReservation ResStatus="Cancelled" CreateDateTime="2023-05-12T19:00:00+01:00" LastModifyDateTime="2023-06-12T12:00:00+01:00">
+            <UniqueID Type="15" ID="6b34fe24ac244444"/>
+        </HotelReservation>
+
+    </HotelReservations>
+
+</OTA_HotelResNotifRQ>

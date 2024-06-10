@@ -19,11 +19,10 @@ import it.bz.opendatahub.alpinebits.servlet.InvalidRequestContentTypeException;
 import it.bz.opendatahub.alpinebits.servlet.MultipartFormDataParseException;
 import it.bz.opendatahub.alpinebits.servlet.ServletContextKey;
 import it.bz.opendatahub.alpinebits.servlet.UndefinedActionException;
-import org.apache.commons.fileupload.FileItemIterator;
-import org.apache.commons.fileupload.FileItemStream;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.fileupload.util.Streams;
+import org.apache.commons.fileupload2.core.DiskFileItem;
+import org.apache.commons.fileupload2.core.DiskFileItemFactory;
+import org.apache.commons.fileupload2.core.FileItem;
+import org.apache.commons.fileupload2.javax.JavaxServletFileUpload;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,8 +31,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This middleware extracts the <code>action</code> and <code>request</code> parts from the
@@ -74,7 +73,7 @@ public class MultipartFormDataParserMiddleware implements Middleware {
     }
 
     private void checkIsMultipartOrThrow(HttpServletRequest request) {
-        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+        boolean isMultipart = JavaxServletFileUpload.isMultipartContent(request);
         if (!isMultipart) {
             String contentType = request.getContentType();
             throw new InvalidRequestContentTypeException("Expecting content-type: multipart/form-data. Got: " + contentType);
@@ -84,48 +83,42 @@ public class MultipartFormDataParserMiddleware implements Middleware {
     private void parseRequestAndAddToContext(HttpServletRequest request, Context ctx) {
         LOG.debug("Parsing multipart/form-data");
 
-        // Create a new file upload handler
-        ServletFileUpload upload = new ServletFileUpload();
-
-        // This list is filled with all form part names. It can be used for logs or exceptions later on
-        List<String> formParts = new ArrayList<>();
+        DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
+        JavaxServletFileUpload<DiskFileItem, DiskFileItemFactory> upload = new JavaxServletFileUpload<>(factory);
 
         String abAction = null;
         InputStream abRequest = null;
 
-        // Parse the request
+        List<DiskFileItem> items = null;
+
         try {
-            FileItemIterator iterStream = upload.getItemIterator(request);
-            while (iterStream.hasNext()) {
-                FileItemStream item = iterStream.next();
-                String name = item.getFieldName();
-                formParts.add(name);
+            // Parse the request into FileItem objects
+            items = upload.parseRequest(request);
 
-                try (InputStream stream = item.openStream()) {
-                    if (FORM_PART_ACTION.equalsIgnoreCase(name)) {
-                        abAction = Streams.asString(stream, "UTF-8");
-                    }
-
-                    if (FORM_PART_REQUEST.equalsIgnoreCase(name)) {
-                        abRequest = IOUtils.toBufferedInputStream(stream);
-                    }
+            for (FileItem<DiskFileItem> item : items) {
+                if (FORM_PART_ACTION.equalsIgnoreCase(item.getFieldName())) {
+                    abAction = item.getString();
+                }
+                if (FORM_PART_REQUEST.equalsIgnoreCase(item.getFieldName())) {
+                    abRequest = IOUtils.toBufferedInputStream(item.getInputStream());
                 }
             }
-        } catch (FileUploadException | IOException e) {
+
+            if (abAction == null) {
+                List<String> partNames = items.stream().map(DiskFileItem::getName).collect(Collectors.toList());
+                String formPartsInfo = partNames.isEmpty()
+                        ? "No multipart/form-data parts found at all"
+                        : "The following multipart/form-data parts were found: " + String.join(", ");
+                throw new UndefinedActionException("No action part defined in the multipart/form-data request. " + formPartsInfo);
+            }
+
+            ctx.put(RequestContextKey.REQUEST_ACTION, abAction);
+
+            if (abRequest != null) {
+                ctx.put(RequestContextKey.REQUEST_CONTENT_STREAM, abRequest);
+            }
+        } catch (IOException e) {
             throw new MultipartFormDataParseException("Error while parsing multipart/form-data", e);
-        }
-
-        if (abAction == null) {
-            String formPartsInfo = formParts.isEmpty()
-                    ? "No multipart/form-data parts found at all"
-                    : "The following multipart/form-data parts were found: " + formParts.toString();
-            throw new UndefinedActionException("No action part defined in the multipart/form-data request. " + formPartsInfo);
-        }
-
-        ctx.put(RequestContextKey.REQUEST_ACTION, abAction);
-
-        if (abRequest != null) {
-            ctx.put(RequestContextKey.REQUEST_CONTENT_STREAM, abRequest);
         }
 
         LOG.debug("AlpineBits action parameter: {}, AlpineBits request parameter is present: {}", abAction, abRequest != null);

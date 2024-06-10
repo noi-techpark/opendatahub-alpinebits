@@ -86,7 +86,7 @@ public class HandshakingMiddlewareIT extends Arquillian {
                 .post(this.base + "AlpineBits")
                 .then()
                 .statusCode(HttpServletResponse.SC_BAD_REQUEST)
-                .content(containsString("ERROR:unknown or missing action"));
+                .body(containsString("ERROR:unknown or missing action"));
     }
 
     @Test

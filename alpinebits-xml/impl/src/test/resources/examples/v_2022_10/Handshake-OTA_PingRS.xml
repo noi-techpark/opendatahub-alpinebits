@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+<OTA_PingRS xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://www.opentravel.org/OTA/2003/05"
+            xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_PingRS.xsd"
+            Version="8.000">
+
+    <Success/>
+
+    <Warnings>
+        <Warning Type="11" Status="ALPINEBITS_HANDSHAKE">
+        {
+          "versions": [{
+            "version": "2018-10",
+            "actions": [
+              {
+            "action": "action_OTA_Ping"
+              },{
+            "action": "action_OTA_HotelRatePlan_BaseRates",
+            "supports": ["OTA_HotelRatePlan_BaseRates_deltas"]
+              }
+            ]
+          }]
+        }
+        </Warning>
+    </Warnings>
+
+    <EchoData>
+    {
+      "versions": [{
+        "version": "2018-10",
+        "actions": [
+          {
+            "action": "action_OTA_Ping"
+          },{
+            "action": "action_OTA_HotelRatePlan_BaseRates",
+            "supports": ["OTA_HotelRatePlan_BaseRates_deltas"]
+          },{
+            "action": "action_OTA_HotelRatePlanNotif_RatePlans",
+            "supports": [
+              "OTA_HotelRatePlanNotif_accept_overlay",
+              "OTA_HotelRatePlanNotif_accept_Supplements",
+              "OTA_HotelRatePlanNotif_accept_RatePlan_BookingRule",
+              "OTA_HotelRatePlanNotif_accept_FreeNightsOffers",
+              "OTA_HotelRatePlanNotif_accept_FamilyOffers"
+            ]
+          }
+        ]
+      }]
+    }
+    </EchoData>
+
+</OTA_PingRS>

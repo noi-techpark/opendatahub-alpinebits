@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+<OTA_HotelPostEventNotifRQ
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.opentravel.org/OTA/2003/05"
+        xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_HotelPostEventNotifRQ.xsd"
+        Version="8.000">
+
+    <EventReports>
+        <EventReport>
+            <EventSites>
+                <EventSite HotelCode="00001" HotelName="TestHotel" >
+                    <Event_ID Type="18" ID="41654" ID_Context="providerNameSrl" />
+                </EventSite>
+            </EventSites>
+
+            <GeneralEventInfo Type="4" URL="https://example.com/event-permalink" Acronym="YO-CES" >
+                <EventContacts>
+                    <EventContact Role="chief">
+                        <PersonName>
+                            <GivenName>Werner</GivenName>
+                            <Surname>Call</Surname>
+                        </PersonName>
+
+                        <URL Type="Image">https://example.com/image.jpg</URL>
+                        <EmployeeInfo EmployeeId="Chief cook"/>
+                    </EventContact>
+                </EventContacts>
+
+                <AttendeeInfo TotalQuantity="50" PreRegisteredQuantity="0"/>
+
+                <Dates>
+                    <Date Start="2022-02-23T09:30:00+02:00" End="2022-02-23T11:30:00+02:00">
+                        <EndDateWindow LatestDate="2022-02-23T09:30:00+02:00"/>
+
+                        <LocationCategories>
+                            <Location AreaID="1" />
+                            <Category Language="en">Wellness Area</Category>
+                            <Category Language="de">Wellnessbereich</Category>
+                            <Category Language="it">Area wellness</Category>
+
+                        </LocationCategories>
+                    </Date>
+                </Dates>
+
+                <Comments>
+                    <Comment Name="Title">
+                        <Text Language="en">Yoga with Cesare</Text>
+                        <Text Language="de">Yoga mit Cesare</Text>
+                        <Text Language="it">Yoga con Cesare</Text>
+                    </Comment>
+                    <Comment Name="Category">
+                        <Text>WELLNESS-MENTAL</Text>
+                        <Text Language="en">Mental wellness</Text>
+                        <Text Language="de">mentales Wohlbefinden</Text>
+                        <Text Language="it">Benessere mentale</Text>
+                    </Comment>
+                    <Comment Name="Gallery">
+                        <Image>https://example.com/image1.jpg</Image>
+                        <Image>https://example.com/image2.jpg</Image>
+                        <Image>https://example.com/image3.jpg</Image>
+                    </Comment>
+                    <Comment Name="Description">
+                        <Text Language="en">Yoga Lorem Ipsum ...</Text>
+                        <Text Language="de">Yoga Lorem Ipsum ...</Text>
+                        <Text Language="it">Yoga Lorem Ipsum ...</Text>
+                    </Comment>
+                </Comments>
+                
+            </GeneralEventInfo>
+            
+        </EventReport>
+        
+    </EventReports>
+    
+</OTA_HotelPostEventNotifRQ>

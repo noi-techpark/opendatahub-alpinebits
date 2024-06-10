@@ -64,7 +64,7 @@ public class MultipartFormDataParserMiddlewareIT extends Arquillian {
                 .then()
                 .statusCode(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE)
                 .and()
-                .content(containsString("ERROR:"));
+                .body(containsString("ERROR:"));
     }
 
     @Test
@@ -77,7 +77,7 @@ public class MultipartFormDataParserMiddlewareIT extends Arquillian {
                 .then()
                 .statusCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
                 .and()
-                .content(containsString("ERROR:"));
+                .body(containsString("ERROR:"));
     }
 
     @Test
@@ -90,7 +90,7 @@ public class MultipartFormDataParserMiddlewareIT extends Arquillian {
                 .then()
                 .statusCode(HttpServletResponse.SC_BAD_REQUEST)
                 .and()
-                .content(containsString("ERROR"));
+                .body(containsString("ERROR"));
     }
 
     @Test

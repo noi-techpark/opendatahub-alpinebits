@@ -34,7 +34,7 @@ import java.util.Arrays;
  * the resulting server is able to respond to Handshaking requests.
  * <p>
  * The resulting server supports the version defined by
- * {@link ConfiguringMiddleware#DEFAULT_VERSION} only (typically 2020-10).
+ * {@link ConfiguringMiddleware#DEFAULT_VERSION} only (typically 2022-10).
  * <p>
  * A basic authentication check is enforced, although any username and
  * password combination is valid. In other words: a request MUST contain
@@ -43,7 +43,7 @@ import java.util.Arrays;
  */
 public class ConfiguringMiddleware implements Middleware {
 
-    public static final String DEFAULT_VERSION = AlpineBitsVersion.V_2020_10;
+    public static final String DEFAULT_VERSION = AlpineBitsVersion.V_2022_10;
 
     private final Middleware middleware;
 

@@ -66,7 +66,7 @@ public class RoutingMiddlewareIT extends Arquillian {
                 .then()
                 .statusCode(HttpServletResponse.SC_BAD_REQUEST)
                 .and()
-                .content(containsString("ERROR:"));
+                .body(containsString("ERROR:"));
     }
 
     @Test
@@ -83,7 +83,7 @@ public class RoutingMiddlewareIT extends Arquillian {
                 .then()
                 .statusCode(HttpServletResponse.SC_BAD_REQUEST)
                 .and()
-                .content(containsString("ERROR:"));
+                .body(containsString("ERROR:"));
     }
 
     @Test

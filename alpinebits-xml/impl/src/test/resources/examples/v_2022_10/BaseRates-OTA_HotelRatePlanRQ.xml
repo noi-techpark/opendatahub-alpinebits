@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+<OTA_HotelRatePlanRQ xmlns="http://www.opentravel.org/OTA/2003/05"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_HotelRatePlanRQ.xsd"
+                     Version="3.000">
+  <RatePlans>
+    <RatePlan>
+
+      <!-- If the DateRange element exists, all matching data will be returned.
+
+           If DateRange is omitted only data that was not sent already, i.e. a delta, is returned.
+           Note that it is also possible to set Start only or End only. -->
+
+      <DateRange Start="2023-12-25" End="2024-01-03" />
+
+      <!-- If RatePlanCandidate elements exist, only the matching rate plans must be returned:
+           RatePlanCode is used for single rate plans, RatePlanID is used for all rate plans with the
+           same Master code (if supported). If RatePlanCandidates is omitted, all rate plans have to
+           be returned. -->
+
+      <RatePlanCandidates>
+        <RatePlanCandidate RatePlanCode="DailyRate-HB" RatePlanID="DailyRate"/>
+        <RatePlanCandidate RatePlanCode="SPECIAL"/>
+      </RatePlanCandidates>
+
+      <!-- Specify either HotelCode or HotelName or both -->
+
+      <HotelRef HotelCode="123" HotelName="Frangart Inn" />
+
+    </RatePlan>
+  </RatePlans>
+</OTA_HotelRatePlanRQ>
+
