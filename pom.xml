@@ -60,6 +60,7 @@ SPDX-License-Identifier: CC0-1.0
 
         <servlet.version>3.1.0</servlet.version>
         <mapstruct.version>1.2.0.Final</mapstruct.version>
+        <commons-io.version>2.20.0</commons-io.version>
         <jackson.version>2.17.1</jackson.version>
 
         <testng.version>7.5.1</testng.version>
@@ -356,6 +357,17 @@ SPDX-License-Identifier: CC0-1.0
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct-jdk8</artifactId>
                 <version>${mapstruct.version}</version>
+            </dependency>
+
+            <!--
+                Use current version of commons-io to fix a security vulnerability
+                introduced by org.apache.commons:commons-fileupload2-javax in
+                alpinebits-servlet-impl module.
+            -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
             </dependency>
 
             <!-- Test dependencies -->
