@@ -527,16 +527,6 @@ SPDX-License-Identifier: CC0-1.0
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>${maven-failsafe-plugin.version}</version>
-                    <configuration>
-                        <!--
-                            ISSUE: org.apache.maven.surefire.booter.SurefireBooterForkException: The forked
-                                VM terminated without properly saying goodbye
-                            TEMP SOLUTION: set "useSystemClassLoader" to false
-                            See https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=911925 and
-                                https://issues.apache.org/jira/browse/SUREFIRE-1588
-                        -->
-                        <useSystemClassLoader>false</useSystemClassLoader>
-                    </configuration>
                     <executions>
                         <execution>
                             <id>integration-test</id>
