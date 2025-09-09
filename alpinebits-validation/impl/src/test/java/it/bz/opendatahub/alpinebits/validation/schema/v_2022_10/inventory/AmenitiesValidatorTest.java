@@ -10,32 +10,11 @@
 
 package it.bz.opendatahub.alpinebits.validation.schema.v_2022_10.inventory;
 
-import it.bz.opendatahub.alpinebits.validation.ValidationException;
-import it.bz.opendatahub.alpinebits.validation.schema.common.inventory.AbstractAmenitiesValidatorTest;
-import it.bz.opendatahub.alpinebits.xml.schema.ota.FacilityInfoType.GuestRooms.GuestRoom.Amenities;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.expectThrows;
-
 /**
  * Tests for {@link AmenitiesValidator}.
  */
-public class AmenitiesValidatorTest extends AbstractAmenitiesValidatorTest {
+public class AmenitiesValidatorTest extends it.bz.opendatahub.alpinebits.validation.schema.v_2020_10.inventory.AmenitiesValidatorTest {
 
-    protected void validateAndAssert(
-            Amenities data,
-            Class<? extends ValidationException> exceptionClass,
-            String errorMessage
-    ) {
-        AmenitiesValidator validator = new AmenitiesValidator();
-
-        // CHECKSTYLE:OFF
-        Exception e = expectThrows(
-                exceptionClass,
-                () -> validator.validate(data, null, VALIDATION_PATH)
-        );
-        // CHECKSTYLE:ON
-        assertEquals(e.getMessage().substring(0, errorMessage.length()), errorMessage);
-    }
+    // This class inherits all tests from the 2020_10 version
 
 }

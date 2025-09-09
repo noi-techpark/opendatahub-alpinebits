@@ -139,6 +139,11 @@ public final class ErrorMessage {
             "The list of GuaranteePayment elements is expected to contain exactly one element (%s found)";
     public static final String EXPECT_GUEST_ROOM_TO_BE_NOT_NULL =
             DefaultErrorMessage.expectNotNullErrorMessage(Names.GUEST_ROOM);
+    public static final String EXPECT_HOTEL_AMENITY_CODE_TO_BE_DEFINED =
+            "The code '%s' is not defined in the list of OTA Hotel Amenity Type Codes (HAC)";
+    public static final String EXPECT_HOTEL_AMENITY_CODE_TO_BE_DEFINED_2024_10 =
+            "The code '%s' is not defined neither in the list of OTA Hotel Amenity Type Codes (RMA) nor in the list of " +
+                    "AlpineBits Hotel Amenity Type Codes (ABR)";
     public static final String EXPECT_HOTEL_AVAIL_NOTIF_RQ_TO_BE_NOT_NULL =
             DefaultErrorMessage.expectNotNullErrorMessage(Names.OTA_HOTEL_AVAIL_NOTIF_RQ);
     public static final String EXPECT_HOTEL_CATEGORIES_TO_BE_NOT_NULL =
@@ -304,6 +309,8 @@ public final class ErrorMessage {
             "The value for the Provider attribute must be all uppercase";
     public static final String EXPECT_PROVIDER_TO_BE_NOT_NULL =
             DefaultErrorMessage.expectNotNullErrorMessage(Names.PROVIDER);
+    public static final String EXPECT_PROXIMITY_CODE_TO_BE_DEFINED =
+            "The code '%s' is not defined in the list of OTA Proximity Type Codes (PRX)";
     public static final String EXPECT_PROXIMITY_CODE_TO_BE_NOT_NULL =
             DefaultErrorMessage.expectNotNullErrorMessage(Names.PROXIMITY_CODE);
     public static final String EXPECT_RATING_TO_BE_NOT_NULL =
@@ -312,6 +319,8 @@ public final class ErrorMessage {
             = "A MultimediaDescription element with InfoCode=25 is required";
     public static final String EXPECT_ROOM_AMENITY_CODE_TO_BE_DEFINED =
             "The code '%s' is not defined in the list of OTA Room Amenity Type Codes (RMA)";
+    public static final String EXPECT_ROOM_AMENITY_CODE_TO_BE_DEFINED_2024_10 =
+            "The code '%s' is not defined neither in the list of OTA Room Amenity Type Codes (RMA) nor in the list of AlpineBits Room Amenity Type Codes (ABR)";
     public static final String EXPECT_ROOM_AMENITY_CODE_TO_BE_NOT_NULL =
             DefaultErrorMessage.expectNotNullErrorMessage(Names.ROOM_AMENITY_CODE);
     public static final String EXPECT_ROOM_CATEGORY_AND_DISTINCT_ROOM_TO_NOT_BE_MIXED =

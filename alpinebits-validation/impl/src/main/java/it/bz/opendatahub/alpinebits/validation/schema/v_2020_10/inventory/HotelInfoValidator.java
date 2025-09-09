@@ -11,6 +11,8 @@
 package it.bz.opendatahub.alpinebits.validation.schema.v_2020_10.inventory;
 
 import it.bz.opendatahub.alpinebits.common.constants.OTACodeDisabilityFeatureCode;
+import it.bz.opendatahub.alpinebits.common.constants.OTACodeHotelAmenityType;
+import it.bz.opendatahub.alpinebits.common.constants.OTACodeProximityType;
 import it.bz.opendatahub.alpinebits.validation.ErrorMessage;
 import it.bz.opendatahub.alpinebits.validation.Names;
 import it.bz.opendatahub.alpinebits.validation.ValidationHelper;
@@ -167,15 +169,21 @@ public class HotelInfoValidator implements Validator<HotelInfoType, Void> {
             Service service = services.getServices().get(i);
             ValidationPath servicePath = path.withElement(Names.SERVICE).withIndex(i);
 
-            VALIDATOR.expectNotNull(service.getCode(), ErrorMessage.EXPECT_CODE_TO_BE_NOT_NULL, servicePath.withAttribute(Names.CODE));
+            String code = service.getCode();
+            VALIDATOR.expectNotNull(code, ErrorMessage.EXPECT_CODE_TO_BE_NOT_NULL, servicePath.withAttribute(Names.CODE));
+            if (!OTACodeHotelAmenityType.isCodeDefined(code)) {
+                String message = String.format(ErrorMessage.EXPECT_HOTEL_AMENITY_CODE_TO_BE_DEFINED, code);
+                VALIDATOR.throwValidationException(message, servicePath.withAttribute(Names.CODE));
+            }
 
-            VALIDATOR.expectNotNull(
-                    service.getProximityCode(),
-                    ErrorMessage.EXPECT_PROXIMITY_CODE_TO_BE_NOT_NULL,
-                    servicePath.withAttribute(Names.PROXIMITY_CODE)
-            );
+            String proximityCode = service.getProximityCode();
+            VALIDATOR.expectNotNull(proximityCode, ErrorMessage.EXPECT_PROXIMITY_CODE_TO_BE_NOT_NULL, servicePath.withAttribute(Names.PROXIMITY_CODE));
+            if (!OTACodeProximityType.isCodeDefined(proximityCode)) {
+                String message = String.format(ErrorMessage.EXPECT_PROXIMITY_CODE_TO_BE_DEFINED, proximityCode);
+                VALIDATOR.throwValidationException(message, servicePath.withAttribute(Names.PROXIMITY_CODE));
+            }
 
-            if ("47".equals(service.getCode()) && service.getFeatures() != null) {
+            if (OTACodeHotelAmenityType.ACCESSIBLE_FACILITIES.getCode().equals(code) && service.getFeatures() != null) {
                 for (int j = 0; j < service.getFeatures().getFeatures().size(); j++) {
                     FeaturesType.Feature feature = service.getFeatures().getFeatures().get(j);
 

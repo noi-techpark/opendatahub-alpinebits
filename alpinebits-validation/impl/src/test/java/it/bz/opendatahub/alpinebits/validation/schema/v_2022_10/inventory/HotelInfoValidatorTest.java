@@ -10,6 +10,8 @@
 
 package it.bz.opendatahub.alpinebits.validation.schema.v_2022_10.inventory;
 
+import it.bz.opendatahub.alpinebits.common.constants.OTACodeHotelAmenityType;
+import it.bz.opendatahub.alpinebits.common.constants.OTACodeProximityType;
 import it.bz.opendatahub.alpinebits.validation.EmptyCollectionValidationException;
 import it.bz.opendatahub.alpinebits.validation.ErrorMessage;
 import it.bz.opendatahub.alpinebits.validation.Names;
@@ -538,7 +540,7 @@ public class HotelInfoValidatorTest {
     public void testValidate_ShouldThrow_WhenServiceCodeIsNull() {
         Service service = new Service();
         service.setCode(null);
-        service.setProximityCode("1");
+        service.setProximityCode(OTACodeProximityType.ONSITE.getCode());
 
         Services services = new Services();
         services.getServices().add(service);
@@ -550,9 +552,27 @@ public class HotelInfoValidatorTest {
     }
 
     @Test
+    public void testValidate_ShouldThrow_WhenServiceCodeIsInvalid() {
+        String code = "INVALID";
+
+        Service service = new Service();
+        service.setCode(code);
+        service.setProximityCode(OTACodeProximityType.ONSITE.getCode());
+
+        Services services = new Services();
+        services.getServices().add(service);
+
+        HotelInfoType hotelInfoType = new HotelInfoType();
+        hotelInfoType.setServices(services);
+
+        String message = String.format(ErrorMessage.EXPECT_HOTEL_AMENITY_CODE_TO_BE_DEFINED, code);
+        validateAndAssert(hotelInfoType, ValidationException.class, message);
+    }
+
+    @Test
     public void testValidate_ShouldThrow_WhenServiceProximityCodeIsNull() {
         Service service = new Service();
-        service.setCode("1");
+        service.setCode(OTACodeHotelAmenityType._24_HOUR_FRONT_DESK.getCode());
         service.setProximityCode(null);
 
         Services services = new Services();
@@ -562,6 +582,24 @@ public class HotelInfoValidatorTest {
         hotelInfoType.setServices(services);
 
         validateAndAssert(hotelInfoType, NullValidationException.class, ErrorMessage.EXPECT_PROXIMITY_CODE_TO_BE_NOT_NULL);
+    }
+
+    @Test
+    public void testValidate_ShouldThrow_WhenServiceProximityCodeIsInvalid() {
+        String proximityCode = "INVALID";
+
+        Service service = new Service();
+        service.setCode(OTACodeHotelAmenityType._24_HOUR_FRONT_DESK.getCode());
+        service.setProximityCode(proximityCode);
+
+        Services services = new Services();
+        services.getServices().add(service);
+
+        HotelInfoType hotelInfoType = new HotelInfoType();
+        hotelInfoType.setServices(services);
+
+        String message = String.format(ErrorMessage.EXPECT_PROXIMITY_CODE_TO_BE_DEFINED, proximityCode);
+        validateAndAssert(hotelInfoType, ValidationException.class, message);
     }
 
     @Test
@@ -576,8 +614,8 @@ public class HotelInfoValidatorTest {
 
         Service service = new Service();
         service.setFeatures(featuresType);
-        service.setCode("47");
-        service.setProximityCode("1");
+        service.setCode(OTACodeHotelAmenityType.ACCESSIBLE_FACILITIES.getCode());
+        service.setProximityCode(OTACodeProximityType.ONSITE.getCode());
 
         Services services = new Services();
         services.getServices().add(service);
@@ -601,8 +639,8 @@ public class HotelInfoValidatorTest {
 
         Service service = new Service();
         service.setFeatures(featuresType);
-        service.setCode("47");
-        service.setProximityCode("1");
+        service.setCode(OTACodeHotelAmenityType.ACCESSIBLE_FACILITIES.getCode());
+        service.setProximityCode(OTACodeProximityType.ONSITE.getCode());
 
         Services services = new Services();
         services.getServices().add(service);
