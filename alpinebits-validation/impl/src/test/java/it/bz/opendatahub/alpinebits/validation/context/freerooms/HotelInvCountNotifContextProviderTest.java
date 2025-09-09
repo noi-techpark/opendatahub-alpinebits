@@ -29,7 +29,7 @@ import static org.testng.Assert.assertTrue;
  */
 public class HotelInvCountNotifContextProviderTest {
 
-    private static final String DEFAULT_ALPINEBITS_VERSION = AlpineBitsVersion.V_2022_10;
+    private static final String DEFAULT_ALPINEBITS_VERSION = AlpineBitsVersion.V_2024_10;
     private static final Action DEFAULT_ACTION = Action.of("REQUEST_PARAM", "NAME");
 
     @Test(expectedExceptions = IllegalArgumentException.class)
@@ -47,7 +47,7 @@ public class HotelInvCountNotifContextProviderTest {
     @Test(expectedExceptions = RequiredContextKeyMissingException.class)
     public void testBuildContext_ShouldThrow_WhenRouterIsNull() {
         Context ctx = new SimpleContext();
-        ctx.put(RequestContextKey.REQUEST_VERSION, AlpineBitsVersion.V_2022_10);
+        ctx.put(RequestContextKey.REQUEST_VERSION, AlpineBitsVersion.V_2024_10);
         new HotelInvCountNotifContextProvider().buildContext(ctx);
     }
 
@@ -106,7 +106,7 @@ public class HotelInvCountNotifContextProviderTest {
 
     private Context buildContextWithRouterCapability(String... capabilities) {
         Context ctx = new SimpleContext();
-        ctx.put(RequestContextKey.REQUEST_VERSION, AlpineBitsVersion.V_2022_10);
+        ctx.put(RequestContextKey.REQUEST_VERSION, AlpineBitsVersion.V_2024_10);
         ctx.put(RouterContextKey.ALPINEBITS_ROUTER, this.buildRouterWithCapabilities(capabilities));
         return ctx;
     }

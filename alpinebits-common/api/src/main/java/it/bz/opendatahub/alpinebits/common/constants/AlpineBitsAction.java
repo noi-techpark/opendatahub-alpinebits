@@ -11,7 +11,7 @@
 package it.bz.opendatahub.alpinebits.common.constants;
 
 /**
- * This class provides constants for all known AlpineBits actions for version 2022-10.
+ * This class provides constants for all known AlpineBits actions for version 2024-10.
  * <p>
  * In the context of this class, "action" means the value of the request parameter called "action".
  */

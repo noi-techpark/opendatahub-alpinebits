@@ -11,8 +11,8 @@
 package it.bz.opendatahub.alpinebits.common.constants;
 
 /**
- * This class provides constants for all known AlpineBits capabilities for version 2022-10.
- *
+ * This class provides constants for all known AlpineBits capabilities for version 2024-10.
+ * <p>
  * In the context of this class, "capability" means the values exchanged as capabilities during
  * the Housekeeping -&gt; getCapabilities and Handshaking requests. They express, what the
  * client and server are capable of.
