@@ -31,14 +31,14 @@ public final class AlpineBitsCapability {
     // Housekeeping
 
     /**
-     * The server implements​ the getVersion​​ action.
+     * The server implements the getVersion action.
      *
      * This action is mandatory for all AlpineBits versions prior to AlpineBits 2018-10.
      */
     public static final String GET_VERSION = "action_getVersion";
 
     /**
-     * The server implements​ the getCapabilities action.
+     * The server implements the getCapabilities action.
      *
      * This action is mandatory for all AlpineBits versions prior to AlpineBits 2018-10.
      */

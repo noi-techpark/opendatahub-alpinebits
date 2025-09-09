@@ -56,12 +56,12 @@ public interface Router {
      * actions {@literal ->} Implementation tips and best practices):
      * <ul>
      * <li>
-     * Client: the​ client​ queries​ the​ server​ version, sending​
-     * a header​ with​ the​ highest​ version​ it supports.
+     * Client: the client queries the server version, sending
+     * a header with the highest version it supports.
      * </li>
      * <li>
      * Server: if the server supports this same version, it
-     * answers with this version and the negotiation​ terminates
+     * answers with this version and the negotiation terminates
      * successfully; otherwise the server answers with the highest
      * version it supports.
      * </li>

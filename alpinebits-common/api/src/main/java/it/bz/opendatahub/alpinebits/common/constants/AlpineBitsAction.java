@@ -41,14 +41,14 @@ public final class AlpineBitsAction {
     /**
      * Value for "FreeRooms" action request parameter up to AlpineBits 2018-10.
      *
-     * A client​ sends​ room availability​ notifications to a server.
+     * A client sendsroom availabilitynotifications to a server.
      */
     public static final String FREE_ROOMS_HOTEL_AVAIL_NOTIF_FREE_ROOMS = "OTA_HotelAvailNotif:FreeRooms";
 
     /**
      * Value for "FreeRooms" action request parameter from AlpineBits 2020-10 going on.
      *
-     * A client​ sends​ room availability​ notifications to a server.
+     * A client sends room availability notifications to a server.
      */
     public static final String FREE_ROOMS_HOTEL_INV_COUNT_NOTIF_FREE_ROOMS = "OTA_HotelInvCountNotif:FreeRooms";
 
