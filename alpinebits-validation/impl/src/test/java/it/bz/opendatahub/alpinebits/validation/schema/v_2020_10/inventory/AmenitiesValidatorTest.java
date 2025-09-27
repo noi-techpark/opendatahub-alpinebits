@@ -20,15 +20,15 @@ import it.bz.opendatahub.alpinebits.validation.ValidationPath;
 import it.bz.opendatahub.alpinebits.xml.schema.ota.FacilityInfoType.GuestRooms.GuestRoom.Amenities;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.expectThrows;
+import static it.bz.opendatahub.alpinebits.validation.schema.common.ValidationUtil.validateAndAssert;
 
 /**
  * Tests for {@link AmenitiesValidator}.
  */
 public class AmenitiesValidatorTest {
 
-    protected static final ValidationPath VALIDATION_PATH = SimpleValidationPath.fromPath(Names.AMENITIES);
+    private static final AmenitiesValidator VALIDATOR = new AmenitiesValidator();
+    private static final ValidationPath VALIDATION_PATH = SimpleValidationPath.fromPath(Names.AMENITIES);
 
     @Test
     public void testValidate_ShouldThrow_WhenRoomAmenityCodeIsNull() {
@@ -37,7 +37,7 @@ public class AmenitiesValidatorTest {
         Amenities amenities = new Amenities();
         amenities.getAmenities().add(amenity);
 
-        this.validateAndAssert(amenities, NullValidationException.class, ErrorMessage.EXPECT_ROOM_AMENITY_CODE_TO_BE_NOT_NULL);
+        validateAndAssert(VALIDATOR, amenities, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_ROOM_AMENITY_CODE_TO_BE_NOT_NULL);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class AmenitiesValidatorTest {
         amenities.getAmenities().add(amenity);
 
         String errorMessage = String.format(ErrorMessage.EXPECT_ROOM_AMENITY_CODE_TO_BE_DEFINED, code);
-        this.validateAndAssert(amenities, ValidationException.class, errorMessage);
+        validateAndAssert(VALIDATOR, amenities, VALIDATION_PATH, ValidationException.class, errorMessage);
     }
 
     @Test
@@ -67,22 +67,6 @@ public class AmenitiesValidatorTest {
 
         AmenitiesValidator validator = new AmenitiesValidator();
         validator.validate(amenities, null, VALIDATION_PATH);
-    }
-
-    private void validateAndAssert(
-            Amenities data,
-            Class<? extends ValidationException> exceptionClass,
-            String errorMessage
-    ) {
-        AmenitiesValidator validator = new AmenitiesValidator();
-
-        // CHECKSTYLE:OFF
-        Exception e = expectThrows(
-                exceptionClass,
-                () -> validator.validate(data, null, VALIDATION_PATH)
-        );
-        // CHECKSTYLE:ON
-        assertEquals(e.getMessage().substring(0, errorMessage.length()), errorMessage);
     }
 
 }

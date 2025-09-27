@@ -12,6 +12,7 @@ package it.bz.opendatahub.alpinebits.validation.schema.v_2024_10.inventory;
 
 import it.bz.opendatahub.alpinebits.validation.ErrorMessage;
 import it.bz.opendatahub.alpinebits.validation.ValidationException;
+import it.bz.opendatahub.alpinebits.validation.schema.common.ValidationUtil;
 import it.bz.opendatahub.alpinebits.validation.schema.common.inventory.AbstractTypeRoomValidatorTest;
 import it.bz.opendatahub.alpinebits.xml.schema.ota.FacilityInfoType.GuestRooms.GuestRoom.TypeRoom;
 import org.testng.annotations.Test;
@@ -24,6 +25,8 @@ import static org.testng.Assert.*;
  * Tests for {@link TypeRoomValidator}.
  */
 public class TypeRoomValidatorTest extends AbstractTypeRoomValidatorTest {
+
+    private static final TypeRoomValidator VALIDATOR = new TypeRoomValidator();
 
     @Test
     public void testValidate_GivenRoomType_ShouldThrow_WhenRoomTypeIsUnsupported() {
@@ -73,15 +76,7 @@ public class TypeRoomValidatorTest extends AbstractTypeRoomValidatorTest {
             Class<? extends ValidationException> exceptionClass,
             String errorMessage
     ) {
-        TypeRoomValidator validator = new TypeRoomValidator();
-
-        // CHECKSTYLE:OFF
-        Exception e = expectThrows(
-                exceptionClass,
-                () -> validator.validate(data, ctx, VALIDATION_PATH)
-        );
-        // CHECKSTYLE:ON
-        assertEquals(e.getMessage().substring(0, errorMessage.length()), errorMessage);
+        ValidationUtil.validateAndAssert(VALIDATOR, data, ctx, VALIDATION_PATH, exceptionClass, errorMessage);
     }
 
     private TypeRoom buildTypeRoom(String roomClassificationCode, String roomType) {

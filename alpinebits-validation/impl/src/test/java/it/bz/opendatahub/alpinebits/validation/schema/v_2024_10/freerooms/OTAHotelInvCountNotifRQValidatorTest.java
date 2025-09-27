@@ -14,45 +14,29 @@ import it.bz.opendatahub.alpinebits.validation.ErrorMessage;
 import it.bz.opendatahub.alpinebits.validation.Names;
 import it.bz.opendatahub.alpinebits.validation.NullValidationException;
 import it.bz.opendatahub.alpinebits.validation.SimpleValidationPath;
-import it.bz.opendatahub.alpinebits.validation.ValidationException;
 import it.bz.opendatahub.alpinebits.validation.ValidationPath;
 import it.bz.opendatahub.alpinebits.xml.schema.ota.OTAHotelInvCountNotifRQ;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.expectThrows;
+import static it.bz.opendatahub.alpinebits.validation.schema.common.ValidationUtil.validateAndAssert;
 
 /**
  * Tests for {@link OTAHotelInvCountNotifRQValidator}.
  */
 public class OTAHotelInvCountNotifRQValidatorTest {
 
-    protected static final ValidationPath VALIDATION_PATH = SimpleValidationPath.fromPath(Names.OTA_HOTEL_INV_COUNT_NOTIF_RQ);
+    private static final OTAHotelInvCountNotifRQValidator VALIDATOR = new OTAHotelInvCountNotifRQValidator();
+    private static final ValidationPath VALIDATION_PATH = SimpleValidationPath.fromPath(Names.OTA_HOTEL_INV_COUNT_NOTIF_RQ);
 
     @Test
     public void testValidate_ShouldThrow_WhenOTAHotelInvCountNotifRQIsNull() {
-        this.validateAndAssert(null, NullValidationException.class, ErrorMessage.EXPECT_HOTEL_INV_COUNT_NOTIF_RQ_TO_BE_NOT_NULL);
+        validateAndAssert(VALIDATOR, null, null, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_HOTEL_INV_COUNT_NOTIF_RQ_TO_BE_NOT_NULL);
     }
 
     @Test
     public void testValidate_ShouldThrow_WhenContextIsNull() {
         OTAHotelInvCountNotifRQ rq = new OTAHotelInvCountNotifRQ();
-        this.validateAndAssert(rq, NullValidationException.class, ErrorMessage.EXPECT_CONTEXT_TO_BE_NOT_NULL);
+        validateAndAssert(VALIDATOR, rq, null, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_CONTEXT_TO_BE_NOT_NULL);
     }
 
-    private void validateAndAssert(
-            OTAHotelInvCountNotifRQ data,
-            Class<? extends ValidationException> exceptionClass,
-            String errorMessage
-    ) {
-        OTAHotelInvCountNotifRQValidator validator = new OTAHotelInvCountNotifRQValidator();
-
-        // CHECKSTYLE:OFF
-        Exception e = expectThrows(
-                exceptionClass,
-                () -> validator.validate(data, null, VALIDATION_PATH)
-        );
-        // CHECKSTYLE:ON
-        assertEquals(e.getMessage().substring(0, errorMessage.length()), errorMessage);
-    }
 }

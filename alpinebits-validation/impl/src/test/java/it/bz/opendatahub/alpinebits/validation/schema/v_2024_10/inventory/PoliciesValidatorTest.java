@@ -37,24 +37,26 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 import java.math.BigDecimal;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.expectThrows;
+import static it.bz.opendatahub.alpinebits.validation.schema.common.ValidationUtil.validateAndAssert;
 
 /**
  * Tests for {@link PoliciesValidator}.
  */
 public class PoliciesValidatorTest {
 
+    private static final PoliciesValidator VALIDATOR = new PoliciesValidator();
     private static final ValidationPath VALIDATION_PATH = SimpleValidationPath.fromPath(Names.POLICIES);
 
     @Test
     public void testValidate_ShouldThrow_WhenPoliciesIsNull() {
-        this.validateAndAssert(null, NullValidationException.class, ErrorMessage.EXPECT_POLICIES_TO_NOT_BE_NULL);
+        validateAndAssert(VALIDATOR, null, null, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_POLICIES_TO_NOT_BE_NULL);
     }
 
     @Test
     public void testValidate_ShouldThrow_WhenPolicyListIsEmpty() {
-        this.validateAndAssert(new Policies(), EmptyCollectionValidationException.class, ErrorMessage.EXPECT_POLICY_LIST_TO_BE_NOT_EMPTY);
+        validateAndAssert(
+                VALIDATOR, new Policies(), null, VALIDATION_PATH, EmptyCollectionValidationException.class, ErrorMessage.EXPECT_POLICY_LIST_TO_BE_NOT_EMPTY
+        );
     }
 
     @Test
@@ -66,7 +68,7 @@ public class PoliciesValidatorTest {
         Policies policies = new Policies();
         policies.getPolicies().add(policy);
 
-        this.validateAndAssert(policies, ValidationException.class, ErrorMessage.EXPECT_POLICY_TO_HAVE_EXACTLY_ONE_ELEMENT);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_POLICY_TO_HAVE_EXACTLY_ONE_ELEMENT);
     }
 
     @Test
@@ -79,7 +81,7 @@ public class PoliciesValidatorTest {
         Policies policies = buildValidPolicies(policy);
 
         String message = String.format(ErrorMessage.EXPECT_CANCEL_PENALTY_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT, 0);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -94,7 +96,7 @@ public class PoliciesValidatorTest {
         Policies policies = buildValidPolicies(policy);
 
         String message = String.format(ErrorMessage.EXPECT_CANCEL_PENALTY_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT, 2);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -104,7 +106,7 @@ public class PoliciesValidatorTest {
         Policies policies = buildPoliciesWithCancelPenalty(cancelPenaltyType);
 
         String message = String.format(ErrorMessage.EXPECT_PENALTY_DESCRIPTION_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT, 0);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     /**
@@ -121,7 +123,7 @@ public class PoliciesValidatorTest {
 
         Policies policies = buildPoliciesWithCancelPenalty(cancelPenaltyType);
 
-        this.validateAndAssert(policies, NullValidationException.class, ErrorMessage.EXPECT_LANGUAGE_TO_BE_NOT_NULL);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_LANGUAGE_TO_BE_NOT_NULL);
     }
 
     @Test
@@ -133,7 +135,7 @@ public class PoliciesValidatorTest {
         Policies policies = buildPoliciesWithCancelPenalty(cancelPenaltyType);
 
         String message = String.format(ErrorMessage.EXPECT_PENALTY_DESCRIPTION_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT, 2);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -143,7 +145,7 @@ public class PoliciesValidatorTest {
 
         Policies policies = buildPoliciesWithCancelPenalty(cancelPenaltyType);
 
-        this.validateAndAssert(policies, ValidationException.class, ErrorMessage.EXPECT_TEXT_LIST_TO_BE_NOT_EMPTY);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_TEXT_LIST_TO_BE_NOT_EMPTY);
     }
 
     @Test
@@ -156,7 +158,7 @@ public class PoliciesValidatorTest {
         Policies policies = buildValidPolicies(policy);
 
         String message = String.format(ErrorMessage.EXPECT_CHECKOUT_CHARGE_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT, 0);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -171,7 +173,7 @@ public class PoliciesValidatorTest {
         Policies policies = buildValidPolicies(policy);
 
         String message = String.format(ErrorMessage.EXPECT_CHECKOUT_CHARGE_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT, 2);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -181,7 +183,7 @@ public class PoliciesValidatorTest {
 
         Policies policies = buildPoliciesWithCheckoutCharge(checkoutCharge);
 
-        this.validateAndAssert(policies, ValidationException.class, ErrorMessage.EXPECT_CURRENCY_CODE_TO_EXIST_IF_AMOUNT_EXISTS);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_CURRENCY_CODE_TO_EXIST_IF_AMOUNT_EXISTS);
     }
 
     @Test
@@ -195,7 +197,7 @@ public class PoliciesValidatorTest {
         policies.getPolicies().get(0).getCheckoutCharges().getCheckoutCharges().get(0).setCurrencyCode(notIso4217);
 
         String message = String.format(ErrorMessage.EXPECT_CURRENCY_CODE_TO_BE_VALID, notIso4217);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -203,7 +205,7 @@ public class PoliciesValidatorTest {
         Policies policies = buildPoliciesWithCheckoutCharge(new CheckoutCharge());
 
         String message = String.format(ErrorMessage.EXPECT_DESCRIPTION_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT, 0);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -215,7 +217,7 @@ public class PoliciesValidatorTest {
         Policies policies = buildPoliciesWithCheckoutCharge(checkoutCharge);
 
         String message = String.format(ErrorMessage.EXPECT_DESCRIPTION_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT, 2);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     /**
@@ -232,7 +234,7 @@ public class PoliciesValidatorTest {
 
         Policies policies = buildPoliciesWithCheckoutCharge(checkoutCharge);
 
-        this.validateAndAssert(policies, NullValidationException.class, ErrorMessage.EXPECT_LANGUAGE_TO_BE_NOT_NULL);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_LANGUAGE_TO_BE_NOT_NULL);
     }
 
     @Test
@@ -245,7 +247,7 @@ public class PoliciesValidatorTest {
         Policies policies = buildValidPolicies(policy);
 
         String message = String.format(ErrorMessage.EXPECT_PETS_POLICIES_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT, 0);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -260,7 +262,7 @@ public class PoliciesValidatorTest {
         Policies policies = buildValidPolicies(policy);
 
         String message = String.format(ErrorMessage.EXPECT_PETS_POLICIES_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT, 2);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -270,7 +272,9 @@ public class PoliciesValidatorTest {
 
         Policies policies = buildPoliciesWithPetsPolicy(petsPolicy);
 
-        this.validateAndAssert(policies, ValidationException.class, ErrorMessage.EXPECT_CURRENCY_CODE_TO_EXIST_IF_NON_REFUNDABLE_FEE_EXISTS);
+        validateAndAssert(
+                VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_CURRENCY_CODE_TO_EXIST_IF_NON_REFUNDABLE_FEE_EXISTS
+        );
     }
 
     @Test
@@ -284,7 +288,7 @@ public class PoliciesValidatorTest {
         policies.getPolicies().get(0).getPetsPolicies().getPetsPolicies().get(0).setCurrencyCode(notIso4217);
 
         String message = String.format(ErrorMessage.EXPECT_CURRENCY_CODE_TO_BE_VALID, notIso4217);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -292,7 +296,7 @@ public class PoliciesValidatorTest {
         Policies policies = buildPoliciesWithPetsPolicy(new PetsPolicy());
 
         String message = String.format(ErrorMessage.EXPECT_DESCRIPTION_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT, 0);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -304,7 +308,7 @@ public class PoliciesValidatorTest {
         Policies policies = buildPoliciesWithPetsPolicy(petsPolicy);
 
         String message = String.format(ErrorMessage.EXPECT_DESCRIPTION_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT, 2);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     /**
@@ -321,7 +325,7 @@ public class PoliciesValidatorTest {
 
         Policies policies = buildPoliciesWithPetsPolicy(petsPolicy);
 
-        this.validateAndAssert(policies, NullValidationException.class, ErrorMessage.EXPECT_LANGUAGE_TO_BE_NOT_NULL);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_LANGUAGE_TO_BE_NOT_NULL);
     }
 
     @Test
@@ -334,7 +338,7 @@ public class PoliciesValidatorTest {
         Policies policies = buildValidPolicies(policy);
 
         String message = String.format(ErrorMessage.EXPECT_TAX_POLICIES_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT, 0);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -349,7 +353,7 @@ public class PoliciesValidatorTest {
         Policies policies = buildValidPolicies(policy);
 
         String message = String.format(ErrorMessage.EXPECT_TAX_POLICIES_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT, 2);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -363,7 +367,7 @@ public class PoliciesValidatorTest {
 
         Policies policies = buildPoliciesWithTaxPolicy(taxPolicy);
 
-        this.validateAndAssert(policies, ValidationException.class, ErrorMessage.EXPECT_CODE_TO_HAVE_A_VALUE_OF_3);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_CODE_TO_HAVE_A_VALUE_OF_3);
     }
 
     @Test
@@ -377,7 +381,7 @@ public class PoliciesValidatorTest {
 
         Policies policies = buildPoliciesWithTaxPolicy(taxPolicy);
 
-        this.validateAndAssert(policies, ValidationException.class, ErrorMessage.EXPECT_CHARGE_FREQUENCY_TO_HAVE_A_VALUE_OF_1);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_CHARGE_FREQUENCY_TO_HAVE_A_VALUE_OF_1);
     }
 
     @Test
@@ -391,7 +395,7 @@ public class PoliciesValidatorTest {
 
         Policies policies = buildPoliciesWithTaxPolicy(taxPolicy);
 
-        this.validateAndAssert(policies, ValidationException.class, ErrorMessage.EXPECT_CHARGE_UNIT_TO_HAVE_A_VALUE_OF_21);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_CHARGE_UNIT_TO_HAVE_A_VALUE_OF_21);
     }
 
     @Test
@@ -405,7 +409,7 @@ public class PoliciesValidatorTest {
 
         Policies policies = buildPoliciesWithTaxPolicy(taxPolicy);
 
-        this.validateAndAssert(policies, ValidationException.class, ErrorMessage.EXPECT_CURRENCY_CODE_TO_EXIST_IF_AMOUNT_EXISTS);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_CURRENCY_CODE_TO_EXIST_IF_AMOUNT_EXISTS);
     }
 
     @Test
@@ -422,7 +426,7 @@ public class PoliciesValidatorTest {
         Policies policies = buildPoliciesWithTaxPolicy(taxPolicy);
 
         String message = String.format(ErrorMessage.EXPECT_CURRENCY_CODE_TO_BE_VALID, notIso4217);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -432,7 +436,7 @@ public class PoliciesValidatorTest {
         Policies policies = buildPoliciesWithTaxPolicy(taxPolicy);
 
         String message = String.format(ErrorMessage.EXPECT_TAX_DESCRIPTION_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT, 0);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -445,7 +449,7 @@ public class PoliciesValidatorTest {
         Policies policies = buildPoliciesWithTaxPolicy(taxPolicy);
 
         String message = String.format(ErrorMessage.EXPECT_TAX_DESCRIPTION_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT, 2);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     /**
@@ -463,7 +467,7 @@ public class PoliciesValidatorTest {
 
         Policies policies = buildPoliciesWithTaxPolicy(taxPolicy);
 
-        this.validateAndAssert(policies, NullValidationException.class, ErrorMessage.EXPECT_LANGUAGE_TO_BE_NOT_NULL);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_LANGUAGE_TO_BE_NOT_NULL);
     }
 
     @Test
@@ -474,7 +478,7 @@ public class PoliciesValidatorTest {
         Policies policies = buildValidPolicies(policy);
 
         String message = String.format(ErrorMessage.EXPECT_STAY_REQUIREMENT_LIST_TO_HAVE_ONE_OR_TWO_ELEMENTS, 0);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -490,7 +494,7 @@ public class PoliciesValidatorTest {
         Policies policies = buildValidPolicies(policy);
 
         String message = String.format(ErrorMessage.EXPECT_STAY_REQUIREMENT_LIST_TO_HAVE_ONE_OR_TWO_ELEMENTS, 3);
-        this.validateAndAssert(policies, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -508,7 +512,7 @@ public class PoliciesValidatorTest {
 
         Policies policies = buildValidPolicies(policy);
 
-        this.validateAndAssert(policies, ValidationException.class, ErrorMessage.EXPECT_STAY_CONTEXT_TO_BE_CHECKIN_OR_CHECKOUT);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_STAY_CONTEXT_TO_BE_CHECKIN_OR_CHECKOUT);
     }
 
     @Test
@@ -526,7 +530,7 @@ public class PoliciesValidatorTest {
 
         Policies policies = buildValidPolicies(policy);
 
-        this.validateAndAssert(policies, NullValidationException.class, ErrorMessage.EXPECT_START_TO_BE_NOT_NULL);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_START_TO_BE_NOT_NULL);
     }
 
     @Test
@@ -544,7 +548,7 @@ public class PoliciesValidatorTest {
 
         Policies policies = buildValidPolicies(policy);
 
-        this.validateAndAssert(policies, ValidationException.class, ErrorMessage.EXPECT_START_TO_BE_TIME_FORMAT);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_START_TO_BE_TIME_FORMAT);
     }
 
     @Test
@@ -562,7 +566,7 @@ public class PoliciesValidatorTest {
 
         Policies policies = buildValidPolicies(policy);
 
-        this.validateAndAssert(policies, ValidationException.class, ErrorMessage.EXPECT_END_TO_BE_NOT_NULL);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_END_TO_BE_NOT_NULL);
     }
 
     @Test
@@ -580,7 +584,7 @@ public class PoliciesValidatorTest {
 
         Policies policies = buildValidPolicies(policy);
 
-        this.validateAndAssert(policies, ValidationException.class, ErrorMessage.EXPECT_END_TO_BE_TIME_FORMAT);
+        validateAndAssert(VALIDATOR, policies, null, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_END_TO_BE_TIME_FORMAT);
     }
 
     private Policies buildValidPolicies(Policy policy) {
@@ -641,20 +645,4 @@ public class PoliciesValidatorTest {
         return paragraphType;
     }
 
-    private void validateAndAssert(
-            Policies data,
-            Class<? extends ValidationException> exceptionClass,
-            String errorMessage
-    ) {
-        PoliciesValidator validator = new PoliciesValidator();
-
-        // CHECKSTYLE:OFF
-        Exception e = expectThrows(
-                exceptionClass,
-                () -> validator.validate(data, null, VALIDATION_PATH)
-        );
-
-        // CHECKSTYLE:ON
-        assertEquals(e.getMessage().substring(0, errorMessage.length()), errorMessage);
-    }
 }

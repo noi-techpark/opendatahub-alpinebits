@@ -29,24 +29,31 @@ import it.bz.opendatahub.alpinebits.xml.schema.ota.URLsType;
 import it.bz.opendatahub.alpinebits.xml.schema.ota.URLsType.URL;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.expectThrows;
+import static it.bz.opendatahub.alpinebits.validation.schema.common.ValidationUtil.validateAndAssert;
 
 /**
  * Tests for {@link ContactInfosValidator}.
  */
 public class ContactInfosValidatorTest {
 
+    private static final ContactInfosValidator VALIDATOR = new ContactInfosValidator();
     private static final ValidationPath VALIDATION_PATH = SimpleValidationPath.fromPath(Names.CONTACT_INFOS);
 
     @Test
     public void testValidate_ShouldThrow_WhenContactInfosTypeIsNull() {
-        this.validateAndAssert(null, NullValidationException.class, ErrorMessage.EXPECT_CONTACT_INFOS_TO_NOT_BE_NULL);
+        validateAndAssert(VALIDATOR, null, null, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_CONTACT_INFOS_TO_NOT_BE_NULL);
     }
 
     @Test
     public void testValidate_ShouldThrow_WhenContactInfoListIsNull() {
-        this.validateAndAssert(new ContactInfosType(), ValidationException.class, ErrorMessage.EXPECT_CONTACT_INFO_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT);
+        validateAndAssert(
+                VALIDATOR,
+                new ContactInfosType(),
+                null,
+                VALIDATION_PATH,
+                ValidationException.class,
+                ErrorMessage.EXPECT_CONTACT_INFO_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT
+        );
     }
 
     @Test
@@ -55,7 +62,9 @@ public class ContactInfosValidatorTest {
         contactInfosType.getContactInfos().add(new ContactInfoRootType());
         contactInfosType.getContactInfos().add(new ContactInfoRootType());
 
-        this.validateAndAssert(contactInfosType, ValidationException.class, ErrorMessage.EXPECT_CONTACT_INFO_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT);
+        validateAndAssert(
+                VALIDATOR, contactInfosType, null, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_CONTACT_INFO_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT
+        );
     }
 
     @Test
@@ -65,7 +74,7 @@ public class ContactInfosValidatorTest {
         ContactInfosType contactInfosType = new ContactInfosType();
         contactInfosType.getContactInfos().add(contactInfoRootType);
 
-        this.validateAndAssert(contactInfosType, ValidationException.class, ErrorMessage.EXPECT_LOCATION_TO_HAVE_A_VALUE_OF_6);
+        validateAndAssert(VALIDATOR, contactInfosType, null, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_LOCATION_TO_HAVE_A_VALUE_OF_6);
     }
 
     @Test
@@ -73,7 +82,9 @@ public class ContactInfosValidatorTest {
         ContactInfosType contactInfosType = buildValidContactInfosType();
         contactInfosType.getContactInfos().get(0).setAddresses(new AddressesType());
 
-        this.validateAndAssert(contactInfosType, EmptyCollectionValidationException.class, ErrorMessage.EXPECT_ADDRESS_LIST_TO_BE_NOT_EMPTY);
+        validateAndAssert(
+                VALIDATOR, contactInfosType, null, VALIDATION_PATH, EmptyCollectionValidationException.class, ErrorMessage.EXPECT_ADDRESS_LIST_TO_BE_NOT_EMPTY
+        );
     }
 
     @Test
@@ -84,7 +95,7 @@ public class ContactInfosValidatorTest {
         ContactInfosType contactInfosType = buildValidContactInfosType();
         contactInfosType.getContactInfos().get(0).setAddresses(addressesType);
 
-        this.validateAndAssert(contactInfosType, ValidationException.class, ErrorMessage.EXPECT_LANGUAGE_TO_BE_NOT_NULL);
+        validateAndAssert(VALIDATOR, contactInfosType, null, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_LANGUAGE_TO_BE_NOT_NULL);
     }
 
     @Test
@@ -99,7 +110,7 @@ public class ContactInfosValidatorTest {
         ContactInfosType contactInfosType = buildValidContactInfosType();
         contactInfosType.getContactInfos().get(0).setAddresses(addressesType);
 
-        this.validateAndAssert(contactInfosType, ValidationException.class, ErrorMessage.EXPECT_ADDRESS_LANGUAGES_TO_BE_UNIQUE);
+        validateAndAssert(VALIDATOR, contactInfosType, null, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_ADDRESS_LANGUAGES_TO_BE_UNIQUE);
     }
 
     @Test
@@ -107,7 +118,9 @@ public class ContactInfosValidatorTest {
         ContactInfosType contactInfosType = buildValidContactInfosType();
         contactInfosType.getContactInfos().get(0).setPhones(new PhonesType());
 
-        this.validateAndAssert(contactInfosType, EmptyCollectionValidationException.class, ErrorMessage.EXPECT_PHONE_LIST_TO_BE_NOT_EMPTY);
+        validateAndAssert(
+                VALIDATOR, contactInfosType, null, VALIDATION_PATH, EmptyCollectionValidationException.class, ErrorMessage.EXPECT_PHONE_LIST_TO_BE_NOT_EMPTY
+        );
     }
 
     @Test
@@ -121,7 +134,9 @@ public class ContactInfosValidatorTest {
         ContactInfosType contactInfosType = buildValidContactInfosType();
         contactInfosType.getContactInfos().get(0).setPhones(phonesType);
 
-        this.validateAndAssert(contactInfosType, NullValidationException.class, ErrorMessage.EXPECT_PHONE_TECH_TYPE_TO_NOT_BE_NULL);
+        validateAndAssert(
+                VALIDATOR, contactInfosType, null, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_PHONE_TECH_TYPE_TO_NOT_BE_NULL
+        );
     }
 
     @Test
@@ -135,7 +150,7 @@ public class ContactInfosValidatorTest {
         ContactInfosType contactInfosType = buildValidContactInfosType();
         contactInfosType.getContactInfos().get(0).setPhones(phonesType);
 
-        this.validateAndAssert(contactInfosType, NullValidationException.class, ErrorMessage.EXPECT_PHONE_NUMBER_TO_NOT_BE_NULL);
+        validateAndAssert(VALIDATOR, contactInfosType, null, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_PHONE_NUMBER_TO_NOT_BE_NULL);
     }
 
     @Test
@@ -143,7 +158,9 @@ public class ContactInfosValidatorTest {
         ContactInfosType contactInfosType = buildValidContactInfosType();
         contactInfosType.getContactInfos().get(0).setEmails(new EmailsType());
 
-        this.validateAndAssert(contactInfosType, EmptyCollectionValidationException.class, ErrorMessage.EXPECT_EMAIL_LIST_TO_BE_NOT_EMPTY);
+        validateAndAssert(
+                VALIDATOR, contactInfosType, null, VALIDATION_PATH, EmptyCollectionValidationException.class, ErrorMessage.EXPECT_EMAIL_LIST_TO_BE_NOT_EMPTY
+        );
     }
 
     @Test
@@ -154,7 +171,7 @@ public class ContactInfosValidatorTest {
         ContactInfosType contactInfosType = buildValidContactInfosType();
         contactInfosType.getContactInfos().get(0).setEmails(emailsType);
 
-        this.validateAndAssert(contactInfosType, NullValidationException.class, ErrorMessage.EXPECT_EMAIL_TYPE_TO_NOT_BE_NULL);
+        validateAndAssert(VALIDATOR, contactInfosType, null, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_EMAIL_TYPE_TO_NOT_BE_NULL);
     }
 
     @Test
@@ -162,7 +179,9 @@ public class ContactInfosValidatorTest {
         ContactInfosType contactInfosType = buildValidContactInfosType();
         contactInfosType.getContactInfos().get(0).setURLs(new URLsType());
 
-        this.validateAndAssert(contactInfosType, EmptyCollectionValidationException.class, ErrorMessage.EXPECT_URL_LIST_TO_BE_NOT_EMPTY);
+        validateAndAssert(
+                VALIDATOR, contactInfosType, null, VALIDATION_PATH, EmptyCollectionValidationException.class, ErrorMessage.EXPECT_URL_LIST_TO_BE_NOT_EMPTY
+        );
     }
 
     @Test
@@ -176,7 +195,7 @@ public class ContactInfosValidatorTest {
         ContactInfosType contactInfosType = buildValidContactInfosType();
         contactInfosType.getContactInfos().get(0).setURLs(urLsType);
 
-        this.validateAndAssert(contactInfosType, ValidationException.class, ErrorMessage.EXPECT_ID_TO_BE_ALL_UPPERCASE);
+        validateAndAssert(VALIDATOR, contactInfosType, null, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_ID_TO_BE_ALL_UPPERCASE);
     }
 
     private ContactInfosType buildValidContactInfosType() {
@@ -194,20 +213,4 @@ public class ContactInfosValidatorTest {
         return contactInfoRootType;
     }
 
-    private void validateAndAssert(
-            ContactInfosType data,
-            Class<? extends ValidationException> exceptionClass,
-            String errorMessage
-    ) {
-        ContactInfosValidator validator = new ContactInfosValidator();
-
-        // CHECKSTYLE:OFF
-        Exception e = expectThrows(
-                exceptionClass,
-                () -> validator.validate(data, null, VALIDATION_PATH)
-        );
-
-        // CHECKSTYLE:ON
-        assertEquals(e.getMessage().substring(0, errorMessage.length()), errorMessage);
-    }
 }
