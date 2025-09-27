@@ -7,8 +7,8 @@ SPDX-License-Identifier: CC0-1.0
 -->
 
 <!DOCTYPE suppressions PUBLIC
-        "-//Puppy Crawl//DTD Suppressions 1.0//EN"
-        "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
+        "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
 
 <suppressions>
     <!-- Suppresses the rule MultipleStringLiterals for unit and integration tests -->

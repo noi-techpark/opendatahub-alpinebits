@@ -505,6 +505,7 @@ SPDX-License-Identifier: CC0-1.0
                                 <suppressionsLocation>
                                     build-tools/src/main/resources/checkstyle-suppressions.xml
                                 </suppressionsLocation>
+                                <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
                                 <consoleOutput>true</consoleOutput>
                                 <includeTestSourceDirectory>true</includeTestSourceDirectory>
                                 <!--check only src directory, ignore generated sources-->
