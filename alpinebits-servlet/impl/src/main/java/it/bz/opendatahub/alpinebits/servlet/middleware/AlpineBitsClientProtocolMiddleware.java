@@ -38,6 +38,7 @@ public class AlpineBitsClientProtocolMiddleware implements Middleware {
     public static final String CLIENT_PROTOCOL_VERSION_HEADER = "X-AlpineBits-ClientProtocolVersion";
 
     private static final Logger LOG = LoggerFactory.getLogger(AlpineBitsClientProtocolMiddleware.class);
+    private static final String ERROR_MESSAGE = "no valid client protocol version provided";
 
     @Override
     public void handleContext(Context ctx, MiddlewareChain chain) {
@@ -45,7 +46,7 @@ public class AlpineBitsClientProtocolMiddleware implements Middleware {
 
         String clientProtocolVersion = request.getHeader(CLIENT_PROTOCOL_VERSION_HEADER);
         if (clientProtocolVersion == null) {
-            throw new AlpineBitsClientProtocolMissingException("No X-AlpineBits-ClientProtocolVersion header found");
+            throw new AlpineBitsClientProtocolMissingException(ERROR_MESSAGE);
         }
 
         LOG.debug("X-AlpineBits-ClientProtocolVersion header found: {}", clientProtocolVersion);

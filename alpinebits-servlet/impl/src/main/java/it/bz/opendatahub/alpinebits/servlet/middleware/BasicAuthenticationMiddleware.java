@@ -48,6 +48,7 @@ public class BasicAuthenticationMiddleware implements Middleware {
     public static final String BASIC_AUTHENTICATION_HEADER = "Authorization";
 
     private static final Logger LOG = LoggerFactory.getLogger(BasicAuthenticationMiddleware.class);
+    private static final String ERROR_MESSAGE = "invalid or missing username/password";
 
     @Override
     public void handleContext(Context ctx, MiddlewareChain chain) {
@@ -55,7 +56,7 @@ public class BasicAuthenticationMiddleware implements Middleware {
 
         String header = request.getHeader(BASIC_AUTHENTICATION_HEADER);
         if (header == null || !header.toLowerCase().startsWith("basic ")) {
-            throw new BasicAuthenticationException("No basic authentication header found");
+            throw new BasicAuthenticationException(ERROR_MESSAGE);
         }
 
         String[] tokens = this.extractAndDecodeHeader(header);
@@ -86,7 +87,7 @@ public class BasicAuthenticationMiddleware implements Middleware {
         try {
             decoded = Base64.getDecoder().decode(base64Token);
         } catch (IllegalArgumentException e) {
-            throw new BasicAuthenticationException("Failed to decode basic authentication token");
+            throw new BasicAuthenticationException(ERROR_MESSAGE);
         }
 
         String token;
@@ -95,7 +96,7 @@ public class BasicAuthenticationMiddleware implements Middleware {
         int delim = token.indexOf(':');
 
         if (delim == -1) {
-            throw new BasicAuthenticationException("Invalid basic authentication token");
+            throw new BasicAuthenticationException(ERROR_MESSAGE);
         }
         return new String[]{token.substring(0, delim), token.substring(delim + 1)};
     }
