@@ -10,6 +10,7 @@
 
 package it.bz.opendatahub.alpinebits.routing.middleware;
 
+import it.bz.opendatahub.alpinebits.common.AlpineBitsVersionChecker;
 import it.bz.opendatahub.alpinebits.common.context.RequestContextKey;
 import it.bz.opendatahub.alpinebits.middleware.Context;
 import it.bz.opendatahub.alpinebits.middleware.Middleware;
@@ -64,10 +65,24 @@ public class RoutingMiddleware implements Middleware {
     }
 
     private Middleware findMiddleware(String version, String actionRequestParam) {
+        // The 2024-10 spec contradicts itself when describing how to handle AlpineBits versions unknown to the server:
+        // - in section "Server Validation" (p. 13) it says:
+        //   "Unsupported Client Protocol Version: 400 Bad Request
+        //   ERROR:your current alpinebits version does not match one of the servers supported versions"
+        // - in section "Implementation tips and best practice" (p. 19) it says:
+        //   "Server: if the server supports this same version, it answers with this version and the negotiation
+        //   terminates successfully; otherwise the server answers with the highest version it supports."
+        // Which one should we follow?
+        // For now, we follow the first approach for AlpineBits 2024-10 and later and
+        // we follow the second approach for AlpineBits versions prior to 2024-10 to not break existing clients.
+        if (AlpineBitsVersionChecker.isVersionWithImplicitOTAPingInHandshaking(version) && !this.router.isVersionDefined(version)) {
+            throw new UndefinedRouteException("your current alpinebits version does not match one of the servers supported versions");
+        }
+
         Optional<Middleware> optional = this.router.findMiddleware(version, actionRequestParam);
 
         if (!optional.isPresent()) {
-            throw new UndefinedRouteException("No route found for version " + version + " and action " + actionRequestParam);
+            throw new UndefinedRouteException("unknown or missing action");
         }
 
         return optional.get();

@@ -136,6 +136,14 @@ public final class DefaultRouter implements Router {
     }
 
     @Override
+    public boolean isVersionDefined(String version) {
+        if (version == null) {
+            throw new IllegalArgumentException(VERSION_NULL_ERROR_MESSAGE);
+        }
+        return this.routes.containsKey(version);
+    }
+
+    @Override
     public boolean isCapabilityDefined(String version, String capability) {
         Set<String> capabilities = this.getCapabilitiesForVersion(version).orElse(Collections.emptySet());
         return capabilities.contains(capability);
@@ -172,7 +180,7 @@ public final class DefaultRouter implements Router {
 
         private final Map<String, VersionConfiguration> versionConfigurations = new HashMap<>();
 
-        private Supplier<Router> routerBuilder = () -> {
+        private final Supplier<Router> routerBuilder = () -> {
             List<String> versions = new ArrayList<>(this.versionConfigurations.keySet());
             Collections.sort(versions);
             String highestVersion = versions.get(versions.size() - 1);

@@ -279,6 +279,18 @@ public class DefaultRouterTest {
         assertEquals(result.get(), capabilities);
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testIsVersionDefined_throwsOnNullVersion() {
+        Router router = this.getDefaultRouter();
+        router.isVersionDefined(null);
+    }
+
+    @Test
+    public void testIsVersionDefined_trueIfDefined() {
+        Router router = this.getDefaultRouter();
+        assertTrue(router.isVersionDefined(DEFAULT_VERSION));
+    }
+
     @Test
     public void testIsCapabilityDefined_trueIfDefined() {
         Router router = new DefaultRouter.Builder()
