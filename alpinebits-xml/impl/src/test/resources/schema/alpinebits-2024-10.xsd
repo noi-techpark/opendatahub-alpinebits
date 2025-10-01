@@ -3397,6 +3397,29 @@
                     </xs:complexType>
                   </xs:element>
 
+                  <!-- TPA_Extensions (Inventory/HotelInfo (push)) -->
+                  <xs:element name="TPA_Extensions" minOccurs="0">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="AdditionalCodes" minOccurs="0">
+                          <xs:complexType>
+                            <xs:sequence>
+                              <xs:element name="AdditionalCode" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                  <xs:simpleContent>
+                                    <xs:extension base="def_nonempty_string">
+                                      <xs:attribute name="Type" use="required" type="def_nonempty_string"/>
+                                    </xs:extension>
+                                  </xs:simpleContent>
+                                </xs:complexType>
+                              </xs:element>
+                            </xs:sequence>
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+
                 </xs:sequence>
                 <xs:attribute name="HotelCityCode" type="StringLength1to8"/>
                 <xs:attribute name="HotelCode"     use="required" type="StringLength1to16" />
