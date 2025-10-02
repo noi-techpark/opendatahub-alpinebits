@@ -38,7 +38,7 @@ public final class JAXBXmlToObjectConverter<T> implements XmlToObjectConverter<T
     private JAXBXmlToObjectConverter(Schema schema, Class<T> classToBeBound) {
         this.schema = schema;
         this.classToBeBound = classToBeBound;
-        this.otaSchema = XmlValidationSchemaProvider.buildXsdSchema("ota2015a-min.xsd");
+        this.otaSchema = OtaSchemaSingleton.getInstance();
     }
 
     @Override
