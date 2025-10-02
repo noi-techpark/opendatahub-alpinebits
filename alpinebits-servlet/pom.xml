@@ -12,12 +12,12 @@ SPDX-License-Identifier: CC0-1.0
     <parent>
         <groupId>it.bz.opendatahub.alpinebits</groupId>
         <artifactId>alpinebits-root</artifactId>
-        <version>4.0.0-SNAPSHOT</version>
+        <version>4.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>alpinebits-servlet</artifactId>
-    <version>4.0.0-SNAPSHOT</version>
+    <version>4.0.0</version>
 
     <packaging>pom</packaging>
     <name>AlpineBits servlet</name>
