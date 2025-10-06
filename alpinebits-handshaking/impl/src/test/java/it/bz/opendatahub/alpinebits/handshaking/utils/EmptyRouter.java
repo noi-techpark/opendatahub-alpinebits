@@ -53,6 +53,11 @@ public class EmptyRouter implements Router {
     }
 
     @Override
+    public boolean isVersionDefined(String version) {
+        return false;
+    }
+
+    @Override
     public boolean isCapabilityDefined(String version, String capability) {
         return false;
     }

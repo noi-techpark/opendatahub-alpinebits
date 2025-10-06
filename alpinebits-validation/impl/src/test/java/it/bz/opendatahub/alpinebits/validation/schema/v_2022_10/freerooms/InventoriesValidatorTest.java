@@ -28,14 +28,14 @@ import org.testng.annotations.Test;
 
 import java.util.Arrays;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.expectThrows;
+import static it.bz.opendatahub.alpinebits.validation.schema.common.ValidationUtil.validateAndAssert;
 
 /**
  * Tests for {@link InventoriesValidator}.
  */
 public class InventoriesValidatorTest {
-    protected static final ValidationPath VALIDATION_PATH = SimpleValidationPath.fromPath(Names.INVENTORIES);
+    private static final InventoriesValidator VALIDATOR = new InventoriesValidator();
+    private static final ValidationPath VALIDATION_PATH = SimpleValidationPath.fromPath(Names.INVENTORIES);
 
     private static final String STATUS_APPLICATION_CONTROL_START = "2017-10-01";
     private static final String STATUS_APPLICATION_CONTROL_END = "2017-10-31";
@@ -45,14 +45,14 @@ public class InventoriesValidatorTest {
 
     @Test
     public void testValidate_ShouldThrow_WhenInventoriesIsNull() {
-        this.validateAndAssert(null, null, NullValidationException.class, ErrorMessage.EXPECT_INVENTORIES_TO_BE_NOT_NULL);
+        validateAndAssert(VALIDATOR, null, null, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_INVENTORIES_TO_BE_NOT_NULL);
     }
 
     @Test
     public void testValidate_ShouldThrow_WhenContextIsNull() {
         InvCountType inventories = new InvCountType();
 
-        this.validateAndAssert(inventories, null, NullValidationException.class, ErrorMessage.EXPECT_CONTEXT_TO_BE_NOT_NULL);
+        validateAndAssert(VALIDATOR, inventories, null, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_CONTEXT_TO_BE_NOT_NULL);
     }
 
     @Test
@@ -61,7 +61,9 @@ public class InventoriesValidatorTest {
 
         InventoriesContext ctx = new InventoriesContext(null, null);
 
-        this.validateAndAssert(inventories, ctx, ValidationException.class, ErrorMessage.EXPECT_HOTEL_CODE_AND_HOTEL_NAME_TO_BE_NOT_BOTH_NULL);
+        validateAndAssert(
+                VALIDATOR, inventories, ctx, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_HOTEL_CODE_AND_HOTEL_NAME_TO_BE_NOT_BOTH_NULL
+        );
     }
 
     @Test
@@ -70,7 +72,9 @@ public class InventoriesValidatorTest {
 
         InventoriesContext ctx = new InventoriesContext(null, null);
 
-        this.validateAndAssert(inventories, ctx, EmptyCollectionValidationException.class, ErrorMessage.EXPECT_INVENTORIES_LIST_TO_BE_NOT_EMPTY);
+        validateAndAssert(
+                VALIDATOR, inventories, ctx, VALIDATION_PATH, EmptyCollectionValidationException.class, ErrorMessage.EXPECT_INVENTORIES_LIST_TO_BE_NOT_EMPTY
+        );
     }
 
     @Test
@@ -80,7 +84,9 @@ public class InventoriesValidatorTest {
 
         InventoriesContext ctx = new InventoriesContext(OTAHotelInvCountNotifRQValidator.COMPLETE_SET, null);
 
-        this.validateAndAssert(inventories, ctx, ValidationException.class, ErrorMessage.EXPECT_HOTEL_INV_COUNT_NOTIF_SUPPORT_FOR_CLOSING_SEASONS);
+        validateAndAssert(
+                VALIDATOR, inventories, ctx, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_HOTEL_INV_COUNT_NOTIF_SUPPORT_FOR_CLOSING_SEASONS
+        );
     }
 
     @Test
@@ -94,7 +100,7 @@ public class InventoriesValidatorTest {
                 new HotelInvCountNotifContext.Builder().withRoomsSupport().withClosingSeasonsSupport().build()
         );
 
-        this.validateAndAssert(inventories, ctx, ValidationException.class, ErrorMessage.EXPECT_CLOSING_SEASON_TO_BE_ON_TOP_OF_LIST);
+        validateAndAssert(VALIDATOR, inventories, ctx, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_CLOSING_SEASON_TO_BE_ON_TOP_OF_LIST);
     }
 
     @Test
@@ -108,7 +114,7 @@ public class InventoriesValidatorTest {
                 new HotelInvCountNotifContext.Builder().withClosingSeasonsSupport().build()
         );
 
-        this.validateAndAssert(inventories, ctx, ValidationException.class, ErrorMessage.EXPECT_INV_COUNTS_TO_BE_NULL);
+        validateAndAssert(VALIDATOR, inventories, ctx, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_INV_COUNTS_TO_BE_NULL);
     }
 
     @Test
@@ -118,7 +124,9 @@ public class InventoriesValidatorTest {
 
         InventoriesContext ctx = new InventoriesContext(null, null);
 
-        this.validateAndAssert(inventories, ctx, ValidationException.class, ErrorMessage.EXPECT_HOTEL_INV_COUNT_NOTIF_SUPPORT_FOR_CATEGORIES);
+        validateAndAssert(
+                VALIDATOR, inventories, ctx, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_HOTEL_INV_COUNT_NOTIF_SUPPORT_FOR_CATEGORIES
+        );
     }
 
     @Test
@@ -128,7 +136,7 @@ public class InventoriesValidatorTest {
 
         InventoriesContext ctx = new InventoriesContext(null, null);
 
-        this.validateAndAssert(inventories, ctx, ValidationException.class, ErrorMessage.EXPECT_HOTEL_INV_COUNT_NOTIF_SUPPORT_FOR_ROOMS);
+        validateAndAssert(VALIDATOR, inventories, ctx, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_HOTEL_INV_COUNT_NOTIF_SUPPORT_FOR_ROOMS);
     }
 
     @Test
@@ -142,7 +150,9 @@ public class InventoriesValidatorTest {
                 new HotelInvCountNotifContext.Builder().withCategoriesSupport().withRoomsSupport().build()
         );
 
-        this.validateAndAssert(inventories, ctx, ValidationException.class, ErrorMessage.EXPECT_ROOM_CATEGORY_AND_DISTINCT_ROOM_TO_NOT_BE_MIXED);
+        validateAndAssert(
+                VALIDATOR, inventories, ctx, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_ROOM_CATEGORY_AND_DISTINCT_ROOM_TO_NOT_BE_MIXED
+        );
     }
 
     @Test
@@ -159,7 +169,7 @@ public class InventoriesValidatorTest {
 
         String message = String.format(ErrorMessage.EXPECT_INV_COUNTS_TO_HAVE_BETWEEN_ONE_AND_THREE_ELEMENTS, 0);
 
-        this.validateAndAssert(inventories, ctx, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, inventories, ctx, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -181,7 +191,7 @@ public class InventoriesValidatorTest {
 
         String message = String.format(ErrorMessage.EXPECT_INV_COUNTS_TO_HAVE_BETWEEN_ONE_AND_THREE_ELEMENTS, 4);
 
-        this.validateAndAssert(inventories, ctx, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, inventories, ctx, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -217,7 +227,9 @@ public class InventoriesValidatorTest {
                 new HotelInvCountNotifContext.Builder().withRoomsSupport().build()
         );
 
-        this.validateAndAssert(inventories, ctx, ValidationException.class, ErrorMessage.EXPECT_HOTEL_INV_COUNT_NOTIF_SUPPORT_FOR_OUT_OF_ORDER);
+        validateAndAssert(
+                VALIDATOR, inventories, ctx, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_HOTEL_INV_COUNT_NOTIF_SUPPORT_FOR_OUT_OF_ORDER
+        );
     }
 
     @Test
@@ -238,7 +250,9 @@ public class InventoriesValidatorTest {
                 new HotelInvCountNotifContext.Builder().withRoomsSupport().build()
         );
 
-        this.validateAndAssert(inventories, ctx, ValidationException.class, ErrorMessage.EXPECT_HOTEL_INV_COUNT_NOTIF_SUPPORT_FOR_OUT_OF_MARKET);
+        validateAndAssert(
+                VALIDATOR, inventories, ctx, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_HOTEL_INV_COUNT_NOTIF_SUPPORT_FOR_OUT_OF_MARKET
+        );
     }
 
     @Test
@@ -259,7 +273,7 @@ public class InventoriesValidatorTest {
                 new HotelInvCountNotifContext.Builder().withRoomsSupport().build()
         );
 
-        this.validateAndAssert(inventories, ctx, ValidationException.class, ErrorMessage.EXPECT_COUNT_TYPE_TO_BE_ONE_OF_2_6_9);
+        validateAndAssert(VALIDATOR, inventories, ctx, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_COUNT_TYPE_TO_BE_ONE_OF_2_6_9);
     }
 
     private void throwOnDuplicateCountType(String countType) {
@@ -282,24 +296,7 @@ public class InventoriesValidatorTest {
 
         String message = String.format(ErrorMessage.EXPECT_NO_DUPLICATE_COUNT_TYPE, countType);
 
-        this.validateAndAssert(inventories, ctx, ValidationException.class, message);
-    }
-
-    private void validateAndAssert(
-            InvCountType data,
-            InventoriesContext ctx,
-            Class<? extends ValidationException> exceptionClass,
-            String errorMessage
-    ) {
-        InventoriesValidator validator = new InventoriesValidator();
-
-        // CHECKSTYLE:OFF
-        Exception e = expectThrows(
-                exceptionClass,
-                () -> validator.validate(data, ctx, VALIDATION_PATH)
-        );
-        // CHECKSTYLE:ON
-        assertEquals(e.getMessage().substring(0, errorMessage.length()), errorMessage);
+        validateAndAssert(VALIDATOR, inventories, ctx, VALIDATION_PATH, ValidationException.class, message);
     }
 
     private InvCountType buildValidInventories(BaseInvCountType... inventoryList) {

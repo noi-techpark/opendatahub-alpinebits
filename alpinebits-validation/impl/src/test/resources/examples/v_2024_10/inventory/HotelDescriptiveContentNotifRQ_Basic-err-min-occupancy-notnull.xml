@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+<OTA_HotelDescriptiveContentNotifRQ xmlns="http://www.opentravel.org/OTA/2003/05"
+                                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="5.000"
+                                    TimeStamp="2014-10-16T17:00:40"
+                                    xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_HotelDescriptiveContentNotifRQ.xsd">
+    <HotelDescriptiveContents>
+        <HotelDescriptiveContent HotelCode="9996">
+            <FacilityInfo>
+                <GuestRooms>
+                    <GuestRoom Code="DZ" MaxOccupancy="2" MinOccupancy="1">
+                        <TypeRoom StandardOccupancy="1" RoomClassificationCode="1"></TypeRoom>
+                        <MultimediaDescriptions>
+                            <MultimediaDescription InfoCode="25">
+                                <TextItems>
+                                    <TextItem>
+                                        <Description Language="en" TextFormat="PlainText">Some text</Description>
+                                    </TextItem>
+                                </TextItems>
+                            </MultimediaDescription>
+                        </MultimediaDescriptions>
+                    </GuestRoom>
+                    <!-- Err: following GuestRoom MinOccupancy is forbidden -->
+                    <GuestRoom Code="DZ" MinOccupancy="1">
+                        <TypeRoom RoomID="101" Size="1"/>
+                    </GuestRoom>
+                </GuestRooms>
+            </FacilityInfo>
+        </HotelDescriptiveContent>
+    </HotelDescriptiveContents>
+</OTA_HotelDescriptiveContentNotifRQ>

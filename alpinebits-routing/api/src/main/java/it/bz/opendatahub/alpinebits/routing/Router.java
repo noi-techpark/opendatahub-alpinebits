@@ -56,12 +56,12 @@ public interface Router {
      * actions {@literal ->} Implementation tips and best practices):
      * <ul>
      * <li>
-     * Client: the​ client​ queries​ the​ server​ version, sending​
-     * a header​ with​ the​ highest​ version​ it supports.
+     * Client: the client queries the server version, sending
+     * a header with the highest version it supports.
      * </li>
      * <li>
      * Server: if the server supports this same version, it
-     * answers with this version and the negotiation​ terminates
+     * answers with this version and the negotiation terminates
      * successfully; otherwise the server answers with the highest
      * version it supports.
      * </li>
@@ -177,6 +177,23 @@ public interface Router {
      * @throws IllegalArgumentException if <code>version</code> is null
      */
     Optional<Set<String>> getCapabilitiesForVersionAndActionName(String version, String actionName);
+
+    /**
+     * Check if the given <code>version</code> is defined.
+     * <p>
+     * The result is <code>true</code>, if the version is configured,
+     * no matter if actions are defined for that version. That means that
+     * a version with no action is also considered as defined.
+     * <p>
+     * If the <code>version</code> is null, an {@link IllegalArgumentException}
+     * is thrown.
+     *
+     * @param version the AlpineBits version to check
+     * @return <code>true</code> if the given version is defined,
+     * <code>false</code> otherwise
+     * @throws IllegalArgumentException if <code>version</code> is null
+     */
+    boolean isVersionDefined(String version);
 
     /**
      * Check if the <code>capability</code> for the given

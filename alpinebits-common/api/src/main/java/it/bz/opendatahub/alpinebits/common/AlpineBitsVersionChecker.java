@@ -32,7 +32,7 @@ public final class AlpineBitsVersionChecker {
      */
     // Disable CheckStyle rule "BooleanExpressionComplexity" for this method,
     // which forbids boolean expressions with more than 7 conditions
-    @SuppressWarnings("checkstyle:booleanexpressioncomplexity")
+    @SuppressWarnings("checkstyle:BooleanExpressionComplexity")
     public static boolean isLegacyVersion(String alpineBitsVersion) {
         return AlpineBitsVersion.V_2017_10.equals(alpineBitsVersion)
                 || AlpineBitsVersion.V_2015_07B.equals(alpineBitsVersion)
@@ -46,6 +46,34 @@ public final class AlpineBitsVersionChecker {
                 || AlpineBitsVersion.V_2011_09.equals(alpineBitsVersion)
                 || AlpineBitsVersion.V_2010_10.equals(alpineBitsVersion)
                 || AlpineBitsVersion.V_2010_08.equals(alpineBitsVersion);
+    }
+
+    /**
+     * This method checks if the provided AlpineBits version is a version
+     * with implicit OTA Ping in handshaking, i.e. all versions from
+     * AlpineBits 2024-10 going on.
+     *
+     * @param alpineBitsVersion The AlpineBits version to check.
+     * @return <code>true</code> if the provided version is a version
+     * with implicit OTA Ping in handshaking, <code>false</code> otherwise.
+     */
+    @SuppressWarnings("checkstyle:BooleanExpressionComplexity")
+    public static boolean isVersionWithImplicitOTAPingInHandshaking(String alpineBitsVersion) {
+        return !AlpineBitsVersion.V_2022_10.equals(alpineBitsVersion)
+                && !AlpineBitsVersion.V_2020_10.equals(alpineBitsVersion)
+                && !AlpineBitsVersion.V_2018_10.equals(alpineBitsVersion)
+                && !AlpineBitsVersion.V_2017_10.equals(alpineBitsVersion)
+                && !AlpineBitsVersion.V_2015_07B.equals(alpineBitsVersion)
+                && !AlpineBitsVersion.V_2015_07.equals(alpineBitsVersion)
+                && !AlpineBitsVersion.V_2014_04.equals(alpineBitsVersion)
+                && !AlpineBitsVersion.V_2013_04.equals(alpineBitsVersion)
+                && !AlpineBitsVersion.V_2012_05B.equals(alpineBitsVersion)
+                && !AlpineBitsVersion.V_2012_05.equals(alpineBitsVersion)
+                && !AlpineBitsVersion.V_2011_11.equals(alpineBitsVersion)
+                && !AlpineBitsVersion.V_2011_10.equals(alpineBitsVersion)
+                && !AlpineBitsVersion.V_2011_09.equals(alpineBitsVersion)
+                && !AlpineBitsVersion.V_2010_10.equals(alpineBitsVersion)
+                && !AlpineBitsVersion.V_2010_08.equals(alpineBitsVersion);
     }
 
 }

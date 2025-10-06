@@ -39,7 +39,7 @@ public final class Action {
     // Housekeeping
 
     /**
-     * The server implements​ the getVersion​​ action. This action is mandatory for all AlpineBits versions prior to AlpineBits 2018-10.
+     * The server implements the getVersion action. This action is mandatory for all AlpineBits versions prior to AlpineBits 2018-10.
      */
     public static final Action GET_VERSION = of(
             AlpineBitsAction.GET_VERSION,
@@ -47,7 +47,7 @@ public final class Action {
     );
 
     /**
-     * The server implements​ the getCapabilities action. This action is mandatory for all AlpineBits versions prior to AlpineBits 2018-10.
+     * The server implements the getCapabilities action. This action is mandatory for all AlpineBits versions prior to AlpineBits 2018-10.
      */
     public static final Action GET_CAPABILITIES = of(
             AlpineBitsAction.GET_CAPABILITIES,

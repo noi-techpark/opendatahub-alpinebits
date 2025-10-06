@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+<OTA_HotelDescriptiveContentNotifRQ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                    xmlns="http://www.opentravel.org/OTA/2003/05"
+                                    xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_HotelDescriptiveContentNotifRQ.xsd"
+                                    Version="8.000">
+
+    <HotelDescriptiveContents>
+        <HotelDescriptiveContent HotelCode="123" HotelName="Frangart Inn" AreaID="3181913">
+            <HotelInfo>
+                <Services>
+                    <!-- Err: Service code must be either a OTA Hotel Amenity Code (HAC) -->
+                    <!-- or, since 2024-10, an AlpineBits Hotel Amenity Code (ABH) -->
+                    <Service Code="INVALID" ProximityCode="2"/>
+                </Services>
+            </HotelInfo>
+        </HotelDescriptiveContent>
+    </HotelDescriptiveContents>
+</OTA_HotelDescriptiveContentNotifRQ>

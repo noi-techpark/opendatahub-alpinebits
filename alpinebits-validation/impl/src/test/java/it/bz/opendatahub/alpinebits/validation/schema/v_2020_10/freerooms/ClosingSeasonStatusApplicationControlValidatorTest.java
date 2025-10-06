@@ -15,19 +15,18 @@ import it.bz.opendatahub.alpinebits.validation.Names;
 import it.bz.opendatahub.alpinebits.validation.NotEqualValidationException;
 import it.bz.opendatahub.alpinebits.validation.NullValidationException;
 import it.bz.opendatahub.alpinebits.validation.SimpleValidationPath;
-import it.bz.opendatahub.alpinebits.validation.ValidationException;
 import it.bz.opendatahub.alpinebits.validation.ValidationPath;
 import it.bz.opendatahub.alpinebits.xml.schema.ota.StatusApplicationControlType;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.expectThrows;
+import static it.bz.opendatahub.alpinebits.validation.schema.common.ValidationUtil.validateAndAssert;
 
 /**
  * Tests for {@link ClosingSeasonStatusApplicationControlValidator}.
  */
 public class ClosingSeasonStatusApplicationControlValidatorTest {
 
+    private static final ClosingSeasonStatusApplicationControlValidator VALIDATOR = new ClosingSeasonStatusApplicationControlValidator();
     private static final ValidationPath VALIDATION_PATH = SimpleValidationPath.fromPath(Names.STATUS_APPLICATION_CONTROL);
 
     private static final String STATUS_APPLICATION_CONTROL_START = "2017-10-01";
@@ -36,8 +35,10 @@ public class ClosingSeasonStatusApplicationControlValidatorTest {
 
     @Test
     public void testValidate_ShouldThrow_WhenStatusApplicationCodeIsNull() {
-        this.validateAndAssert(
+        validateAndAssert(
+                VALIDATOR,
                 null,
+                VALIDATION_PATH,
                 NullValidationException.class,
                 ErrorMessage.EXPECT_STATUS_APPLICATION_CONTROL_TO_BE_NOT_NULL
         );
@@ -48,8 +49,10 @@ public class ClosingSeasonStatusApplicationControlValidatorTest {
         StatusApplicationControlType statusApplicationControl = this.buildValidStatusApplicationControl();
         statusApplicationControl.setStart(null);
 
-        this.validateAndAssert(
+        validateAndAssert(
+                VALIDATOR,
                 statusApplicationControl,
+                VALIDATION_PATH,
                 NullValidationException.class,
                 ErrorMessage.EXPECT_START_TO_BE_NOT_NULL
         );
@@ -60,8 +63,10 @@ public class ClosingSeasonStatusApplicationControlValidatorTest {
         StatusApplicationControlType statusApplicationControl = this.buildValidStatusApplicationControl();
         statusApplicationControl.setEnd(null);
 
-        this.validateAndAssert(
+        validateAndAssert(
+                VALIDATOR,
                 statusApplicationControl,
+                VALIDATION_PATH,
                 NullValidationException.class,
                 ErrorMessage.EXPECT_END_TO_BE_NOT_NULL
         );
@@ -72,27 +77,13 @@ public class ClosingSeasonStatusApplicationControlValidatorTest {
         StatusApplicationControlType statusApplicationControl = this.buildValidStatusApplicationControl();
         statusApplicationControl.setAllInvCode(false);
 
-        this.validateAndAssert(
+        validateAndAssert(
+                VALIDATOR,
                 statusApplicationControl,
+                VALIDATION_PATH,
                 NotEqualValidationException.class,
                 ErrorMessage.EXPECT_CLOSING_SEASON_TO_HAVE_ALL_INV_CODE_SET_TO_TRUE
         );
-    }
-
-    private void validateAndAssert(
-            StatusApplicationControlType data,
-            Class<? extends ValidationException> exceptionClass,
-            String errorMessage
-    ) {
-        ClosingSeasonStatusApplicationControlValidator validator = new ClosingSeasonStatusApplicationControlValidator();
-
-        // CHECKSTYLE:OFF
-        Exception e = expectThrows(
-                exceptionClass,
-                () -> validator.validate(data, null, VALIDATION_PATH)
-        );
-        // CHECKSTYLE:ON
-        assertEquals(e.getMessage().substring(0, errorMessage.length()), errorMessage);
     }
 
     private StatusApplicationControlType buildValidStatusApplicationControl() {
@@ -102,4 +93,5 @@ public class ClosingSeasonStatusApplicationControlValidatorTest {
         statusApplicationControl.setInvTypeCode(STATUS_APPLICATION_CONTROL_INV_TYPE_CODE);
         return statusApplicationControl;
     }
+
 }

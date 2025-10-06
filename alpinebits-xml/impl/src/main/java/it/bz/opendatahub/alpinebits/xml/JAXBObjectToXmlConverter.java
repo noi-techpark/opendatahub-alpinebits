@@ -40,7 +40,7 @@ public final class JAXBObjectToXmlConverter implements ObjectToXmlConverter {
     private JAXBObjectToXmlConverter(Schema schema, boolean doPrettyPrintXml) {
         this.schema = schema;
         this.doPrettyPrintXml = doPrettyPrintXml;
-        this.otaSchema = XmlValidationSchemaProvider.buildXsdSchema("ota2015a-min.xsd");
+        this.otaSchema = OtaSchemaSingleton.getInstance();
     }
 
     @Override

@@ -37,6 +37,7 @@ public class GzipUnsupportedMiddleware implements Middleware {
     public static final String GZIP = "gzip";
 
     private static final Logger LOG = LoggerFactory.getLogger(GzipUnsupportedMiddleware.class);
+    private static final String ERROR_MESSAGE = "unsupported GZIP compression";
 
     @Override
     public void handleContext(Context ctx, MiddlewareChain chain) {
@@ -44,9 +45,7 @@ public class GzipUnsupportedMiddleware implements Middleware {
 
         String contentType = request.getHeader(CONTENT_ENCODING_HEADER);
         if (GZIP.equalsIgnoreCase(contentType)) {
-            throw new GzipUnsupportedException(
-                    "GZIP compression unsupported (Content-Encoding header with value \"gzip\" found in request header)"
-            );
+            throw new GzipUnsupportedException(ERROR_MESSAGE);
         }
 
         LOG.debug("Content-Encoding header value: {}", contentType);

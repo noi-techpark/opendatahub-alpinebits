@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+<OTA_HotelRatePlanRS xmlns="http://www.opentravel.org/OTA/2003/05"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_HotelRatePlanRS.xsd"
+                     Version="3.000">
+
+    <Success/> 
+
+    <RatePlans HotelCode="123" HotelName="Frangart Inn">
+        <RatePlan RatePlanCode="Base" CurrencyCode="EUR">
+            <Rates>
+                <Rate RateTimeUnit="Day" UnitMultiplier="1">
+                    <BaseByGuestAmts>
+                        <BaseByGuestAmt Type="7"/>
+                    </BaseByGuestAmts>
+                    <MealsIncluded MealPlanIndicator="true" MealPlanCodes="12"/>
+                </Rate>
+                <Rate Start="2023-12-29" End="2023-12-31" InvTypeCode="EZ">
+                    <BaseByGuestAmts>
+                        <BaseByGuestAmt NumberOfGuests="1"
+                                        AmountAfterTax="130.00"/>
+                    </BaseByGuestAmts>
+                </Rate>
+                <Rate Start="2023-12-29" End="2023-12-31" InvTypeCode="DZ">
+                    <BaseByGuestAmts>
+                        <BaseByGuestAmt NumberOfGuests="2"
+                                        AmountAfterTax="180.00"/>
+                    </BaseByGuestAmts>
+                </Rate>
+            </Rates>
+            <Description Name="title">
+                <Text TextFormat="PlainText" Language="en">Lorem ipsum.</Text>
+                <Text TextFormat="PlainText" Language="it">Lorem ipsum.</Text>
+                <!-- more languages ... -->
+            </Description>
+        </RatePlan>
+    </RatePlans>
+
+</OTA_HotelRatePlanRS> 

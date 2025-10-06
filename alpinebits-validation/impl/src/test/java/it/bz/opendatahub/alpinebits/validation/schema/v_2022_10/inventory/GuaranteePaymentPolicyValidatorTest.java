@@ -30,20 +30,20 @@ import it.bz.opendatahub.alpinebits.xml.schema.ota.RequiredPaymentsType.Guarante
 import it.bz.opendatahub.alpinebits.xml.schema.ota.TimeUnitType;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.expectThrows;
+import static it.bz.opendatahub.alpinebits.validation.schema.common.ValidationUtil.validateAndAssert;
 
 /**
  * Tests for {@link GuaranteePaymentPolicyValidator}.
  */
 public class GuaranteePaymentPolicyValidatorTest {
 
+    private static final GuaranteePaymentPolicyValidator VALIDATOR = new GuaranteePaymentPolicyValidator();
     private static final ValidationPath VALIDATION_PATH = SimpleValidationPath.fromPath(Names.GUARANTEE_PAYMENT_POLICY);
 
     @Test
     public void testValidate_ShouldThrow_WhenGuaranteePaymentCountIsLessThanOne() {
         String message = String.format(ErrorMessage.EXPECT_GUARANTEE_PAYMENT_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT, 0);
-        this.validateAndAssert(new GuaranteePaymentPolicy(), ValidationException.class, message);
+        validateAndAssert(VALIDATOR, new GuaranteePaymentPolicy(), VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class GuaranteePaymentPolicyValidatorTest {
         guaranteePaymentPolicy.getGuaranteePayments().add(new GuaranteePayment());
 
         String message = String.format(ErrorMessage.EXPECT_GUARANTEE_PAYMENT_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT, 2);
-        this.validateAndAssert(guaranteePaymentPolicy, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, guaranteePaymentPolicy, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -64,7 +64,13 @@ public class GuaranteePaymentPolicyValidatorTest {
         GuaranteePaymentPolicy guaranteePaymentPolicy = new GuaranteePaymentPolicy();
         guaranteePaymentPolicy.getGuaranteePayments().add(guaranteePayment);
 
-        this.validateAndAssert(guaranteePaymentPolicy, EmptyCollectionValidationException.class, ErrorMessage.EXPECT_ACCEPTED_PAYMENT_TO_BE_NOT_EMPTY);
+        validateAndAssert(
+                VALIDATOR,
+                guaranteePaymentPolicy,
+                VALIDATION_PATH,
+                EmptyCollectionValidationException.class,
+                ErrorMessage.EXPECT_ACCEPTED_PAYMENT_TO_BE_NOT_EMPTY
+        );
     }
 
     @Test
@@ -82,7 +88,9 @@ public class GuaranteePaymentPolicyValidatorTest {
         GuaranteePaymentPolicy guaranteePaymentPolicy = new GuaranteePaymentPolicy();
         guaranteePaymentPolicy.getGuaranteePayments().add(guaranteePayment);
 
-        this.validateAndAssert(guaranteePaymentPolicy, ValidationException.class, ErrorMessage.EXPECT_ACCEPTED_PAYMENT_TO_HAVE_EXACTLY_ONE_ELEMENT);
+        validateAndAssert(
+                VALIDATOR, guaranteePaymentPolicy, VALIDATION_PATH, ValidationException.class, ErrorMessage.EXPECT_ACCEPTED_PAYMENT_TO_HAVE_EXACTLY_ONE_ELEMENT
+        );
     }
 
     @Test
@@ -96,7 +104,7 @@ public class GuaranteePaymentPolicyValidatorTest {
 
         GuaranteePaymentPolicy guaranteePaymentPolicy = buildGuaranteePaymentPolicyWithAcceptedPayment(acceptedPayment);
 
-        this.validateAndAssert(guaranteePaymentPolicy, NullValidationException.class, ErrorMessage.EXPECT_BANK_ACCT_NAME_TO_NOT_BE_NULL);
+        validateAndAssert(VALIDATOR, guaranteePaymentPolicy, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_BANK_ACCT_NAME_TO_NOT_BE_NULL);
     }
 
     @Test
@@ -114,7 +122,9 @@ public class GuaranteePaymentPolicyValidatorTest {
 
         GuaranteePaymentPolicy guaranteePaymentPolicy = buildGuaranteePaymentPolicyWithAcceptedPayment(acceptedPayment);
 
-        this.validateAndAssert(guaranteePaymentPolicy, NullValidationException.class, ErrorMessage.EXPECT_BANK_ACCT_NUMBER_TO_NOT_BE_NULL);
+        validateAndAssert(
+                VALIDATOR, guaranteePaymentPolicy, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_BANK_ACCT_NUMBER_TO_NOT_BE_NULL
+        );
     }
 
     @Test
@@ -132,7 +142,7 @@ public class GuaranteePaymentPolicyValidatorTest {
 
         GuaranteePaymentPolicy guaranteePaymentPolicy = buildGuaranteePaymentPolicyWithAcceptedPayment(acceptedPayment);
 
-        this.validateAndAssert(guaranteePaymentPolicy, NullValidationException.class, ErrorMessage.EXPECT_PLAIN_TEXT_TO_NOT_BE_NULL);
+        validateAndAssert(VALIDATOR, guaranteePaymentPolicy, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_PLAIN_TEXT_TO_NOT_BE_NULL);
     }
 
     @Test
@@ -151,7 +161,7 @@ public class GuaranteePaymentPolicyValidatorTest {
 
         GuaranteePaymentPolicy guaranteePaymentPolicy = buildGuaranteePaymentPolicyWithAcceptedPayment(acceptedPayment);
 
-        this.validateAndAssert(guaranteePaymentPolicy, NullValidationException.class, ErrorMessage.EXPECT_BANK_ID_TO_NOT_BE_NULL);
+        validateAndAssert(VALIDATOR, guaranteePaymentPolicy, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_BANK_ID_TO_NOT_BE_NULL);
     }
 
     @Test
@@ -170,7 +180,7 @@ public class GuaranteePaymentPolicyValidatorTest {
 
         GuaranteePaymentPolicy guaranteePaymentPolicy = buildGuaranteePaymentPolicyWithAcceptedPayment(acceptedPayment);
 
-        this.validateAndAssert(guaranteePaymentPolicy, NullValidationException.class, ErrorMessage.EXPECT_PLAIN_TEXT_TO_NOT_BE_NULL);
+        validateAndAssert(VALIDATOR, guaranteePaymentPolicy, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_PLAIN_TEXT_TO_NOT_BE_NULL);
     }
 
     @Test
@@ -180,7 +190,7 @@ public class GuaranteePaymentPolicyValidatorTest {
 
         GuaranteePaymentPolicy guaranteePaymentPolicy = buildGuaranteePaymentPolicyWithAcceptedPayment(acceptedPayment);
 
-        this.validateAndAssert(guaranteePaymentPolicy, NullValidationException.class, ErrorMessage.EXPECT_CASH_INDICATOR_TO_NOT_BE_NULL);
+        validateAndAssert(VALIDATOR, guaranteePaymentPolicy, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_CASH_INDICATOR_TO_NOT_BE_NULL);
     }
 
     @Test
@@ -190,7 +200,7 @@ public class GuaranteePaymentPolicyValidatorTest {
 
         GuaranteePaymentPolicy guaranteePaymentPolicy = buildGuaranteePaymentPolicyWithAcceptedPayment(acceptedPayment);
 
-        this.validateAndAssert(guaranteePaymentPolicy, NullValidationException.class, ErrorMessage.EXPECT_CARD_CODE_TO_NOT_BE_NULL);
+        validateAndAssert(VALIDATOR, guaranteePaymentPolicy, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_CARD_CODE_TO_NOT_BE_NULL);
     }
 
     @Test
@@ -206,7 +216,7 @@ public class GuaranteePaymentPolicyValidatorTest {
         GuaranteePayment guaranteePayment = guaranteePaymentPolicy.getGuaranteePayments().get(0);
         guaranteePayment.setAmountPercent(new AmountPercent());
 
-        this.validateAndAssert(guaranteePaymentPolicy, NullValidationException.class, ErrorMessage.EXPECT_PERCENT_TO_NOT_BE_NULL);
+        validateAndAssert(VALIDATOR, guaranteePaymentPolicy, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_PERCENT_TO_NOT_BE_NULL);
     }
 
     @Test
@@ -224,7 +234,7 @@ public class GuaranteePaymentPolicyValidatorTest {
         guaranteePayment.getDeadlines().add(new Deadline());
 
         String message = String.format(ErrorMessage.EXPECT_DEADLINE_LIST_TO_HAVE_EXACTLY_ONE_ELEMENT, 2);
-        this.validateAndAssert(guaranteePaymentPolicy, ValidationException.class, message);
+        validateAndAssert(VALIDATOR, guaranteePaymentPolicy, VALIDATION_PATH, ValidationException.class, message);
     }
 
     @Test
@@ -245,7 +255,9 @@ public class GuaranteePaymentPolicyValidatorTest {
         GuaranteePayment guaranteePayment = guaranteePaymentPolicy.getGuaranteePayments().get(0);
         guaranteePayment.getDeadlines().add(deadline);
 
-        this.validateAndAssert(guaranteePaymentPolicy, NullValidationException.class, ErrorMessage.EXPECT_OFFSET_DROP_TIME_TO_NOT_BE_NULL);
+        validateAndAssert(
+                VALIDATOR, guaranteePaymentPolicy, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_OFFSET_DROP_TIME_TO_NOT_BE_NULL
+        );
     }
 
     @Test
@@ -266,7 +278,9 @@ public class GuaranteePaymentPolicyValidatorTest {
         GuaranteePayment guaranteePayment = guaranteePaymentPolicy.getGuaranteePayments().get(0);
         guaranteePayment.getDeadlines().add(deadline);
 
-        this.validateAndAssert(guaranteePaymentPolicy, NullValidationException.class, ErrorMessage.EXPECT_OFFSET_TIME_UNIT_TO_NOT_BE_NULL);
+        validateAndAssert(
+                VALIDATOR, guaranteePaymentPolicy, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_OFFSET_TIME_UNIT_TO_NOT_BE_NULL
+        );
     }
 
     @Test
@@ -287,7 +301,9 @@ public class GuaranteePaymentPolicyValidatorTest {
         GuaranteePayment guaranteePayment = guaranteePaymentPolicy.getGuaranteePayments().get(0);
         guaranteePayment.getDeadlines().add(deadline);
 
-        this.validateAndAssert(guaranteePaymentPolicy, NullValidationException.class, ErrorMessage.EXPECT_OFFSET_UNIT_MULTIPLIER_TO_NOT_BE_NULL);
+        validateAndAssert(
+                VALIDATOR, guaranteePaymentPolicy, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_OFFSET_UNIT_MULTIPLIER_TO_NOT_BE_NULL
+        );
     }
 
     private GuaranteePaymentPolicy buildGuaranteePaymentPolicyWithAcceptedPayment(AcceptedPayment acceptedPayment) {
@@ -303,20 +319,4 @@ public class GuaranteePaymentPolicyValidatorTest {
         return guaranteePaymentPolicy;
     }
 
-    private void validateAndAssert(
-            GuaranteePaymentPolicy data,
-            Class<? extends ValidationException> exceptionClass,
-            String errorMessage
-    ) {
-        GuaranteePaymentPolicyValidator validator = new GuaranteePaymentPolicyValidator();
-
-        // CHECKSTYLE:OFF
-        Exception e = expectThrows(
-                exceptionClass,
-                () -> validator.validate(data, null, VALIDATION_PATH)
-        );
-
-        // CHECKSTYLE:ON
-        assertEquals(e.getMessage().substring(0, errorMessage.length()), errorMessage);
-    }
 }

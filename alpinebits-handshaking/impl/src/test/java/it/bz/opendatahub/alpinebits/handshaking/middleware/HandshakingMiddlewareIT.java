@@ -18,8 +18,8 @@ import it.bz.opendatahub.alpinebits.common.constants.AlpineBitsCapability;
 import it.bz.opendatahub.alpinebits.common.constants.AlpineBitsVersion;
 import it.bz.opendatahub.alpinebits.handshaking.dto.HandshakingData;
 import it.bz.opendatahub.alpinebits.handshaking.dto.SupportedAction;
+import it.bz.opendatahub.alpinebits.handshaking.dto.SupportedVersion;
 import it.bz.opendatahub.alpinebits.handshaking.utils.OTAPingRSExtractor;
-import it.bz.opendatahub.alpinebits.handshaking.utils.RouterMiddlewareBuilder;
 import it.bz.opendatahub.alpinebits.routing.constants.Action;
 import it.bz.opendatahub.alpinebits.servlet.impl.AlpineBitsServlet;
 import it.bz.opendatahub.alpinebits.servlet.middleware.AlpineBitsClientProtocolMiddleware;
@@ -78,7 +78,7 @@ public class HandshakingMiddlewareIT extends Arquillian {
         given()
                 .header(
                         AlpineBitsClientProtocolMiddleware.CLIENT_PROTOCOL_VERSION_HEADER,
-                        RouterMiddlewareBuilder.DEFAULT_VERSION + 1
+                        AlpineBitsVersion.V_2018_10 + 1
                 )
                 .multiPart("action", AlpineBitsAction.HANDSHAKING)
                 .multiPart("request", inputXml)
@@ -97,7 +97,7 @@ public class HandshakingMiddlewareIT extends Arquillian {
         ValidatableResponse response = given()
                 .header(
                         AlpineBitsClientProtocolMiddleware.CLIENT_PROTOCOL_VERSION_HEADER,
-                        RouterMiddlewareBuilder.DEFAULT_VERSION
+                        AlpineBitsVersion.V_2024_10
                 )
                 .multiPart("action", AlpineBitsAction.HANDSHAKING)
                 .multiPart("request", inputXml)
@@ -107,7 +107,7 @@ public class HandshakingMiddlewareIT extends Arquillian {
                 .statusCode(HttpServletResponse.SC_OK);
 
         XmlToObjectConverter<OTAPingRS> converter = new JAXBXmlToObjectConverter.Builder<>(OTAPingRS.class)
-                .schema(XmlValidationSchemaProvider.buildXsdSchemaForAlpineBitsVersion(AlpineBitsVersion.V_2018_10))
+                .schema(XmlValidationSchemaProvider.buildXsdSchemaForAlpineBitsVersion(AlpineBitsVersion.V_2024_10))
                 .build();
         OTAPingRS otaPingRS = converter.toObject(response.extract().body().asInputStream());
 
@@ -118,23 +118,45 @@ public class HandshakingMiddlewareIT extends Arquillian {
 
         HandshakingData handshakingData = om.readValue(warningData.get(), HandshakingData.class);
 
-        assertEquals(handshakingData.getVersions().size(), 1);
-        handshakingData.getVersions().forEach(version -> {
-            assertEquals(version.getVersion(), RouterMiddlewareBuilder.DEFAULT_VERSION);
+        assertEquals(handshakingData.getVersions().size(), 2);
 
-            Set<SupportedAction> actions = version.getActions();
-            assertEquals(actions.size(), 2);
-            actions.forEach(action -> {
-                if (action.getAction().equals(Action.HANDSHAKING.getName())) {
-                    Set<String> capabilities = action.getSupports();
-                    assertNull(capabilities);
-                } else if (action.getAction().equals(Action.BASE_RATES_HOTEL_RATE_PLAN_BASE_RATES.getName())) {
-                    Set<String> capabilities = action.getSupports();
-                    capabilities.forEach(capability -> assertEquals(capability, AlpineBitsCapability.BASE_RATES_HOTEL_RATE_PLAN_BASE_RATES_DELTAS));
-                } else {
-                    throw new RuntimeException("Action not one of expected actions");
-                }
-            });
+        // Check 2018-10 version
+        SupportedVersion version201810 = handshakingData.getVersions().stream()
+                .filter(version -> AlpineBitsVersion.V_2018_10.equals(version.getVersion()))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Expected version " + AlpineBitsVersion.V_2018_10 + " not found"));
+
+        Set<SupportedAction> actions201810 = version201810.getActions();
+        assertEquals(actions201810.size(), 2);
+        actions201810.forEach(action -> {
+            if (action.getAction().equals(Action.HANDSHAKING.getName())) {
+                Set<String> capabilities = action.getSupports();
+                assertNull(capabilities);
+            } else if (action.getAction().equals(Action.BASE_RATES_HOTEL_RATE_PLAN_BASE_RATES.getName())) {
+                Set<String> capabilities = action.getSupports();
+                capabilities.forEach(capability -> assertEquals(capability, AlpineBitsCapability.BASE_RATES_HOTEL_RATE_PLAN_BASE_RATES_DELTAS));
+            } else {
+                throw new RuntimeException("Action not one of expected actions");
+            }
+        });
+
+        // Check 2024-10 version
+        SupportedVersion version202410 = handshakingData.getVersions().stream()
+                .filter(version -> AlpineBitsVersion.V_2024_10.equals(version.getVersion()))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Expected version " + AlpineBitsVersion.V_2024_10 + " not found"));
+
+        Set<SupportedAction> actions202410 = version202410.getActions();
+        assertEquals(actions202410.size(), 1);
+        actions202410.forEach(action -> {
+            if (action.getAction().equals(Action.HANDSHAKING.getName())) {
+                throw new RuntimeException("As of AlpineBits 2024-10, OTA_Ping action is implicit and should not be part of result actions");
+            } else if (action.getAction().equals(Action.BASE_RATES_HOTEL_RATE_PLAN_BASE_RATES.getName())) {
+                Set<String> capabilities = action.getSupports();
+                capabilities.forEach(capability -> assertEquals(capability, AlpineBitsCapability.BASE_RATES_HOTEL_RATE_PLAN_BASE_RATES_DELTAS));
+            } else {
+                throw new RuntimeException("Action not one of expected actions");
+            }
         });
     }
 

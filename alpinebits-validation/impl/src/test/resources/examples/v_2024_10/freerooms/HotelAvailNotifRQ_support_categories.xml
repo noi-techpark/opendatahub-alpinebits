@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+<OTA_HotelInvCountNotifRQ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                       xmlns="http://www.opentravel.org/OTA/2003/05"
+                       xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_HotelInvCountNotifRQ.xsd"
+                       Version="1.002">
+    <UniqueID Type="16" ID="1" Instance="CompleteSet"/>
+    <Inventories HotelCode="9996">
+        <Inventory>
+            <StatusApplicationControl Start="2010-08-01" End="2010-08-10" InvTypeCode="double"/>
+            <InvCounts>
+                <InvCount CountType="2" Count="3" />
+            </InvCounts>
+        </Inventory>
+    </Inventories>
+</OTA_HotelInvCountNotifRQ>

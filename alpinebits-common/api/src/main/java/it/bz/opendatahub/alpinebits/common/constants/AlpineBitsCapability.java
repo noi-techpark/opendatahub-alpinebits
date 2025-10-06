@@ -11,8 +11,8 @@
 package it.bz.opendatahub.alpinebits.common.constants;
 
 /**
- * This class provides constants for all known AlpineBits capabilities for version 2022-10.
- *
+ * This class provides constants for all known AlpineBits capabilities for version 2024-10.
+ * <p>
  * In the context of this class, "capability" means the values exchanged as capabilities during
  * the Housekeeping -&gt; getCapabilities and Handshaking requests. They express, what the
  * client and server are capable of.
@@ -23,7 +23,7 @@ public final class AlpineBitsCapability {
 
     /**
      * Handshaking action (support for this action is mandatory since AlpineBits 2018-10).
-     *
+     * <p>
      * This action was introduced with AlpineBits 2018-10.
      */
     public static final String HANDSHAKING = "action_OTA_Ping";
@@ -31,15 +31,15 @@ public final class AlpineBitsCapability {
     // Housekeeping
 
     /**
-     * The server implements​ the getVersion​​ action.
-     *
+     * The server implements the getVersion action.
+     * <p>
      * This action is mandatory for all AlpineBits versions prior to AlpineBits 2018-10.
      */
     public static final String GET_VERSION = "action_getVersion";
 
     /**
-     * The server implements​ the getCapabilities action.
-     *
+     * The server implements the getCapabilities action.
+     * <p>
      * This action is mandatory for all AlpineBits versions prior to AlpineBits 2018-10.
      */
     public static final String GET_CAPABILITIES = "action_getCapabilities";

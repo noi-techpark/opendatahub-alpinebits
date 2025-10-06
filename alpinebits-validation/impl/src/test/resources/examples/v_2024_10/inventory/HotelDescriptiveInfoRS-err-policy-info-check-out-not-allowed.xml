@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+<OTA_HotelDescriptiveInfoRS xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                            xmlns="http://www.opentravel.org/OTA/2003/05"
+                            xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_HotelDescriptiveInfoRS.xsd"
+                            Version="3.000">
+
+    <Success/>
+
+    <HotelDescriptiveContents>
+
+		<!-- 
+		HotelCode: Is the sender unique ID of the Property.
+		AreaID:    Unique id that identify  a city/location. 
+		           Could be used the GeoNames code as common reference. 
+		-->
+        <HotelDescriptiveContent HotelCode="123" HotelName="Frangart Inn" AreaID="3181913" >
+  
+            <!-- Policies: check-in and check_out period, min guest age, ... -->
+            <Policies>
+                <Policy>
+                    <!-- Breaking change 2024-10: CheckOutTime not allowed anymore in PolicyInfo -->
+                    <PolicyInfo MinGuestAge="6" CheckOutTime="22:00:00"></PolicyInfo>
+                </Policy>
+            </Policies>
+
+        </HotelDescriptiveContent>
+    </HotelDescriptiveContents>
+
+</OTA_HotelDescriptiveInfoRS>

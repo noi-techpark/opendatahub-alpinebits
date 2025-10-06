@@ -11,7 +11,7 @@ SPDX-License-Identifier: CC0-1.0
 
     <groupId>it.bz.opendatahub.alpinebits</groupId>
     <artifactId>alpinebits-root</artifactId>
-    <version>3.0.0</version>
+    <version>4.0.0</version>
     <packaging>pom</packaging>
     <name>AlpineBits</name>
     <description>
@@ -60,13 +60,15 @@ SPDX-License-Identifier: CC0-1.0
 
         <servlet.version>3.1.0</servlet.version>
         <mapstruct.version>1.2.0.Final</mapstruct.version>
+        <commons-io.version>2.20.0</commons-io.version>
+        <commons-codec.version>1.19.0</commons-codec.version>
         <jackson.version>2.17.1</jackson.version>
 
         <testng.version>7.5.1</testng.version>
         <mockito.version>2.22.0</mockito.version>
         <arquillian.version>1.8.0.Final</arquillian.version>
-        <tomcat-embedded.version>9.0.88</tomcat-embedded.version>
-        <rest-assured.version>5.4.0</rest-assured.version>
+        <tomcat-embedded.version>9.0.109</tomcat-embedded.version>
+        <rest-assured.version>5.5.6</rest-assured.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -238,107 +240,107 @@ SPDX-License-Identifier: CC0-1.0
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>alpinebits-common-api</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>alpinebits-common-utils</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>alpinebits-db-api</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>alpinebits-db-impl</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>alpinebits-handshaking-api</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>alpinebits-handshaking-impl</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>alpinebits-housekeeping-api</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>alpinebits-housekeeping-impl</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>alpinebits-middleware-api</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>alpinebits-middleware-impl</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>alpinebits-routing-api</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>alpinebits-routing-impl</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>alpinebits-servlet-api</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>alpinebits-servlet-impl</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>alpinebits-validation-api</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>alpinebits-validation-impl</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>alpinebits-xml-api</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>alpinebits-xml-impl</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>examples-housekeeping</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>examples-freerooms</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>it.bz.opendatahub.alpinebits</groupId>
                 <artifactId>examples-inventory</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0</version>
             </dependency>
 
             <dependency>
@@ -356,6 +358,26 @@ SPDX-License-Identifier: CC0-1.0
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct-jdk8</artifactId>
                 <version>${mapstruct.version}</version>
+            </dependency>
+
+            <!--
+                Use current version of commons-io to fix a security vulnerability
+                introduced by org.apache.commons:commons-fileupload2-javax in
+                alpinebits-servlet-impl module.
+            -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            <!--
+                Use current version of commons-codec to fix a security vulnerability
+                introduced by io.rest-assured:rest-assured
+            -->
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons-codec.version}</version>
             </dependency>
 
             <!-- Test dependencies -->
@@ -483,6 +505,7 @@ SPDX-License-Identifier: CC0-1.0
                                 <suppressionsLocation>
                                     build-tools/src/main/resources/checkstyle-suppressions.xml
                                 </suppressionsLocation>
+                                <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
                                 <consoleOutput>true</consoleOutput>
                                 <includeTestSourceDirectory>true</includeTestSourceDirectory>
                                 <!--check only src directory, ignore generated sources-->
@@ -527,17 +550,6 @@ SPDX-License-Identifier: CC0-1.0
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>${maven-failsafe-plugin.version}</version>
-                    <configuration>
-                        <encoding>UTF-8</encoding>
-                        <!--
-                            ISSUE: org.apache.maven.surefire.booter.SurefireBooterForkException: The forked
-                                VM terminated without properly saying goodbye
-                            TEMP SOLUTION: set "useSystemClassLoader" to false
-                            See https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=911925 and
-                                https://issues.apache.org/jira/browse/SUREFIRE-1588
-                        -->
-                        <useSystemClassLoader>false</useSystemClassLoader>
-                    </configuration>
                     <executions>
                         <execution>
                             <id>integration-test</id>

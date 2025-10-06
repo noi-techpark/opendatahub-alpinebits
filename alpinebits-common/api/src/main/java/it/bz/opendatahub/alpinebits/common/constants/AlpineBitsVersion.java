@@ -12,10 +12,11 @@ package it.bz.opendatahub.alpinebits.common.constants;
 
 /**
  * This class provides constants for all known
- * AlpineBits versions (as of 2022-10).
+ * AlpineBits versions (as of 2024-10).
  */
 public final class AlpineBitsVersion {
 
+    public static final String V_2024_10 = "2024-10";
     public static final String V_2022_10 = "2022-10";
     public static final String V_2020_10 = "2020-10";
     public static final String V_2018_10 = "2018-10";

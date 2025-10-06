@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+<OTA_HotelDescriptiveInfoRQ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                            xmlns="http://www.opentravel.org/OTA/2003/05"
+                            xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_HotelDescriptiveInfoRQ.xsd"
+                            Version="3.000">
+
+    <HotelDescriptiveInfos>
+        <HotelDescriptiveInfo HotelCode="123" HotelName="Frangart Inn"/>
+    </HotelDescriptiveInfos>
+
+</OTA_HotelDescriptiveInfoRQ>

@@ -30,8 +30,6 @@ import java.util.Arrays;
  */
 public class RouterMiddlewareBuilder {
 
-    public static final String DEFAULT_VERSION = AlpineBitsVersion.V_2018_10;
-
     public static Middleware buildRoutingMiddlewareForIntegrationTest() {
         RoutingBuilder.FinalBuilder builder = new DefaultRouter.Builder()
                 .version(AlpineBitsVersion.V_2017_10)
@@ -45,11 +43,25 @@ public class RouterMiddlewareBuilder {
                 .versionComplete()
                 .and()
 
-                .version(DEFAULT_VERSION)
+                .version(AlpineBitsVersion.V_2018_10)
                 .supportsAction(Action.HANDSHAKING)
                 .withCapabilities(AlpineBitsCapability.HANDSHAKING)
                 .using(new HandshakingMiddleware(
-                        new DefaultContextSerializer(DEFAULT_VERSION))
+                        new DefaultContextSerializer(AlpineBitsVersion.V_2018_10))
+                )
+                .and()
+                .supportsAction(Action.BASE_RATES_HOTEL_RATE_PLAN_BASE_RATES)
+                .withCapabilities(AlpineBitsCapability.BASE_RATES_HOTEL_RATE_PLAN_BASE_RATES_DELTAS)
+                .using((ctx, chain) -> {
+                })
+                .versionComplete()
+                .and()
+
+                .version(AlpineBitsVersion.V_2024_10)
+                .supportsAction(Action.HANDSHAKING)
+                .withCapabilities(AlpineBitsCapability.HANDSHAKING)
+                .using(new HandshakingMiddleware(
+                        new DefaultContextSerializer(AlpineBitsVersion.V_2024_10))
                 )
                 .and()
                 .supportsAction(Action.BASE_RATES_HOTEL_RATE_PLAN_BASE_RATES)

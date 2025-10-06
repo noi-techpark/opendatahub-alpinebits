@@ -10,32 +10,63 @@
 
 package it.bz.opendatahub.alpinebits.validation.schema.v_2020_10.inventory;
 
+import it.bz.opendatahub.alpinebits.common.constants.OTACodeRoomAmenityType;
+import it.bz.opendatahub.alpinebits.validation.ErrorMessage;
+import it.bz.opendatahub.alpinebits.validation.Names;
+import it.bz.opendatahub.alpinebits.validation.NullValidationException;
+import it.bz.opendatahub.alpinebits.validation.SimpleValidationPath;
 import it.bz.opendatahub.alpinebits.validation.ValidationException;
-import it.bz.opendatahub.alpinebits.validation.schema.common.inventory.AbstractAmenitiesValidatorTest;
+import it.bz.opendatahub.alpinebits.validation.ValidationPath;
 import it.bz.opendatahub.alpinebits.xml.schema.ota.FacilityInfoType.GuestRooms.GuestRoom.Amenities;
+import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.expectThrows;
+import static it.bz.opendatahub.alpinebits.validation.schema.common.ValidationUtil.validateAndAssert;
 
 /**
  * Tests for {@link AmenitiesValidator}.
  */
-public class AmenitiesValidatorTest extends AbstractAmenitiesValidatorTest {
+public class AmenitiesValidatorTest {
 
-    protected void validateAndAssert(
-            Amenities data,
-            Class<? extends ValidationException> exceptionClass,
-            String errorMessage
-    ) {
+    private static final AmenitiesValidator VALIDATOR = new AmenitiesValidator();
+    private static final ValidationPath VALIDATION_PATH = SimpleValidationPath.fromPath(Names.AMENITIES);
+
+    @Test
+    public void testValidate_ShouldThrow_WhenRoomAmenityCodeIsNull() {
+        Amenities.Amenity amenity = new Amenities.Amenity();
+
+        Amenities amenities = new Amenities();
+        amenities.getAmenities().add(amenity);
+
+        validateAndAssert(VALIDATOR, amenities, VALIDATION_PATH, NullValidationException.class, ErrorMessage.EXPECT_ROOM_AMENITY_CODE_TO_BE_NOT_NULL);
+    }
+
+    @Test
+    public void testValidate_ShouldThrow_WhenRoomAmenityCodeIsInvalid() {
+        // Invalid OTA Room Amenity code
+        String code = OTACodeRoomAmenityType.ADJOINING_ROOMS.getCode() + ".INVALID";
+
+        Amenities.Amenity amenity = new Amenities.Amenity();
+        amenity.setRoomAmenityCode(code);
+
+        Amenities amenities = new Amenities();
+        amenities.getAmenities().add(amenity);
+
+        String errorMessage = String.format(ErrorMessage.EXPECT_ROOM_AMENITY_CODE_TO_BE_DEFINED, code);
+        validateAndAssert(VALIDATOR, amenities, VALIDATION_PATH, ValidationException.class, errorMessage);
+    }
+
+    @Test
+    public void testValidate_ShouldPass_WhenRoomAmenityCodeIsValid() {
+        String code = OTACodeRoomAmenityType.ADJOINING_ROOMS.getCode();
+
+        Amenities.Amenity amenity = new Amenities.Amenity();
+        amenity.setRoomAmenityCode(code);
+
+        Amenities amenities = new Amenities();
+        amenities.getAmenities().add(amenity);
+
         AmenitiesValidator validator = new AmenitiesValidator();
-
-        // CHECKSTYLE:OFF
-        Exception e = expectThrows(
-                exceptionClass,
-                () -> validator.validate(data, null, VALIDATION_PATH)
-        );
-        // CHECKSTYLE:ON
-        assertEquals(e.getMessage().substring(0, errorMessage.length()), errorMessage);
+        validator.validate(amenities, null, VALIDATION_PATH);
     }
 
 }
