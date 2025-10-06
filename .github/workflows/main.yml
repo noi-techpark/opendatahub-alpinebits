@@ -11,7 +11,7 @@ env:
 
 jobs:
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v2
@@ -25,7 +25,7 @@ jobs:
           test-command: mvn -B -U clean verify -P it,sources
 
   deploy:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: startsWith(github.ref, 'refs/tags/v')
     needs: test
     concurrency: deploy
