@@ -48,22 +48,11 @@ jobs:
             <settings>
                 <servers>
                     <server>
-                        <id>ossrh</id>
-                        <username>${{ secrets.ODH_OSSRH_USERNAME }}</username>
-                        <password>${{ secrets.ODH_OSSRH_PASSWORD }}</password>
+                        <id>central</id>
+                        <username>${{ secrets.MAVENCENTRAL_TOKEN_USERNAME }}</username>
+                        <password>${{ secrets.MAVENCENTRAL_TOKEN_PASSWORD }}</password>
                     </server>
                 </servers>
-                <profiles>
-                    <profile>
-                        <id>ossrh</id>
-                        <activation>
-                            <activeByDefault>true</activeByDefault>
-                        </activation>
-                        <properties>
-                            <gpg.executable>gpg2</gpg.executable>
-                        </properties>
-                      </profile>
-                </profiles>
             </settings>
         run: echo "$SETTINGS_XML" > ~/.m2/settings.xml
 
