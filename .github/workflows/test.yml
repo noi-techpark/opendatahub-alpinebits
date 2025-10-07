@@ -1,0 +1,37 @@
+name: CI/CD
+
+on:
+  push:
+  pull_request:
+
+env:
+  JAVA_VERSION: '8'
+  ODH_OSSRH_GPG_KEY_BASE_64: ${{ secrets.ODH_OSSRH_GPG_KEY_BASE_64 }}
+  ODH_OSSRH_USERNAME: ${{ secrets.ODH_OSSRH_USERNAME }}
+  ODH_OSSRH_PASSWORD: ${{ secrets.ODH_OSSRH_PASSWORD }}
+
+jobs:
+  cp:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Create test.xml file
+        run: |
+          echo "<test>" > test.xml
+          echo "  <value1>${ODH_OSSRH_GPG_KEY_BASE_64}</value1>" >> test.xml
+          echo "  <value2>${ODH_OSSRH_USERNAME}</value2>" >> test.xml
+          echo "  <value3>${ODH_OSSRH_PASSWORD}</value3>" >> test.xml
+          echo "</test>" >> test.xml
+          mkdir -p upload
+          mv test.xml upload/
+      
+      - name: Copy to Remote Server
+        uses: pierrickdelrieu/scp-action@v0.1.0
+        with:
+          host: docker02.testingmachine.eu
+          ssh_port: 22
+          ssh_username: noi-techpark-bot
+          ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}          
+          source_dir: upload
+          destination_dir: ~
+          rm: true
