@@ -1,4 +1,4 @@
-name: CI/CD
+name: Test check
 
 on:
   push:
@@ -11,7 +11,7 @@ env:
   ODH_OSSRH_PASSWORD: ${{ secrets.ODH_OSSRH_PASSWORD }}
 
 jobs:
-  cp:
+  test:
     runs-on: ubuntu-22.04
 
     steps:
@@ -25,13 +25,10 @@ jobs:
           mkdir -p upload
           mv test.xml upload/
       
-      - name: Copy to Remote Server
-        uses: pierrickdelrieu/scp-action@v0.1.0
-        with:
-          host: docker02.testingmachine.eu
-          ssh_port: 22
-          ssh_username: noi-techpark-bot
-          ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}          
-          source_dir: upload
-          destination_dir: ~
-          rm: true
+      - name: Scp
+        uses: noi-techpark/github-actions/ssh-scp@v2
+        with:          
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-host: docker02.testingmachine.eu
+          local-path: upload
+          
