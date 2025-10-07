@@ -30,5 +30,4 @@ jobs:
         with:          
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           ssh-host: docker02.testingmachine.eu
-          local-path: upload
-          
+          local-path: upload/test.xml
