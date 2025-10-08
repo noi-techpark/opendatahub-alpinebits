@@ -722,6 +722,9 @@ SPDX-License-Identifier: CC0-1.0
                     <publishingServerId>central</publishingServerId>
                     <autoPublish>true</autoPublish>
                     <waitUntil>published</waitUntil>
+                    <excludeArtifacts>
+                        <excludeArtifact>it.bz.opendatahub.alpinebits:build-tools</excludeArtifact>                        
+                    </excludeArtifacts>
                 </configuration>
             </plugin>
 

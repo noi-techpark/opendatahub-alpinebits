@@ -60,5 +60,5 @@ jobs:
         run: | 
           THIS_VERSION=${GITHUB_REF/refs\/tags\/v/}
           mvn versions:set -DnewVersion="$THIS_VERSION"
-          mvn -B -U clean -X deploy -P release,sources
+          mvn -B -U clean -e deploy -P release,sources
 
