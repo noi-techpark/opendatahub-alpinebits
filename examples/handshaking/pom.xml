@@ -53,7 +53,7 @@ SPDX-License-Identifier: CC0-1.0
             </plugin>
             <plugin>
                 <groupId>org.codehaus.cargo</groupId>
-                <artifactId>cargo-maven2-plugin</artifactId>
+                <artifactId>cargo-maven3-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
