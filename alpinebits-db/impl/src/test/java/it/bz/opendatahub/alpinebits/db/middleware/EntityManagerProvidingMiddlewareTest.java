@@ -10,18 +10,17 @@
 
 package it.bz.opendatahub.alpinebits.db.middleware;
 
+import it.bz.opendatahub.alpinebits.db.PersistenceContextKey;
+import it.bz.opendatahub.alpinebits.db.entity.TestUserEntity;
 import it.bz.opendatahub.alpinebits.middleware.Context;
 import it.bz.opendatahub.alpinebits.middleware.Middleware;
 import it.bz.opendatahub.alpinebits.middleware.impl.SimpleContext;
-import it.bz.opendatahub.alpinebits.db.PersistenceContextKey;
-import it.bz.opendatahub.alpinebits.db.entity.TestUserEntity;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
 import org.testng.annotations.Test;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertNotNull;
 
 /**
  * Test cases for {@link EntityManagerProvidingMiddleware} class.

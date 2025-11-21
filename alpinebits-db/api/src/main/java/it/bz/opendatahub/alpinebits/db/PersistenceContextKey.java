@@ -11,9 +11,8 @@
 package it.bz.opendatahub.alpinebits.db;
 
 import it.bz.opendatahub.alpinebits.middleware.Key;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 
 /**
  * This class contains key definitions, that may be used e.g. in a middleware context.
