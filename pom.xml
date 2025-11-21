@@ -60,7 +60,7 @@ SPDX-License-Identifier: CC0-1.0
         <jakarta.xml.bind.version>4.0.4</jakarta.xml.bind.version>
         <jaxb-runtime.version>4.0.6</jaxb-runtime.version>
         <servlet.version>6.1.0</servlet.version>
-        <mapstruct.version>1.2.0.Final</mapstruct.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
         <commons-codec.version>1.20.0</commons-codec.version>
         <jackson.version>2.17.1</jackson.version>
 
@@ -366,7 +366,7 @@ SPDX-License-Identifier: CC0-1.0
             </dependency>
             <dependency>
                 <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct-jdk8</artifactId>
+                <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
 
