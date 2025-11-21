@@ -13,7 +13,6 @@ package it.bz.opendatahub.alpinebits.examples.inventory.middleware.configuration
 import it.bz.opendatahub.alpinebits.common.utils.middleware.ComposingMiddlewareBuilder;
 import it.bz.opendatahub.alpinebits.examples.inventory.middleware.InventoryPushMiddleware;
 import it.bz.opendatahub.alpinebits.middleware.Middleware;
-import jakarta.xml.bind.JAXBException;
 
 import java.util.Arrays;
 
@@ -26,7 +25,7 @@ public final class InventoryPushMiddlewareBuilder {
         // Empty
     }
 
-    public static Middleware buildInventoryPushMiddleware() throws JAXBException {
+    public static Middleware buildInventoryPushMiddleware() {
         return ComposingMiddlewareBuilder.compose(Arrays.asList(
                 XmlMiddlewareBuilder.buildXmlToObjectConvertingMiddleware(InventoryPushMiddleware.OTA_INVENTORY_PUSH_REQUEST),
                 XmlMiddlewareBuilder.buildObjectToXmlConvertingMiddleware(InventoryPushMiddleware.OTA_INVENTORY_PUSH_RESPONSE),

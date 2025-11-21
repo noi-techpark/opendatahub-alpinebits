@@ -23,7 +23,7 @@ import static org.testng.Assert.assertNull;
 public class LocalDateAdapterTest {
 
     @Test
-    public void testUnmarshal() throws Exception {
+    public void testUnmarshal() {
         LocalDate localDate = LocalDate.now();
         LocalDateAdapter localDateAdapter = new LocalDateAdapter();
         LocalDate unmarshalledLocalDate = localDateAdapter.unmarshal(localDate.toString());
@@ -32,7 +32,7 @@ public class LocalDateAdapterTest {
     }
 
     @Test
-    public void testMarshal() throws Exception {
+    public void testMarshal() {
         LocalDate localDate = LocalDate.now();
         LocalDateAdapter localDateAdapter = new LocalDateAdapter();
         String date = localDateAdapter.marshal(localDate);
@@ -40,7 +40,7 @@ public class LocalDateAdapterTest {
     }
 
     @Test
-    public void testMarshal_LocalDateIsNull() throws Exception {
+    public void testMarshal_LocalDateIsNull() {
         LocalDateAdapter localDateAdapter = new LocalDateAdapter();
         String date = localDateAdapter.marshal(null);
         assertNull(date);

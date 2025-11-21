@@ -50,6 +50,7 @@ import static org.testng.Assert.expectThrows;
 /**
  * Tests for {@link HotelInfoValidator}.
  */
+@SuppressWarnings("checkstyle:ClassDataAbstractionCoupling")
 public class HotelInfoValidatorTest {
 
     private static final ValidationPath VALIDATION_PATH = SimpleValidationPath.fromPath(Names.HOTEL_INFO);

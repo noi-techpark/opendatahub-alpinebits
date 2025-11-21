@@ -42,6 +42,7 @@ import static it.bz.opendatahub.alpinebits.validation.schema.common.ValidationUt
 /**
  * Tests for {@link PoliciesValidator}.
  */
+@SuppressWarnings("checkstyle:ClassDataAbstractionCoupling")
 public class PoliciesValidatorTest {
 
     private static final PoliciesValidator VALIDATOR = new PoliciesValidator();

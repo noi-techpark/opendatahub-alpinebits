@@ -38,25 +38,21 @@ public class AlpineBitsServletIT extends Arquillian {
     @Deployment(name = "ServletWithEmptyMiddleware", testable = false)
     @SuppressWarnings("ArquillianTooManyDeployment")
     public static WebArchive createDeploymentWithEmptyMiddleware() {
-        final WebArchive emptyMiddlewareWar = ShrinkWrap.create(WebArchive.class, "testServletWithEmptyMiddleware.war")
+        return ShrinkWrap.create(WebArchive.class, "testServletWithEmptyMiddleware.war")
                 .addClasses(AlpineBitsServlet.class)
                 .addClasses(EmptyMiddleware.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource("web-alpinebits-servlet-with-empty-middleware-integration-test.xml", "web.xml");
-
-        return emptyMiddlewareWar;
     }
 
     @Deployment(name = "ServletWithThrowingMiddleware", testable = false)
     @SuppressWarnings("ArquillianTooManyDeployment")
     public static WebArchive createDeploymentWithThrowingMiddleware() {
-        final WebArchive throwingMiddlewareWar = ShrinkWrap.create(WebArchive.class, "testServletWithThrowingMiddleware.war")
+        return ShrinkWrap.create(WebArchive.class, "testServletWithThrowingMiddleware.war")
                 .addClasses(AlpineBitsServlet.class)
                 .addClasses(ThrowingMiddleware.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource("web-alpinebits-servlet-with-throwing-middleware-integration-test.xml", "web.xml");
-
-        return throwingMiddlewareWar;
     }
 
     @Test(dataProvider = Arquillian.ARQUILLIAN_DATA_PROVIDER)

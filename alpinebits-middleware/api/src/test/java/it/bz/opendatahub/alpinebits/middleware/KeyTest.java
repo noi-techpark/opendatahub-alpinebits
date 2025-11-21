@@ -32,19 +32,19 @@ public class KeyTest {
     @Test
     public void testEquals_FalseOnNullCompare() {
         Key<String> key1 = Key.key(DEFAULT_IDENTIFIER, DEFAULT_TYPE);
-        assertFalse(key1.equals(null));
+        assertNotEquals(key1, null);
     }
 
     @Test
     public void testEquals_FalseOnOtherTypeCompare() {
         Key<String> key1 = Key.key(DEFAULT_IDENTIFIER, DEFAULT_TYPE);
-        assertFalse(key1.equals(new Object()));
+        assertNotEquals(key1, new Object());
     }
 
     @Test
     public void testEquals_TrueOnSameInstance() {
         Key<String> key1 = Key.key(DEFAULT_IDENTIFIER, DEFAULT_TYPE);
-        assertTrue(key1.equals(key1));
+        assertEquals(key1, key1);
     }
 
     @Test

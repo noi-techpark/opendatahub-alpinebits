@@ -57,7 +57,7 @@ public class XsdValidatingXmlResponseMappingMiddleware implements Middleware {
         this.middleware.handleContext(ctx, chain);
     }
 
-    private XmlResponseMappingMiddleware validatingMiddleware() {
+    private XmlResponseMappingMiddleware<OTAResRetrieveRS> validatingMiddleware() {
         Schema schema = XmlValidationSchemaProvider.buildRngSchemaForAlpineBitsVersion("2017-10");
         ObjectToXmlConverter converter = this.validatingConverter(schema);
         return new XmlResponseMappingMiddleware<>(converter, DEFAULT_CTX_KEY);

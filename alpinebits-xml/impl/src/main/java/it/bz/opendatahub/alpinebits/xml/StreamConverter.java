@@ -38,6 +38,6 @@ public final class StreamConverter {
         for (int result = bis.read(); result != -1; result = bis.read()) {
             buf.write((byte) result);
         }
-        return buf.toString(StandardCharsets.UTF_8.name());
+        return buf.toString(StandardCharsets.UTF_8);
     }
 }

@@ -16,6 +16,7 @@ import it.bz.opendatahub.alpinebits.middleware.Context;
 import it.bz.opendatahub.alpinebits.middleware.Middleware;
 import it.bz.opendatahub.alpinebits.middleware.impl.SimpleContext;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import org.testng.annotations.Test;
@@ -28,7 +29,7 @@ import static org.testng.Assert.assertNotNull;
 public class EntityManagerProvidingMiddlewareTest {
 
     @Test
-    public void testHandleContext() throws Exception {
+    public void testHandleContext() {
         Middleware middleware = new EntityManagerProvidingMiddleware();
 
         Context ctx = new SimpleContext();
@@ -47,9 +48,10 @@ public class EntityManagerProvidingMiddlewareTest {
         assertNotNull(ctx.getOrThrow(PersistenceContextKey.ENTITY_MANAGER_FACTORY));
         assertNotNull(ctx.getOrThrow(PersistenceContextKey.ENTITY_MANAGER));
 
-        EntityManager em = Persistence.createEntityManagerFactory("default").createEntityManager();
-        TestUserEntity user = em.find(TestUserEntity.class, "user1");
-
-        assertNotNull(user);
+        try (EntityManagerFactory emf = Persistence.createEntityManagerFactory("default")) {
+            EntityManager em = emf.createEntityManager();
+            TestUserEntity user = em.find(TestUserEntity.class, "user1");
+            assertNotNull(user);
+        }
     }
 }

@@ -56,7 +56,7 @@ public class HousekeepingGetCapabilitiesMiddlewareTest {
     }
 
     @Test
-    public void testHandleContext_ReturnSingleCapability() throws Exception {
+    public void testHandleContext_ReturnSingleCapability() {
         Context ctx = new SimpleContext();
         ctx.put(RequestContextKey.REQUEST_VERSION, RouterMiddlewareBuilder.DEFAULT_VERSION);
         ctx.put(RequestContextKey.REQUEST_ACTION, AlpineBitsAction.GET_CAPABILITIES);
@@ -70,7 +70,7 @@ public class HousekeepingGetCapabilitiesMiddlewareTest {
 
         // Read the capabilities response from the context
         ByteArrayOutputStream responseStream = (ByteArrayOutputStream) ctx.getOrThrow(ResponseContextKeys.RESPONSE_CONTENT_STREAM);
-        String resultCapabilities = responseStream.toString(StandardCharsets.UTF_8.name()).substring(3);
+        String resultCapabilities = responseStream.toString(StandardCharsets.UTF_8).substring(3);
         Collection<String> capabilities = Arrays.asList(resultCapabilities.split(","));
 
         assertEquals(capabilities, Collections.singletonList(AlpineBitsCapability.GET_CAPABILITIES));
@@ -78,7 +78,7 @@ public class HousekeepingGetCapabilitiesMiddlewareTest {
     }
 
     @Test
-    public void testHandleContext_ReturnManyCapabilities() throws Exception {
+    public void testHandleContext_ReturnManyCapabilities() {
         Context ctx = new SimpleContext();
         ctx.put(RequestContextKey.REQUEST_VERSION, RouterMiddlewareBuilder.DEFAULT_VERSION);
         ctx.put(RequestContextKey.REQUEST_ACTION, AlpineBitsAction.GET_CAPABILITIES);
@@ -94,7 +94,7 @@ public class HousekeepingGetCapabilitiesMiddlewareTest {
 
         // Read the capabilities response from the context
         ByteArrayOutputStream responseStream = (ByteArrayOutputStream) ctx.getOrThrow(ResponseContextKeys.RESPONSE_CONTENT_STREAM);
-        String resultCapabilities = responseStream.toString(StandardCharsets.UTF_8.name()).substring(3);
+        String resultCapabilities = responseStream.toString(StandardCharsets.UTF_8).substring(3);
         Collection<String> capabilities = Arrays.asList(resultCapabilities.split(","));
 
         Set<String> expectedCapabilities = new HashSet<>(

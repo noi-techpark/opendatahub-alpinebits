@@ -38,13 +38,11 @@ public class BasicAuthenticationMiddlewareIT extends Arquillian {
 
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
-        final WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war")
+        return ShrinkWrap.create(WebArchive.class, "test.war")
                 .addClasses(AlpineBitsServlet.class)
                 .addClasses(BasicAuthenticationMiddleware.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource("web-basic-authentication-middleware-integration-test.xml", "web.xml");
-
-        return war;
     }
 
     @DataProvider(name = "badBasicAuthentication")

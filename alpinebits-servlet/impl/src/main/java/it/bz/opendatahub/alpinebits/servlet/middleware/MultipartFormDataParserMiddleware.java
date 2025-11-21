@@ -89,11 +89,9 @@ public class MultipartFormDataParserMiddleware implements Middleware {
         String abAction = null;
         InputStream abRequest = null;
 
-        List<DiskFileItem> items = null;
-
         try {
             // Parse the request into FileItem objects
-            items = upload.parseRequest(request);
+            List<DiskFileItem> items = upload.parseRequest(request);
 
             for (FileItem<DiskFileItem> item : items) {
                 if (FORM_PART_ACTION.equalsIgnoreCase(item.getFieldName())) {

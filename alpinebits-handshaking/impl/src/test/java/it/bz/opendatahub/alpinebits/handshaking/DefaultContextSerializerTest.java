@@ -22,11 +22,10 @@ import org.testng.annotations.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
 
 /**
  * Test cases for {@link DefaultContextSerializer} class.
@@ -60,25 +59,17 @@ public class DefaultContextSerializerTest {
     }
 
     @Test
-    public void testToContext_ShouldPutDataIntoContext() throws UnsupportedEncodingException {
+    public void testToContext_ShouldPutDataIntoContext() {
         Context ctx = new SimpleContext();
         ByteArrayOutputStream responseStream = new ByteArrayOutputStream();
         ctx.put(ResponseContextKeys.RESPONSE_CONTENT_STREAM, responseStream);
 
         OTAPingRS otaPingRS = OTAPingRSBuilder.build("a", "");
-//
-//
-//
-//        otaPingRS.setEchoData("a");
-//        otaPingRS.setSuccess("");
-//        otaPingRS.setVersion("1");
-//        Warnings warnings = new Warnings();
-//        warnings.setWarning(new Warning());
-//        otaPingRS.setWarnings(warnings);
+
         new DefaultContextSerializer(AlpineBitsVersion.V_2018_10).toContext(ctx, otaPingRS);
 
-        String result = responseStream.toString(StandardCharsets.UTF_8.name());
+        String result = responseStream.toString(StandardCharsets.UTF_8);
 
-        assertTrue(result.length() > 0);
+        assertFalse(result.isEmpty());
     }
 }

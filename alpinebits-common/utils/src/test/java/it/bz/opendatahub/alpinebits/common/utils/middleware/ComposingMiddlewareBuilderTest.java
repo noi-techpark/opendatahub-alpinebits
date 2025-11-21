@@ -108,7 +108,7 @@ public class ComposingMiddlewareBuilderTest {
         assertEquals(ctx.get(key2), expectedValue);
 
         // Assert the value of the toString() method for 100% test coverage
-        assertEquals(ComposingMiddlewareBuilder.COMPOSING_MIDDLEWARE_NAME, composedMiddleware.toString());
+        assertEquals(composedMiddleware.toString(), ComposingMiddlewareBuilder.COMPOSING_MIDDLEWARE_NAME);
     }
 
     @Test(dataProvider = "testComposeDataProvider")
@@ -132,7 +132,7 @@ public class ComposingMiddlewareBuilderTest {
         assertEquals(ctx.get(key2), expectedValue);
 
         // Assert the value of the toString() method for 100% test coverage
-        assertEquals(ComposingMiddlewareBuilder.COMPOSING_MIDDLEWARE_NAME, composedMiddleware.toString());
+        assertEquals(composedMiddleware.toString(), ComposingMiddlewareBuilder.COMPOSING_MIDDLEWARE_NAME);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)

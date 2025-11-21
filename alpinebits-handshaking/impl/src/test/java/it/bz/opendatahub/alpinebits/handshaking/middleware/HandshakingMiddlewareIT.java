@@ -162,7 +162,7 @@ public class HandshakingMiddlewareIT extends Arquillian {
 
     private String fromResource(String resource) {
         InputStream is = this.getClass().getClassLoader().getResourceAsStream(resource);
-        try (Scanner scanner = new Scanner(is, StandardCharsets.UTF_8.name())) {
+        try (Scanner scanner = new Scanner(is, StandardCharsets.UTF_8)) {
             return scanner.useDelimiter("\\A").next();
         }
     }

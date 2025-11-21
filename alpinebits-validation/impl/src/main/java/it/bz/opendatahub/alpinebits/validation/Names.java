@@ -13,7 +13,7 @@ package it.bz.opendatahub.alpinebits.validation;
 /**
  * This class provides name constants, used as XML elements
  * or attributes.
- *
+ * <p>
  * In addition, it provides often used names (e.g. "Context")
  */
 public final class Names {

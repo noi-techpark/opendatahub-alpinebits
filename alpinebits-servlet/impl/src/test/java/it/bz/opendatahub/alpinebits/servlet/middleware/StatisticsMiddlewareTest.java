@@ -34,9 +34,7 @@ public class StatisticsMiddlewareTest {
         ctx.put(RequestContextKey.REQUEST_USERNAME, "user");
         ctx.put(RequestContextKey.REQUEST_VERSION, AlpineBitsVersion.V_2017_10);
         ctx.put(RequestContextKey.REQUEST_ACTION, AlpineBitsAction.GET_CAPABILITIES);
-        middleware.handleContext(ctx, () -> {
-            ctx.put(key, "some value");
-        });
+        middleware.handleContext(ctx, () -> ctx.put(key, "some value"));
 
         assertTrue(ctx.get(key).isPresent());
     }

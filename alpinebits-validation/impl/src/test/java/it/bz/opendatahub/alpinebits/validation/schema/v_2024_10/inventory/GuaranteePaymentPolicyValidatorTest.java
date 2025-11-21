@@ -35,6 +35,7 @@ import static it.bz.opendatahub.alpinebits.validation.schema.common.ValidationUt
 /**
  * Tests for {@link GuaranteePaymentPolicyValidator}.
  */
+@SuppressWarnings("checkstyle:ClassDataAbstractionCoupling")
 public class GuaranteePaymentPolicyValidatorTest {
 
     private static final GuaranteePaymentPolicyValidator VALIDATOR = new GuaranteePaymentPolicyValidator();

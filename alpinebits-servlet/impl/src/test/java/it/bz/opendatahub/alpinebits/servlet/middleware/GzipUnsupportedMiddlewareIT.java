@@ -37,13 +37,11 @@ public class GzipUnsupportedMiddlewareIT extends Arquillian {
 
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
-        final WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war")
+        return ShrinkWrap.create(WebArchive.class, "test.war")
                 .addClasses(AlpineBitsServlet.class)
                 .addClasses(GzipUnsupportedMiddleware.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource("web-gzip-unsupported-middleware-integration-test.xml", "web.xml");
-
-        return war;
     }
 
     @Test

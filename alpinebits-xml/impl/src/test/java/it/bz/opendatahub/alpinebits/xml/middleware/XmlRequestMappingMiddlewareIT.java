@@ -43,40 +43,34 @@ public class XmlRequestMappingMiddlewareIT extends Arquillian {
     @Deployment(name = "NoValidation", testable = false)
     @SuppressWarnings("ArquillianTooManyDeployment")
     public static WebArchive createNotValidatingDeployment() {
-        final WebArchive war = ShrinkWrap.create(WebArchive.class, "test-no-validation.war")
+        return ShrinkWrap.create(WebArchive.class, "test-no-validation.war")
                 .addClasses(AlpineBitsServlet.class)
                 .addClasses(NotValidatingXmlRequestMappingMiddleware.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsManifestResource("web/context.xml", "context.xml")
                 .addAsWebInfResource("web/web-not-validating-xml-request-wrapping-middleware-integration-test.xml", "web.xml");
-
-        return war;
     }
 
     @Deployment(name = "RngValidation", testable = false)
     @SuppressWarnings("ArquillianTooManyDeployment")
     public static WebArchive createRngValidatingDeployment() {
-        final WebArchive war = ShrinkWrap.create(WebArchive.class, "test-rng-validation.war")
+        return ShrinkWrap.create(WebArchive.class, "test-rng-validation.war")
                 .addClasses(AlpineBitsServlet.class)
                 .addClasses(RngValidatingXmlRequestMappingMiddleware.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsManifestResource("web/context.xml", "context.xml")
                 .addAsWebInfResource("web/web-rng-validating-xml-request-wrapping-middleware-integration-test.xml", "web.xml");
-
-        return war;
     }
 
     @Deployment(name = "XsdValidation", testable = false)
     @SuppressWarnings("ArquillianTooManyDeployment")
     public static WebArchive createXsdValidatingDeployment() {
-        final WebArchive war = ShrinkWrap.create(WebArchive.class, "test-xsd-validation.war")
+        return ShrinkWrap.create(WebArchive.class, "test-xsd-validation.war")
                 .addClasses(AlpineBitsServlet.class)
                 .addClasses(XsdValidatingXmlRequestMappingMiddleware.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsManifestResource("web/context.xml", "context.xml")
                 .addAsWebInfResource("web/web-xsd-validating-xml-request-wrapping-middleware-integration-test.xml", "web.xml");
-
-        return war;
     }
 
     @Test

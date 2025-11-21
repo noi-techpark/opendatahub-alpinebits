@@ -5,71 +5,71 @@ SPDX-License-Identifier: CC0-1.0
 -->
 
 <!doctype html>
-<html>
+<html lang="en">
     <head>
         <title>AlpineBits example: Housekeeping actions</title>
     </head>
-<body>
-    <h1>AlpineBits Housekeeping actions</h1>
-    <p>
-        <a href="#" onclick='callGetVersion()'>Click here to execute the AlpineBits getVersion Housekeeping action</a>
-    </p>
-    <p>
-        <a href="#" onclick='callGetCapabilities()'>Click here to execute the AlpineBits getCapabilities Housekeeping action</a>
-    </p>
-    <p>
-        <textarea id="log" cols="80" rows="25" readonly style="background: #eee; margin-top: 20px;"></textarea>
-    </p>
+    <body>
+        <h1>AlpineBits Housekeeping actions</h1>
+        <p>
+            <button onclick='callGetVersion()'>Click here to execute the AlpineBits getVersion Housekeeping action</button>
+        </p>
+        <p>
+            <button onclick='callGetCapabilities()'>Click here to execute the AlpineBits getCapabilities Housekeeping action</button>
+        </p>
+        <p>
+            <textarea id="log" cols="80" rows="25" readonly style="background: #eee; margin-top: 20px;"></textarea>
+        </p>
 
-    <script>
-        var logArea = document.getElementById('log');
+        <script>
+            var logArea = document.getElementById('log');
 
-        function callGetVersion() {
-            logAction('Invoking AlpineBits endpoint with getVersion action...');
-            post('./AlpineBits', {action: 'getVersion'});
-        }
-
-        function callGetCapabilities() {
-            logAction('Invoking AlpineBits endpoint with getCapabilities action...');
-            post('./AlpineBits', {action: 'getCapabilities'});
-        }
-
-        function post(path, params) {
-            var xhr = new XMLHttpRequest();
-            var formData = new FormData();
-            var start = null;
-
-            for (var key in params) {
-                formData.append(key, params[key]);
+            function callGetVersion() {
+                logAction('Invoking AlpineBits endpoint with getVersion action...');
+                post('./AlpineBits', {action: 'getVersion'});
             }
 
-            xhr.addEventListener('load', function (event) {
-                var end = new Date();
-                console.log(event);
-                logAction(xhr.responseText + ' (took ' + (end.getTime() - start.getTime()) + 'ms)');
-            });
+            function callGetCapabilities() {
+                logAction('Invoking AlpineBits endpoint with getCapabilities action...');
+                post('./AlpineBits', {action: 'getCapabilities'});
+            }
 
-            xhr.addEventListener('error', function (event) {
-                console.log(event);
-                logAction('Oops! Something went wrong: ' + xhr.statusText);
-            });
+            function post(path, params) {
+                var xhr = new XMLHttpRequest();
+                var formData = new FormData();
+                var start = null;
 
-            xhr.open('POST', path, true);
-            xhr.setRequestHeader('X-AlpineBits-ClientProtocolVersion', '2017-10');
-            xhr.setRequestHeader('Authorization', 'Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==');
+                for (var key in params) {
+                    formData.append(key, params[key]);
+                }
 
-            start = new Date()
-            xhr.send(formData);
-        }
+                xhr.addEventListener('load', function (event) {
+                    var end = new Date();
+                    console.log(event);
+                    logAction(xhr.responseText + ' (took ' + (end.getTime() - start.getTime()) + 'ms)');
+                });
 
-        function logAction(message) {
-            var now = new Date();
-            var hours = ('0' + now.getHours()).slice(-2);
-            var minutes = ('0' + now.getMinutes()).slice(-2);
-            var seconds = ('0' + now.getSeconds()).slice(-2);
-            var time = hours + ':' + minutes + ':' + seconds;
-            logArea.value += '[' + time + ']: ' + message + '\n';
-        }
-    </script>
-</body>
-<html>
+                xhr.addEventListener('error', function (event) {
+                    console.log(event);
+                    logAction('Oops! Something went wrong: ' + xhr.statusText);
+                });
+
+                xhr.open('POST', path, true);
+                xhr.setRequestHeader('X-AlpineBits-ClientProtocolVersion', '2017-10');
+                xhr.setRequestHeader('Authorization', 'Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==');
+
+                start = new Date()
+                xhr.send(formData);
+            }
+
+            function logAction(message) {
+                var now = new Date();
+                var hours = ('0' + now.getHours()).slice(-2);
+                var minutes = ('0' + now.getMinutes()).slice(-2);
+                var seconds = ('0' + now.getSeconds()).slice(-2);
+                var time = hours + ':' + minutes + ':' + seconds;
+                logArea.value += '[' + time + ']: ' + message + '\n';
+            }
+        </script>
+    </body>
+</html>

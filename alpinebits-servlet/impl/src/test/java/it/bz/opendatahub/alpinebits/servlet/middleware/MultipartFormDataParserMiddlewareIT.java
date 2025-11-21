@@ -37,13 +37,11 @@ public class MultipartFormDataParserMiddlewareIT extends Arquillian {
 
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
-        final WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war")
+        return ShrinkWrap.create(WebArchive.class, "test.war")
                 .addClasses(AlpineBitsServlet.class)
                 .addClasses(MultipartFormDataParserMiddleware.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource("web-multipart-formdata-parser-middleware-integration-test.xml", "web.xml");
-
-        return war;
     }
 
     @DataProvider(name = "badContentType")

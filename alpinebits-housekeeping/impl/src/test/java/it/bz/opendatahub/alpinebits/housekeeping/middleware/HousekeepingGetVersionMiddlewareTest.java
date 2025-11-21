@@ -51,7 +51,7 @@ public class HousekeepingGetVersionMiddlewareTest {
     }
 
     @Test
-    public void testHandleContext_ReturnSameVersionIfMatch() throws Exception {
+    public void testHandleContext_ReturnSameVersionIfMatch() {
         String version = RouterBuilder.DEFAULT_VERSION;
 
         Context ctx = new SimpleContext();
@@ -63,14 +63,14 @@ public class HousekeepingGetVersionMiddlewareTest {
         routingMiddleware.handleContext(ctx, null);
 
         ByteArrayOutputStream responseStream = (ByteArrayOutputStream)ctx.getOrThrow(ResponseContextKeys.RESPONSE_CONTENT_STREAM);
-        String resultVersion = responseStream.toString(StandardCharsets.UTF_8.name()).substring(3);
+        String resultVersion = responseStream.toString(StandardCharsets.UTF_8).substring(3);
 
         assertEquals(resultVersion, version);
         assertEquals(ctx.getOrThrow(ResponseContextKeys.RESPONSE_CONTENT_TYPE_HINT), HttpContentTypeHeaderValues.TEXT_PLAIN);
     }
 
     @Test
-    public void testHandleContext_ReturnHighestVersionIfNoMatch() throws Exception {
+    public void testHandleContext_ReturnHighestVersionIfNoMatch() {
         String version = RouterBuilder.DEFAULT_VERSION;
         String otherVersion = version + "1";
 
@@ -83,7 +83,7 @@ public class HousekeepingGetVersionMiddlewareTest {
         routingMiddleware.handleContext(ctx, null);
 
         ByteArrayOutputStream responseStream = (ByteArrayOutputStream)ctx.getOrThrow(ResponseContextKeys.RESPONSE_CONTENT_STREAM);
-        String resultVersion = responseStream.toString(StandardCharsets.UTF_8.name()).substring(3);
+        String resultVersion = responseStream.toString(StandardCharsets.UTF_8).substring(3);
 
         assertEquals(resultVersion, version);
         assertEquals(ctx.getOrThrow(ResponseContextKeys.RESPONSE_CONTENT_TYPE_HINT), HttpContentTypeHeaderValues.TEXT_PLAIN);

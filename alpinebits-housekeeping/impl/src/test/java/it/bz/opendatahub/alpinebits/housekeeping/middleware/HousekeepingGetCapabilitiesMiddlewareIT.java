@@ -45,15 +45,13 @@ public class HousekeepingGetCapabilitiesMiddlewareIT extends Arquillian {
     @Deployment(testable = false)
     @SuppressWarnings("ArquillianTooManyDeployment")
     public static WebArchive createDeployment() {
-        final WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war")
+        return ShrinkWrap.create(WebArchive.class, "test.war")
                 .addClasses(AlpineBitsServlet.class)
                 .addClasses(AlpineBitsClientProtocolMiddleware.class)
                 .addClasses(MultipartFormDataParserMiddleware.class)
                 .addClasses(IntegrationTestingMiddleware.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource("web-housekeeping-middleware-integration-test.xml", "web.xml");
-
-        return war;
     }
 
     @Test

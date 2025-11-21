@@ -155,7 +155,7 @@ public final class ComposingMiddlewareBuilder {
 
         Middleware currentMiddleware = index < middlewares.size() ? middlewares.get(index) : null;
 
-        return new Consumer<Context>() {
+        return new Consumer<>() {
             @Override
             public void accept(Context ctx) {
                 if (currentMiddleware != null) {

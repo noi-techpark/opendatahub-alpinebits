@@ -41,13 +41,13 @@ public class XmlRequestMappingMiddlewareTest {
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testConstructor_BusinessContextKeyIsNull() throws Exception {
+    public void testConstructor_BusinessContextKeyIsNull() {
         XmlToObjectConverter<Object> converter = this.notValidatingConverter(Object.class);
         new XmlRequestMappingMiddleware<>(converter, null);
     }
 
     @Test(expectedExceptions = RequiredContextKeyMissingException.class)
-    public void testHandleContext_RequestContentStreamIsNull() throws Exception {
+    public void testHandleContext_RequestContentStreamIsNull() {
         Context ctx = this.getDefaultCtx();
         ctx.remove(RequestContextKey.REQUEST_CONTENT_STREAM);
         Middleware middleware = this.notValidatingMiddleware();
@@ -55,7 +55,7 @@ public class XmlRequestMappingMiddlewareTest {
     }
 
     @Test
-    public void testHandleContext_NoValidation() throws Exception {
+    public void testHandleContext_NoValidation() {
         Context ctx = this.getDefaultCtx();
 
         Middleware middleware = this.notValidatingMiddleware();
@@ -67,7 +67,7 @@ public class XmlRequestMappingMiddlewareTest {
     }
 
     @Test(expectedExceptions = XmlConversionException.class)
-    public void testHandleContext_RngValidationError() throws Exception {
+    public void testHandleContext_RngValidationError() {
         Context ctx = this.getDefaultCtx();
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("examples/v_2017_10/GuestRequests-OTA_ReadRQ-invalid.xml");
         ctx.put(RequestContextKey.REQUEST_CONTENT_STREAM, is);
@@ -79,7 +79,7 @@ public class XmlRequestMappingMiddlewareTest {
     }
 
     @Test
-    public void testHandleContext_RngValidationOk() throws Exception {
+    public void testHandleContext_RngValidationOk() {
         Context ctx = this.getDefaultCtx();
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("examples/v_2017_10/GuestRequests-OTA_ReadRQ.xml");
         ctx.put(RequestContextKey.REQUEST_CONTENT_STREAM, is);
@@ -94,7 +94,7 @@ public class XmlRequestMappingMiddlewareTest {
     }
 
     @Test(expectedExceptions = XmlConversionException.class)
-    public void testHandleContext_XsdValidationError() throws Exception {
+    public void testHandleContext_XsdValidationError() {
         Context ctx = this.getDefaultCtx();
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("examples/v_2017_10/GuestRequests-OTA_ReadRQ-invalid.xml");
         ctx.put(RequestContextKey.REQUEST_CONTENT_STREAM, is);
@@ -106,7 +106,7 @@ public class XmlRequestMappingMiddlewareTest {
     }
 
     @Test
-    public void testHandleContext_XsdValidationOk() throws Exception {
+    public void testHandleContext_XsdValidationOk() {
         Context ctx = this.getDefaultCtx();
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("examples/v_2017_10/GuestRequests-OTA_ReadRQ.xml");
         ctx.put(RequestContextKey.REQUEST_CONTENT_STREAM, is);

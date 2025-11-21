@@ -40,6 +40,7 @@ public final class RequestContextKey {
      * could have security implications, e.g. if the context is logged somewhere.
      * Instead, the password is wrapped with a {@link Supplier}.
      */
+    @SuppressWarnings("rawtypes")
     public static final Key<Supplier> REQUEST_PASSWORD_SUPPLIER = Key.key(
             "request.password.supplier", Supplier.class
     );

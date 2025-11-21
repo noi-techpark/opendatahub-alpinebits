@@ -40,7 +40,7 @@ public class RoutingMiddlewareIT extends Arquillian {
     @Deployment(name = "DefaultRouter", testable = false)
     @SuppressWarnings("ArquillianTooManyDeployment")
     public static WebArchive createDeployment() {
-        final WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war")
+        return ShrinkWrap.create(WebArchive.class, "test.war")
                 .addClasses(AlpineBitsServlet.class)
                 .addClasses(AlpineBitsClientProtocolMiddleware.class)
                 .addClasses(MultipartFormDataParserMiddleware.class)
@@ -48,8 +48,6 @@ public class RoutingMiddlewareIT extends Arquillian {
                 .addClasses(DefaultRouterMiddleware.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource("web-routing-middleware-integration-test.xml", "web.xml");
-
-        return war;
     }
 
     @Test

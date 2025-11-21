@@ -38,9 +38,9 @@ public class DescriptionTest {
 
         Description description = Description.fromImageItemDescription(imageItemDescription);
 
-        assertEquals(DEFAULT_LANGUAGE, description.getLanguage());
-        assertEquals(DEFAULT_TEXT_FORMAT, description.getTextFormat());
-        assertEquals(DEFAULT_VALUE, description.getValue());
+        assertEquals(description.getLanguage(), DEFAULT_LANGUAGE);
+        assertEquals(description.getTextFormat(), DEFAULT_TEXT_FORMAT);
+        assertEquals(description.getValue(), DEFAULT_VALUE);
     }
 
     @Test
@@ -54,9 +54,9 @@ public class DescriptionTest {
         assertEquals(descriptions.size(), 1);
 
         Description description = descriptions.get(0);
-        assertEquals(DEFAULT_LANGUAGE, description.getLanguage());
-        assertEquals(DEFAULT_TEXT_FORMAT, description.getTextFormat());
-        assertEquals(DEFAULT_VALUE, description.getValue());
+        assertEquals(description.getLanguage(), DEFAULT_LANGUAGE);
+        assertEquals(description.getTextFormat(), DEFAULT_TEXT_FORMAT);
+        assertEquals(description.getValue(), DEFAULT_VALUE);
     }
 
     @Test
@@ -65,9 +65,9 @@ public class DescriptionTest {
 
         Description description = Description.fromTextItemDescription(textItemDescription);
 
-        assertEquals(DEFAULT_LANGUAGE, description.getLanguage());
-        assertEquals(DEFAULT_TEXT_FORMAT, description.getTextFormat());
-        assertEquals(DEFAULT_VALUE, description.getValue());
+        assertEquals(description.getLanguage(), DEFAULT_LANGUAGE);
+        assertEquals(description.getTextFormat(), DEFAULT_TEXT_FORMAT);
+        assertEquals(description.getValue(), DEFAULT_VALUE);
     }
 
     @Test
@@ -81,9 +81,9 @@ public class DescriptionTest {
         assertEquals(descriptions.size(), 1);
 
         Description description = descriptions.get(0);
-        assertEquals(DEFAULT_LANGUAGE, description.getLanguage());
-        assertEquals(DEFAULT_TEXT_FORMAT, description.getTextFormat());
-        assertEquals(DEFAULT_VALUE, description.getValue());
+        assertEquals(description.getLanguage(), DEFAULT_LANGUAGE);
+        assertEquals(description.getTextFormat(), DEFAULT_TEXT_FORMAT);
+        assertEquals(description.getValue(), DEFAULT_VALUE);
     }
 
     @Test
@@ -92,9 +92,9 @@ public class DescriptionTest {
 
         Description description = Description.fromVideoItemDescription(videoItemDescription);
 
-        assertEquals(DEFAULT_LANGUAGE, description.getLanguage());
-        assertEquals(DEFAULT_TEXT_FORMAT, description.getTextFormat());
-        assertEquals(DEFAULT_VALUE, description.getValue());
+        assertEquals(description.getLanguage(), DEFAULT_LANGUAGE);
+        assertEquals(description.getTextFormat(), DEFAULT_TEXT_FORMAT);
+        assertEquals(description.getValue(), DEFAULT_VALUE);
     }
 
     @Test
@@ -108,9 +108,9 @@ public class DescriptionTest {
         assertEquals(descriptions.size(), 1);
 
         Description description = descriptions.get(0);
-        assertEquals(DEFAULT_LANGUAGE, description.getLanguage());
-        assertEquals(DEFAULT_TEXT_FORMAT, description.getTextFormat());
-        assertEquals(DEFAULT_VALUE, description.getValue());
+        assertEquals(description.getLanguage(), DEFAULT_LANGUAGE);
+        assertEquals(description.getTextFormat(), DEFAULT_TEXT_FORMAT);
+        assertEquals(description.getValue(), DEFAULT_VALUE);
     }
 
 

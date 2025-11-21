@@ -21,7 +21,7 @@ import static org.testng.Assert.assertTrue;
 public class LoggingExceptionHandlerTest {
 
     @Test
-    public void testHandleException() throws Exception {
+    public void testHandleException() {
         // This test is solely here to have 100% test coverage
         ExceptionHandler exceptionHandler = new LoggingExceptionHandler();
         exceptionHandler.handleException(null);

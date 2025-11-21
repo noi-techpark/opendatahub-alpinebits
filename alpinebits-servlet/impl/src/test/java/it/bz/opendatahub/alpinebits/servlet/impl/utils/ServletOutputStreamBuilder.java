@@ -35,7 +35,7 @@ public class ServletOutputStreamBuilder {
 
             @Override
             public void setWriteListener(WriteListener writeListener) {
-
+                // Empty
             }
 
             @Override
