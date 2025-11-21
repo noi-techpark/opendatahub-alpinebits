@@ -64,7 +64,7 @@ SPDX-License-Identifier: CC0-1.0
         <jackson.version>2.20.1</jackson.version>
 
         <testng.version>7.11.0</testng.version>
-        <mockito.version>2.22.0</mockito.version>
+        <mockito.version>5.20.0</mockito.version>
         <arquillian-testng-container.version>1.10.0.Final</arquillian-testng-container.version>
         <tomcat-embedded.version>10.1.49</tomcat-embedded.version>
         <rest-assured.version>5.5.6</rest-assured.version>
