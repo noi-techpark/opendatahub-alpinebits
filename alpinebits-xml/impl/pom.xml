@@ -44,6 +44,10 @@ SPDX-License-Identifier: CC0-1.0
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.relaxng</groupId>
             <artifactId>jing</artifactId>
             <version>${jing.version}</version>
@@ -83,8 +87,8 @@ SPDX-License-Identifier: CC0-1.0
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

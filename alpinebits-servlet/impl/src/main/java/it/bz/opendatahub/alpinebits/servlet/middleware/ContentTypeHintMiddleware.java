@@ -15,10 +15,10 @@ import it.bz.opendatahub.alpinebits.middleware.Context;
 import it.bz.opendatahub.alpinebits.middleware.Middleware;
 import it.bz.opendatahub.alpinebits.middleware.MiddlewareChain;
 import it.bz.opendatahub.alpinebits.servlet.ServletContextKey;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 /**
@@ -30,7 +30,7 @@ import java.util.Optional;
  * This middleware does nothing when there is no such key or when the
  * "Content-Type" header is already set.
  */
-public class ContentTypeHintMiddleware  implements Middleware {
+public class ContentTypeHintMiddleware implements Middleware {
 
     public static final String RESPONSE_CONTENT_TYPE_HEADER = "Content-Type";
 

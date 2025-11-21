@@ -6,7 +6,8 @@ SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
 SPDX-License-Identifier: CC0-1.0
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -22,7 +23,7 @@ SPDX-License-Identifier: CC0-1.0
     <name>AlpineBits servlet impl</name>
 
     <properties>
-        <commons-fileupload.version>2.0.0-M1</commons-fileupload.version>
+        <commons-fileupload.version>2.0.0-M4</commons-fileupload.version>
     </properties>
 
     <dependencies>
@@ -47,13 +48,13 @@ SPDX-License-Identifier: CC0-1.0
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
-            <artifactId>commons-fileupload2-javax</artifactId>
+            <artifactId>commons-fileupload2-jakarta-servlet6</artifactId>
             <version>${commons-fileupload.version}</version>
         </dependency>
 

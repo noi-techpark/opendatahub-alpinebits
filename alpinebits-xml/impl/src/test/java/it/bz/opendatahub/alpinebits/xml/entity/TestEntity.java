@@ -10,7 +10,7 @@
 
 package it.bz.opendatahub.alpinebits.xml.entity;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  * Entity used for tests.

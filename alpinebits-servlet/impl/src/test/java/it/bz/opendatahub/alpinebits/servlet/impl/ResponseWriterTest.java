@@ -12,13 +12,16 @@ package it.bz.opendatahub.alpinebits.servlet.impl;
 
 import it.bz.opendatahub.alpinebits.common.constants.HttpContentTypeHeaderValues;
 import it.bz.opendatahub.alpinebits.servlet.impl.utils.ServletOutputStreamBuilder;
+import jakarta.servlet.http.HttpServletResponse;
 import org.testng.annotations.Test;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.StringWriter;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 
 /**

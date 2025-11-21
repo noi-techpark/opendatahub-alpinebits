@@ -19,8 +19,8 @@ import it.bz.opendatahub.alpinebits.xml.XmlToObjectConverter;
 import it.bz.opendatahub.alpinebits.xml.XmlValidationSchemaProvider;
 import it.bz.opendatahub.alpinebits.xml.middleware.XmlRequestMappingMiddleware;
 import it.bz.opendatahub.alpinebits.xml.middleware.XmlResponseMappingMiddleware;
+import jakarta.xml.bind.JAXBException;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.validation.Schema;
 
 /**

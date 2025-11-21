@@ -37,7 +37,7 @@ the project on a live system.
 
 To build the project, the following prerequisites must be met:
 
-- Java JDK 1.8 or higher (e.g. [OpenJDK](https://openjdk.java.net/))
+- Java JDK 11 or higher (e.g. [OpenJDK](https://openjdk.java.net/))
 - [Maven](https://maven.apache.org/) 3.x
 
 For a ready to use Docker environment with all prerequisites already installed and prepared, you can check out the [Docker environment](#docker-environment) section.
@@ -47,13 +47,13 @@ For a ready to use Docker environment with all prerequisites already installed a
 Get a copy of the repository, e.g. by cloning it from the following location:
 
 ```bash
-git clone https://github.com/idm-suedtirol/odh-alpinebits.git
+git clone https://github.com/noi-techpark/opendatahub-alpinebits.git
 ```
 
 Change directory:
 
 ```bash
-cd odh-alpinebits/
+cd opendatahub-alpinebits/
 ```
 
 Build the project:

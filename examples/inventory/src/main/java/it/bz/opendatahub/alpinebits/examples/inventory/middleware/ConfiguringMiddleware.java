@@ -28,8 +28,8 @@ import it.bz.opendatahub.alpinebits.servlet.middleware.AlpineBitsClientProtocolM
 import it.bz.opendatahub.alpinebits.servlet.middleware.BasicAuthenticationMiddleware;
 import it.bz.opendatahub.alpinebits.servlet.middleware.GzipUnsupportedMiddleware;
 import it.bz.opendatahub.alpinebits.servlet.middleware.MultipartFormDataParserMiddleware;
+import jakarta.xml.bind.JAXBException;
 
-import javax.xml.bind.JAXBException;
 import java.util.Arrays;
 
 /**

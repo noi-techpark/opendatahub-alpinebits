@@ -18,10 +18,10 @@ import it.bz.opendatahub.alpinebits.middleware.RequiredContextKeyMissingExceptio
 import it.bz.opendatahub.alpinebits.middleware.impl.SimpleContext;
 import it.bz.opendatahub.alpinebits.servlet.BasicAuthenticationException;
 import it.bz.opendatahub.alpinebits.servlet.ServletContextKey;
+import jakarta.servlet.http.HttpServletRequest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.function.Supplier;
 

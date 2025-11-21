@@ -20,11 +20,11 @@ import it.bz.opendatahub.alpinebits.servlet.MultipartFormDataParseException;
 import it.bz.opendatahub.alpinebits.servlet.ServletContextKey;
 import it.bz.opendatahub.alpinebits.servlet.UndefinedActionException;
 import it.bz.opendatahub.alpinebits.servlet.impl.utils.MultipartFormDataRequestBuilder;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.io.IOUtils;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
 
 import static org.mockito.Mockito.mock;

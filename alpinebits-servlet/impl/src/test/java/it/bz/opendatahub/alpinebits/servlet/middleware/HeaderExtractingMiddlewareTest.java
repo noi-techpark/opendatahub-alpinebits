@@ -16,13 +16,13 @@ import it.bz.opendatahub.alpinebits.middleware.Middleware;
 import it.bz.opendatahub.alpinebits.middleware.RequiredContextKeyMissingException;
 import it.bz.opendatahub.alpinebits.middleware.impl.SimpleContext;
 import it.bz.opendatahub.alpinebits.servlet.ServletContextKey;
+import jakarta.servlet.http.HttpServletRequest;
 import org.testng.annotations.Test;
-
-import javax.servlet.http.HttpServletRequest;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 
 /**
  * Tests for {@link HeaderExtractingMiddleware}.

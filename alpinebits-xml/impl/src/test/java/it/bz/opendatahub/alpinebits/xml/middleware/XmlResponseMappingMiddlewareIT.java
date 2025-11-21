@@ -16,6 +16,7 @@ import it.bz.opendatahub.alpinebits.servlet.middleware.ContentTypeHintMiddleware
 import it.bz.opendatahub.alpinebits.xml.middleware.utils.NotValidatingXmlResponseMappingMiddleware;
 import it.bz.opendatahub.alpinebits.xml.middleware.utils.RngValidatingXmlResponseMappingMiddleware;
 import it.bz.opendatahub.alpinebits.xml.middleware.utils.XsdValidatingXmlResponseMappingMiddleware;
+import jakarta.servlet.http.HttpServletResponse;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -26,7 +27,6 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.testng.annotations.Test;
 
-import javax.servlet.http.HttpServletResponse;
 import java.net.URL;
 
 import static io.restassured.RestAssured.given;

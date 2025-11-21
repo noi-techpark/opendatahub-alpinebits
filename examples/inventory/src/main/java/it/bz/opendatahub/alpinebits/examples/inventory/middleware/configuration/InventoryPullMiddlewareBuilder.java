@@ -13,8 +13,8 @@ package it.bz.opendatahub.alpinebits.examples.inventory.middleware.configuration
 import it.bz.opendatahub.alpinebits.common.utils.middleware.ComposingMiddlewareBuilder;
 import it.bz.opendatahub.alpinebits.examples.inventory.middleware.InventoryPullMiddleware;
 import it.bz.opendatahub.alpinebits.middleware.Middleware;
+import jakarta.xml.bind.JAXBException;
 
-import javax.xml.bind.JAXBException;
 import java.util.Arrays;
 
 /**

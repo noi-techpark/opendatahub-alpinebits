@@ -15,6 +15,7 @@ import it.bz.opendatahub.alpinebits.xml.middleware.utils.NotValidatingXmlRequest
 import it.bz.opendatahub.alpinebits.xml.middleware.utils.RngValidatingXmlRequestMappingMiddleware;
 import it.bz.opendatahub.alpinebits.xml.middleware.utils.XsdValidatingXmlRequestMappingMiddleware;
 import it.bz.opendatahub.alpinebits.xml.schema.ota.OTAReadRQ;
+import jakarta.servlet.http.HttpServletResponse;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -25,7 +26,6 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.testng.annotations.Test;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.net.URL;
 

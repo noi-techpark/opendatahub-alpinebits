@@ -11,15 +11,14 @@
 package it.bz.opendatahub.alpinebits.servlet.impl;
 
 import it.bz.opendatahub.alpinebits.common.context.RequestContextKey;
+import it.bz.opendatahub.alpinebits.middleware.Context;
 import it.bz.opendatahub.alpinebits.servlet.ContextBuilder;
 import it.bz.opendatahub.alpinebits.servlet.ContextBuildingException;
 import it.bz.opendatahub.alpinebits.servlet.ServletContextKey;
-import it.bz.opendatahub.alpinebits.middleware.Context;
 import it.bz.opendatahub.alpinebits.servlet.impl.utils.ServletOutputStreamBuilder;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.testng.annotations.Test;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 

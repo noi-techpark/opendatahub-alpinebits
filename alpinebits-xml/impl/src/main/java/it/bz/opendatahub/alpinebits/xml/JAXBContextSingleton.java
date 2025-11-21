@@ -11,13 +11,12 @@
 package it.bz.opendatahub.alpinebits.xml;
 
 import it.bz.opendatahub.alpinebits.xml.schema.ota.ObjectFactory;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
 
 /**
  * This class holds a {@link JAXBContext} instance as a singleton.
- *
+ * <p>
  * The JAXBContext is initialized with the {@link ObjectFactory}. That
  * means, that the JAXBContext provided by this singleton is usable only
  * for classes declared in that ObjectFactory.

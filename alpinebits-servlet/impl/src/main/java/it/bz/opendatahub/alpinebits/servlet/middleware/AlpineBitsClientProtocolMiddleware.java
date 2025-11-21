@@ -17,10 +17,9 @@ import it.bz.opendatahub.alpinebits.middleware.MiddlewareChain;
 import it.bz.opendatahub.alpinebits.middleware.RequiredContextKeyMissingException;
 import it.bz.opendatahub.alpinebits.servlet.AlpineBitsClientProtocolMissingException;
 import it.bz.opendatahub.alpinebits.servlet.ServletContextKey;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * This middleware extracts the value of the <code>X-AlpineBits-ClientProtocolVersion</code> header
