@@ -23,7 +23,7 @@ SPDX-License-Identifier: CC0-1.0
 
     <properties>
         <jing.version>20220510</jing.version>
-        <xmlunit.version>2.10.0</xmlunit.version>
+        <xmlunit.version>2.11.0</xmlunit.version>
     </properties>
 
     <dependencies>
