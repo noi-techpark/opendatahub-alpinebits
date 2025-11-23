@@ -27,7 +27,7 @@ public class JsonSerializer {
     public JsonSerializer() {
         this.om = new ObjectMapper();
         // Don't include empty sets in serialization, since this is against the specification
-        this.om.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+        this.om.setDefaultPropertyInclusion(JsonInclude.Include.NON_EMPTY);
     }
 
     /**
