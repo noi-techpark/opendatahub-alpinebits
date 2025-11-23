@@ -121,10 +121,17 @@ public final class XmlValidationSchemaProvider {
         }
     }
 
+    // Suppress "SchemaFactory.newInstance(String) is a security-sensitive method and should not be called with untrusted input"
+    @SuppressWarnings("java:S2755")
     private static Schema buildKnownSchema(String filename, String schemaLanguage) throws SAXException {
         URL xsdUrl = XmlValidationSchemaProvider.class.getClassLoader().getResource(filename);
-        SchemaFactory sf = SchemaFactory.newInstance(schemaLanguage);
-        return sf.newSchema(xsdUrl);
+        SchemaFactory factory = SchemaFactory.newInstance(schemaLanguage);
+        factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        if (XMLConstants.W3C_XML_SCHEMA_NS_URI.equals(schemaLanguage)) {
+            factory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+            factory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "file");
+        }
+        return factory.newSchema(xsdUrl);
     }
 
     private static InvalidSchemaException buildValidationException(String filename, String validationType, Throwable e) {
