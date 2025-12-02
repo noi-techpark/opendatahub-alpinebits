@@ -21,6 +21,7 @@ SPDX-License-Identifier: CC0-1.0
 
     <name>AlpineBits validation impl</name>
     <description>Implementation of validation components for AlpineBits.</description>
+    <url>https://www.alpinebits.org/</url>
 
     <dependencies>
         <dependency>

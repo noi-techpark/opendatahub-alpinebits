@@ -21,6 +21,7 @@ SPDX-License-Identifier: CC0-1.0
 
     <name>AlpineBits handshaking API</name>
     <description>Handshaking API for AlpineBits protocol (since 2018-10). Defines interfaces for version negotiation and capability discovery.</description>
+    <url>https://www.alpinebits.org/</url>
 
     <dependencies>
         <dependency>

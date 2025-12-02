@@ -21,6 +21,7 @@ SPDX-License-Identifier: CC0-1.0
 
     <name>AlpineBits XML impl</name>
     <description>Implementation of XML processing components for AlpineBits.</description>
+    <url>https://www.alpinebits.org/</url>
 
     <properties>
         <jing.version>20220510</jing.version>

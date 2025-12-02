@@ -22,6 +22,7 @@ SPDX-License-Identifier: CC0-1.0
 
     <name>AlpineBits servlet impl</name>
     <description>Servlet implementation for AlpineBits. Provides concrete servlet classes for AlpineBits request handling.</description>
+    <url>https://www.alpinebits.org/</url>
 
     <properties>
         <commons-fileupload.version>2.0.0-M4</commons-fileupload.version>

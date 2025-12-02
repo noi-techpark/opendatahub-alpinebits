@@ -21,6 +21,7 @@ SPDX-License-Identifier: CC0-1.0
 
     <name>AlpineBits common utils</name>
     <description>Utility classes for AlpineBits common operations. Provides helper methods and common functionality.</description>
+    <url>https://www.alpinebits.org/</url>
 
     <dependencies>
         <dependency>

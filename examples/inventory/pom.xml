@@ -22,6 +22,7 @@ SPDX-License-Identifier: CC0-1.0
 
     <name>AlpineBits examples - Inventory</name>
     <description>Example web application demonstrating the inventory features of the AlpineBits library.</description>
+    <url>https://www.alpinebits.org/</url>
 
     <dependencies>
         <dependency>
