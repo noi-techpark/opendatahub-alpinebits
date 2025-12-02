@@ -5,7 +5,7 @@ on:
   pull_request:
 
 env:
-  JAVA_VERSION: '8'
+  JAVA_VERSION: '11'
   ODH_OSSRH_GPG_KEY_BASE_64: ${{ secrets.ODH_OSSRH_GPG_KEY_BASE_64 }}
 
 
