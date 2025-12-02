@@ -38,7 +38,7 @@ the project on a live system.
 To build the project, the following prerequisites must be met:
 
 - Java JDK 11 or higher (e.g. [OpenJDK](https://openjdk.java.net/))
-- [Maven](https://maven.apache.org/) 3.x
+- [Maven](https://maven.apache.org/) 3.6+
 
 For a ready to use Docker environment with all prerequisites already installed and prepared, you can check out the [Docker environment](#docker-environment) section.
 
