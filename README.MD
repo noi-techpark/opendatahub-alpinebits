@@ -253,13 +253,13 @@ Install [Docker](https://docs.docker.com/install/) (with Docker Compose) locally
 Before start working you have to start the Docker containers:
 
 ```
-docker-compose up --build --detach
+docker compose up --build --detach
 ```
 
 After finished working you can stop the Docker containers:
 
 ```
-docker-compose stop
+docker compose stop
 ```
 
 ### Running commands inside the container
@@ -267,33 +267,33 @@ docker-compose stop
 When the containers are running, you can execute any command inside the environment. Just replace the dots `...` in the following example with the command you wish to execute:
 
 ```bash
-docker-compose exec java /bin/bash -c "..."
+docker compose exec java /bin/bash -c "..."
 ```
 
 Some examples are:
 
 ```bash
-docker-compose exec java /bin/bash -c "mvn clean install"
+docker compose exec java /bin/bash -c "mvn clean install"
 
 # or
 
-docker-compose exec java /bin/bash -c "mvn clean verify"
+docker compose exec java /bin/bash -c "mvn clean verify"
 
 # or
 
-docker-compose exec java /bin/bash -c "mvn clean verify -P it"
+docker compose exec java /bin/bash -c "mvn clean verify -P it"
 ```
 
 To check the code quality, you can run the following command and then visit the results at [http://localhost:9000/](http://localhost:9000/):
 
 ```bash
-docker-compose exec java /bin/bash -c "mvn clean verify sonar:sonar -Dsonar.host.url=http://sonar:9000 -P it,report"
+docker compose exec java /bin/bash -c "mvn clean verify sonar:sonar -Dsonar.host.url=http://sonar:9000 -P it,report"
 ```
 
 To server the example run the following command and then visit the website at [http://localhost:8080/examples-housekeeping/index.html](http://localhost:8080/examples-housekeeping/index.html):
 
 ```bash
-docker-compose exec java /bin/bash -c "cd examples/housekeeping && mvn cargo:run"
+docker compose exec java /bin/bash -c "cd examples/housekeeping && mvn cargo:run"
 ```
 
 ## Information
