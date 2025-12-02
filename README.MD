@@ -88,7 +88,7 @@ mvn clean install cargo:run
 ```
 
 This command starts a local Tomcat 10 instance using
-[Cargo](https://codehaus-cargo.github.io/cargo/Maven2+plugin.html) and deploys
+[Cargo](https://codehaus-cargo.github.io/cargo/Maven+3+Plugin.html) and deploys
 the example war file, generated during the installation (see [Installing](#installing)).
 
 The deployment contains an AlpineBits server instance supporting the
@@ -121,7 +121,7 @@ mvn clean install cargo:run
 ```
 
 This command starts a local Tomcat 10 instance using
-[Cargo](https://codehaus-cargo.github.io/cargo/Maven2+plugin.html) and deploys
+[Cargo](https://codehaus-cargo.github.io/cargo/Maven+3+Plugin.html) and deploys
 the example war file, generated during the installation (see [Installing](#installing)).
 
 The deployment contains an AlpineBits server instance supporting the
@@ -156,7 +156,7 @@ mvn clean install cargo:run
 ```
 
 This command starts a local Tomcat 10 instance using
-[Cargo](https://codehaus-cargo.github.io/cargo/Maven2+plugin.html) and deploys
+[Cargo](https://codehaus-cargo.github.io/cargo/Maven+3+Plugin.html) and deploys
 the example war file, generated during the installation (see [Installing](#installing)).
 
 The deployment contains an AlpineBits server instance supporting the
@@ -186,7 +186,7 @@ mvn clean install cargo:run
 ```
 
 This command starts a local Tomcat 10 instance using
-[Cargo](https://codehaus-cargo.github.io/cargo/Maven2+plugin.html) and deploys
+[Cargo](https://codehaus-cargo.github.io/cargo/Maven+3+Plugin.html) and deploys
 the example war file, generated during the installation (see [Installing](#installing)).
 
 The deployment contains an AlpineBits server instance supporting the
