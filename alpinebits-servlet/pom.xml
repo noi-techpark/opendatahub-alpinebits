@@ -23,6 +23,9 @@ SPDX-License-Identifier: CC0-1.0
     <name>AlpineBits servlet</name>
     <description>Servlet integration for AlpineBits. Provides servlet-based implementation for handling AlpineBits HTTP requests.</description>
     <url>https://www.alpinebits.org/</url>
+    <scm>
+        <url>https://github.com/noi-techpark/opendatahub-alpinebits</url>
+    </scm>
 
     <modules>
         <module>api</module>

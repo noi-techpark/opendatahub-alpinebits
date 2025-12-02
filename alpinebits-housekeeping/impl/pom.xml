@@ -22,6 +22,9 @@ SPDX-License-Identifier: CC0-1.0
     <name>AlpineBits housekeeping impl</name>
     <description>Housekeeping implementation for AlpineBits (supported until 2017-10). Provides concrete implementations for capability exchange.</description>
     <url>https://www.alpinebits.org/</url>
+    <scm>
+        <url>https://github.com/noi-techpark/opendatahub-alpinebits</url>
+    </scm>
 
     <dependencies>
         <dependency>

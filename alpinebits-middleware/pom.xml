@@ -23,6 +23,9 @@ SPDX-License-Identifier: CC0-1.0
     <name>AlpineBits middleware</name>
     <description>Middleware layer for AlpineBits request processing. Provides extensible pipeline for handling AlpineBits operations.</description>
     <url>https://www.alpinebits.org/</url>
+    <scm>
+        <url>https://github.com/noi-techpark/opendatahub-alpinebits</url>
+    </scm>
 
     <modules>
         <module>api</module>

@@ -13,6 +13,7 @@ SPDX-License-Identifier: CC0-1.0
     <artifactId>alpinebits-root</artifactId>
     <version>5.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+
     <name>AlpineBits</name>
     <description>
         AlpineBits is an open standard to exchange touristic data.
@@ -20,7 +21,6 @@ SPDX-License-Identifier: CC0-1.0
         This library provides functionality to implement AlpineBits server. Use it to build your own standalone AlpineBits server, or integrate parts of it into your existing code base.
     </description>
     <url>https://www.alpinebits.org/</url>
-
     <scm>
         <url>https://github.com/noi-techpark/opendatahub-alpinebits</url>
     </scm>

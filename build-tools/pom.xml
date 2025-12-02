@@ -20,4 +20,7 @@ SPDX-License-Identifier: CC0-1.0
     <name>AlpineBits Build Tools</name>
     <description>Build tools and configuration for AlpineBits project. Contains checkstyle rules and build-time utilities.</description>
     <url>https://www.alpinebits.org/</url>
+    <scm>
+        <url>https://github.com/noi-techpark/opendatahub-alpinebits</url>
+    </scm>
 </project>

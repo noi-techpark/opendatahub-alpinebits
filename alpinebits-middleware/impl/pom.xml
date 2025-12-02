@@ -22,6 +22,9 @@ SPDX-License-Identifier: CC0-1.0
     <name>AlpineBits middleware impl</name>
     <description>Middleware implementation for AlpineBits. Provides concrete implementations for request processing pipeline and middleware components.</description>
     <url>https://www.alpinebits.org/</url>
+    <scm>
+        <url>https://github.com/noi-techpark/opendatahub-alpinebits</url>
+    </scm>
 
     <dependencies>
         <dependency>
