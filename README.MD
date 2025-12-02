@@ -87,7 +87,7 @@ Run the following maven command:
 mvn clean install cargo:run
 ```
 
-This command starts a local Tomcat 8 instance using
+This command starts a local Tomcat 10 instance using
 [Cargo](https://codehaus-cargo.github.io/cargo/Maven2+plugin.html) and deploys
 the example war file, generated during the installation (see [Installing](#installing)).
 
@@ -120,7 +120,7 @@ Run the following maven command:
 mvn clean install cargo:run
 ```
 
-This command starts a local Tomcat 8 instance using
+This command starts a local Tomcat 10 instance using
 [Cargo](https://codehaus-cargo.github.io/cargo/Maven2+plugin.html) and deploys
 the example war file, generated during the installation (see [Installing](#installing)).
 
@@ -155,7 +155,7 @@ Run the following maven command:
 mvn clean install cargo:run
 ```
 
-This command starts a local Tomcat 8 instance using
+This command starts a local Tomcat 10 instance using
 [Cargo](https://codehaus-cargo.github.io/cargo/Maven2+plugin.html) and deploys
 the example war file, generated during the installation (see [Installing](#installing)).
 
@@ -185,7 +185,7 @@ Run the following maven command:
 mvn clean install cargo:run
 ```
 
-This command starts a local Tomcat 8 instance using
+This command starts a local Tomcat 10 instance using
 [Cargo](https://codehaus-cargo.github.io/cargo/Maven2+plugin.html) and deploys
 the example war file, generated during the installation (see [Installing](#installing)).
 
@@ -232,7 +232,7 @@ mvn clean install -P sources
 The project provides a servlet as entry point to the AlpineBits server. If you want,
 to use it, the following additional prerequisites must be met:
 
-- Servlet Container 3.x (e.g. [Tomcat 8](https://tomcat.apache.org/download-80.cgi))
+- Servlet Container 6.x (e.g. [Tomcat 10](https://tomcat.apache.org/download-10.cgi))
 
 Using the provided examples as template (see [Examples](#examples)), you should
 be able to configure your AlpineBits server and to deploy the result as a war
