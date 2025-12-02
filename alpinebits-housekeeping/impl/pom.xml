@@ -20,6 +20,7 @@ SPDX-License-Identifier: CC0-1.0
     <version>5.0.0-SNAPSHOT</version>
 
     <name>AlpineBits housekeeping impl</name>
+    <description>Housekeeping implementation for AlpineBits (supported until 2017-10). Provides concrete implementations for capability exchange.</description>
 
     <dependencies>
         <dependency>

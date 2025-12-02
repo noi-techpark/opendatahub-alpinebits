@@ -18,9 +18,10 @@ SPDX-License-Identifier: CC0-1.0
 
     <artifactId>alpinebits-routing</artifactId>
     <version>5.0.0-SNAPSHOT</version>
-
     <packaging>pom</packaging>
+
     <name>AlpineBits routing</name>
+    <description>Routing functionality for AlpineBits requests. Manages request dispatching and action routing.</description>
 
     <modules>
         <module>api</module>

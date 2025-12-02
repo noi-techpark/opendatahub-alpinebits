@@ -18,9 +18,10 @@ SPDX-License-Identifier: CC0-1.0
 
     <artifactId>alpinebits-servlet</artifactId>
     <version>5.0.0-SNAPSHOT</version>
-
     <packaging>pom</packaging>
+
     <name>AlpineBits servlet</name>
+    <description>Servlet integration for AlpineBits. Provides servlet-based implementation for handling AlpineBits HTTP requests.</description>
 
     <modules>
         <module>api</module>

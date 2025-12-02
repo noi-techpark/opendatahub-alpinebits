@@ -20,6 +20,7 @@ SPDX-License-Identifier: CC0-1.0
     <version>5.0.0-SNAPSHOT</version>
 
     <name>AlpineBits handshaking impl</name>
+    <description>Handshaking implementation for AlpineBits (since 2018-10). Provides concrete implementations for protocol handshaking.</description>
 
     <dependencies>
         <dependency>

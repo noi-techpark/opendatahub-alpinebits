@@ -16,4 +16,7 @@ SPDX-License-Identifier: CC0-1.0
     </parent>
 
     <artifactId>build-tools</artifactId>
+
+    <name>AlpineBits Build Tools</name>
+    <description>Build tools and configuration for AlpineBits project. Contains checkstyle rules and build-time utilities.</description>
 </project>
