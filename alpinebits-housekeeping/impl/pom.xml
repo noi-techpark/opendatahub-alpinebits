@@ -12,12 +12,12 @@ SPDX-License-Identifier: CC0-1.0
     <parent>
         <groupId>it.bz.opendatahub.alpinebits</groupId>
         <artifactId>alpinebits-housekeeping</artifactId>
-        <version>5.0.0-SNAPSHOT</version>
+        <version>5.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>alpinebits-housekeeping-impl</artifactId>
-    <version>5.0.0-SNAPSHOT</version>
+    <version>5.0.0</version>
 
     <name>AlpineBits housekeeping impl</name>
     <description>Housekeeping implementation for AlpineBits (supported until 2017-10). Provides concrete implementations for capability exchange.</description>
