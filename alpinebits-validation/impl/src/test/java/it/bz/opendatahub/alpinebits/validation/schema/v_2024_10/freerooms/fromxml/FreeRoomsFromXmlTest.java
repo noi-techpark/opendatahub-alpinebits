@@ -48,9 +48,6 @@ public class FreeRoomsFromXmlTest {
 
         OTAHotelInvCountNotifRQValidator validator = new OTAHotelInvCountNotifRQValidator();
 
-//        OTAHotelInvCountNotifRQ rq = xmlConverter.toObject(is);
-//        validator.validate(rq, ctx, null);
-
         if (exceptionClass == null) {
             // Expect no exception
 

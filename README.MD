@@ -37,8 +37,8 @@ the project on a live system.
 
 To build the project, the following prerequisites must be met:
 
-- Java JDK 1.8 or higher (e.g. [OpenJDK](https://openjdk.java.net/))
-- [Maven](https://maven.apache.org/) 3.x
+- Java JDK 11 or higher (e.g. [OpenJDK](https://openjdk.java.net/))
+- [Maven](https://maven.apache.org/) 3.6+
 
 For a ready to use Docker environment with all prerequisites already installed and prepared, you can check out the [Docker environment](#docker-environment) section.
 
@@ -47,13 +47,13 @@ For a ready to use Docker environment with all prerequisites already installed a
 Get a copy of the repository, e.g. by cloning it from the following location:
 
 ```bash
-git clone https://github.com/idm-suedtirol/odh-alpinebits.git
+git clone https://github.com/noi-techpark/opendatahub-alpinebits.git
 ```
 
 Change directory:
 
 ```bash
-cd odh-alpinebits/
+cd opendatahub-alpinebits/
 ```
 
 Build the project:
@@ -87,8 +87,8 @@ Run the following maven command:
 mvn clean install cargo:run
 ```
 
-This command starts a local Tomcat 8 instance using
-[Cargo](https://codehaus-cargo.github.io/cargo/Maven2+plugin.html) and deploys
+This command starts a local Tomcat 10 instance using
+[Cargo](https://codehaus-cargo.github.io/cargo/Maven+3+Plugin.html) and deploys
 the example war file, generated during the installation (see [Installing](#installing)).
 
 The deployment contains an AlpineBits server instance supporting the
@@ -120,8 +120,8 @@ Run the following maven command:
 mvn clean install cargo:run
 ```
 
-This command starts a local Tomcat 8 instance using
-[Cargo](https://codehaus-cargo.github.io/cargo/Maven2+plugin.html) and deploys
+This command starts a local Tomcat 10 instance using
+[Cargo](https://codehaus-cargo.github.io/cargo/Maven+3+Plugin.html) and deploys
 the example war file, generated during the installation (see [Installing](#installing)).
 
 The deployment contains an AlpineBits server instance supporting the
@@ -155,8 +155,8 @@ Run the following maven command:
 mvn clean install cargo:run
 ```
 
-This command starts a local Tomcat 8 instance using
-[Cargo](https://codehaus-cargo.github.io/cargo/Maven2+plugin.html) and deploys
+This command starts a local Tomcat 10 instance using
+[Cargo](https://codehaus-cargo.github.io/cargo/Maven+3+Plugin.html) and deploys
 the example war file, generated during the installation (see [Installing](#installing)).
 
 The deployment contains an AlpineBits server instance supporting the
@@ -185,8 +185,8 @@ Run the following maven command:
 mvn clean install cargo:run
 ```
 
-This command starts a local Tomcat 8 instance using
-[Cargo](https://codehaus-cargo.github.io/cargo/Maven2+plugin.html) and deploys
+This command starts a local Tomcat 10 instance using
+[Cargo](https://codehaus-cargo.github.io/cargo/Maven+3+Plugin.html) and deploys
 the example war file, generated during the installation (see [Installing](#installing)).
 
 The deployment contains an AlpineBits server instance supporting the
@@ -232,7 +232,7 @@ mvn clean install -P sources
 The project provides a servlet as entry point to the AlpineBits server. If you want,
 to use it, the following additional prerequisites must be met:
 
-- Servlet Container 3.x (e.g. [Tomcat 8](https://tomcat.apache.org/download-80.cgi))
+- Servlet Container 6.x (e.g. [Tomcat 10](https://tomcat.apache.org/download-10.cgi))
 
 Using the provided examples as template (see [Examples](#examples)), you should
 be able to configure your AlpineBits server and to deploy the result as a war
@@ -253,13 +253,13 @@ Install [Docker](https://docs.docker.com/install/) (with Docker Compose) locally
 Before start working you have to start the Docker containers:
 
 ```
-docker-compose up --build --detach
+docker compose up --build --detach
 ```
 
 After finished working you can stop the Docker containers:
 
 ```
-docker-compose stop
+docker compose stop
 ```
 
 ### Running commands inside the container
@@ -267,33 +267,33 @@ docker-compose stop
 When the containers are running, you can execute any command inside the environment. Just replace the dots `...` in the following example with the command you wish to execute:
 
 ```bash
-docker-compose exec java /bin/bash -c "..."
+docker compose exec java /bin/bash -c "..."
 ```
 
 Some examples are:
 
 ```bash
-docker-compose exec java /bin/bash -c "mvn clean install"
+docker compose exec java /bin/bash -c "mvn clean install"
 
 # or
 
-docker-compose exec java /bin/bash -c "mvn clean verify"
+docker compose exec java /bin/bash -c "mvn clean verify"
 
 # or
 
-docker-compose exec java /bin/bash -c "mvn clean verify -P it"
+docker compose exec java /bin/bash -c "mvn clean verify -P it"
 ```
 
 To check the code quality, you can run the following command and then visit the results at [http://localhost:9000/](http://localhost:9000/):
 
 ```bash
-docker-compose exec java /bin/bash -c "mvn clean verify sonar:sonar -Dsonar.host.url=http://sonar:9000 -P it,report"
+docker compose exec java /bin/bash -c "mvn clean verify sonar:sonar -Dsonar.host.url=http://sonar:9000 -P it,report"
 ```
 
 To server the example run the following command and then visit the website at [http://localhost:8080/examples-housekeeping/index.html](http://localhost:8080/examples-housekeeping/index.html):
 
 ```bash
-docker-compose exec java /bin/bash -c "cd examples/housekeeping && mvn cargo:run"
+docker compose exec java /bin/bash -c "cd examples/housekeeping && mvn cargo:run"
 ```
 
 ## Information

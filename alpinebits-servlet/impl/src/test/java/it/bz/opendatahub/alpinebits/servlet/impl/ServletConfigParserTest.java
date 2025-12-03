@@ -16,9 +16,8 @@ import it.bz.opendatahub.alpinebits.servlet.RequestExceptionHandler;
 import it.bz.opendatahub.alpinebits.servlet.impl.utils.EmptyMiddleware;
 import it.bz.opendatahub.alpinebits.servlet.impl.utils.EmptyRequestExceptionHandler;
 import it.bz.opendatahub.alpinebits.servlet.impl.utils.NullContextBuilder;
+import jakarta.servlet.ServletConfig;
 import org.testng.annotations.Test;
-
-import javax.servlet.ServletConfig;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

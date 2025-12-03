@@ -16,7 +16,7 @@ import java.util.Objects;
  * This class implements a {@link ValidationPath} and can
  * be used to track the path from the beginning of a
  * validation to the current positions.
- *
+ * <p>
  * It is encouraged that exceptions include the path
  * information to simplify the determination of the
  * exception cause.
@@ -29,7 +29,7 @@ public final class SimpleValidationPath implements ValidationPath {
     public static final Character OPEN_ATTRIBUTE_CHAR = '{';
     public static final Character CLOSE_ATTRIBUTE_CHAR = '}';
 
-    private StringBuilder validationPath;
+    private final StringBuilder validationPath;
 
     private SimpleValidationPath(String validationPath) {
         if (validationPath == null) {
@@ -43,25 +43,23 @@ public final class SimpleValidationPath implements ValidationPath {
     }
 
     public SimpleValidationPath withElement(String path) {
-        String newPath = new StringBuilder(this.validationPath).append(DELIMITER).append(path).toString();
+        String newPath = this.validationPath + DELIMITER + path;
         return new SimpleValidationPath(newPath);
     }
 
     public SimpleValidationPath withAttribute(String path) {
-        String newPath = new StringBuilder(this.validationPath)
-                .append(OPEN_ATTRIBUTE_CHAR)
-                .append(path)
-                .append(CLOSE_ATTRIBUTE_CHAR)
-                .toString();
+        String newPath = String.valueOf(this.validationPath) +
+                OPEN_ATTRIBUTE_CHAR +
+                path +
+                CLOSE_ATTRIBUTE_CHAR;
         return new SimpleValidationPath(newPath);
     }
 
     public SimpleValidationPath withIndex(int index) {
-        String newPath = new StringBuilder(this.validationPath)
-                .append(OPEN_INDEX_CHAR)
-                .append(index)
-                .append(CLOSE_INDEX_CHAR)
-                .toString();
+        String newPath = String.valueOf(this.validationPath) +
+                OPEN_INDEX_CHAR +
+                index +
+                CLOSE_INDEX_CHAR;
         return new SimpleValidationPath(newPath);
     }
 

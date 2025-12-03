@@ -41,8 +41,9 @@ public class TypeRoomValidator implements Validator<TypeRoom, Boolean> {
         this.validateRoomType(typeRoom, path.withAttribute(Names.ROOM_TYPE));
     }
 
+    @SuppressWarnings("checkstyle:CyclomaticComplexity")
     private void validateRoomType(TypeRoom typeRoom, ValidationPath path) {
-        // RoomType is optional an can be accessed without additional null-check of TypeRoom,
+        // RoomType is optional and can be accessed without additional null-check of TypeRoom,
         // because TypeRoom is mandatory and its null-check already occurred.
         if (typeRoom.getRoomType() == null) {
             return;

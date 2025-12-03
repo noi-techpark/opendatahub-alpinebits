@@ -12,8 +12,15 @@ SPDX-License-Identifier: CC0-1.0
     <parent>
         <artifactId>alpinebits-root</artifactId>
         <groupId>it.bz.opendatahub.alpinebits</groupId>
-        <version>4.0.1</version>
+        <version>5.0.0</version>
     </parent>
 
     <artifactId>build-tools</artifactId>
+
+    <name>AlpineBits Build Tools</name>
+    <description>Build tools and configuration for AlpineBits project. Contains checkstyle rules and build-time utilities.</description>
+    <url>https://www.alpinebits.org/</url>
+    <scm>
+        <url>https://github.com/noi-techpark/opendatahub-alpinebits</url>
+    </scm>
 </project>

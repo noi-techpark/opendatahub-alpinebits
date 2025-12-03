@@ -32,7 +32,7 @@ public final class AlpineBitsVersionChecker {
      */
     // Disable CheckStyle rule "BooleanExpressionComplexity" for this method,
     // which forbids boolean expressions with more than 7 conditions
-    @SuppressWarnings("checkstyle:BooleanExpressionComplexity")
+    @SuppressWarnings({"checkstyle:BooleanExpressionComplexity", "checkstyle:CyclomaticComplexity"})
     public static boolean isLegacyVersion(String alpineBitsVersion) {
         return AlpineBitsVersion.V_2017_10.equals(alpineBitsVersion)
                 || AlpineBitsVersion.V_2015_07B.equals(alpineBitsVersion)
@@ -57,7 +57,7 @@ public final class AlpineBitsVersionChecker {
      * @return <code>true</code> if the provided version is a version
      * with implicit OTA Ping in handshaking, <code>false</code> otherwise.
      */
-    @SuppressWarnings("checkstyle:BooleanExpressionComplexity")
+    @SuppressWarnings({"checkstyle:BooleanExpressionComplexity", "checkstyle:CyclomaticComplexity"})
     public static boolean isVersionWithImplicitOTAPingInHandshaking(String alpineBitsVersion) {
         return !AlpineBitsVersion.V_2022_10.equals(alpineBitsVersion)
                 && !AlpineBitsVersion.V_2020_10.equals(alpineBitsVersion)

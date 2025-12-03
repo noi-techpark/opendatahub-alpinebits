@@ -34,7 +34,7 @@ public class SimpleContextTest {
 
         Optional<Integer> ctxIntValue = ctx.get(intKey);
         assertTrue(ctxIntValue.isPresent());
-        assertEquals(intValue, ctxIntValue.get().intValue());
+        assertEquals(ctxIntValue.get().intValue(), intValue);
 
         Key<Long> longKey = Key.key("longKey", Long.class);
         Long longValue = 2L;
@@ -42,7 +42,7 @@ public class SimpleContextTest {
 
         Optional<Long> ctxLongValue = ctx.get(longKey);
         assertTrue(ctxLongValue.isPresent());
-        assertEquals(longValue, ctxLongValue.get());
+        assertEquals(ctxLongValue.get(), longValue);
 
         Key<String> stringKey = Key.key("stringKey", String.class);
         String stringValue = "one";
@@ -50,7 +50,7 @@ public class SimpleContextTest {
 
         Optional<String> ctxStringValue = ctx.get(stringKey);
         assertTrue(ctxStringValue.isPresent());
-        assertEquals(stringValue, ctxStringValue.get());
+        assertEquals(ctxStringValue.get(), stringValue);
 
         Key<Object> objectKey = Key.key("objectKey", Object.class);
         Object objectValue = new Object();
@@ -70,21 +70,21 @@ public class SimpleContextTest {
         ctx.put(intKey, intValue);
 
         Integer ctxIntValue = ctx.getOrThrow(intKey);
-        assertEquals(intValue, ctxIntValue.intValue());
+        assertEquals(ctxIntValue.intValue(), intValue);
 
         Key<Long> longKey = Key.key("longKey", Long.class);
         Long longValue = 2L;
         ctx.put(longKey, longValue);
 
         Long ctxLongValue = ctx.getOrThrow(longKey);
-        assertEquals(longValue, ctxLongValue);
+        assertEquals(ctxLongValue, longValue);
 
         Key<String> stringKey = Key.key("stringKey", String.class);
         String stringValue = "one";
         ctx.put(stringKey, stringValue);
 
         String ctxStringValue = ctx.getOrThrow(stringKey);
-        assertEquals(stringValue, ctxStringValue);
+        assertEquals(ctxStringValue, stringValue);
 
         Key<Object> objectKey = Key.key("objectKey", Object.class);
         Object objectValue = new Object();
@@ -113,14 +113,14 @@ public class SimpleContextTest {
 
         Optional<Integer> ctxValue = ctx.get(intKey);
         assertTrue(ctxValue.isPresent());
-        assertEquals(intValue1, ctxValue.get().intValue());
+        assertEquals(ctxValue.get().intValue(), intValue1);
 
         int intValue2 = 2;
         ctx.put(intKey, intValue2);
 
         ctxValue = ctx.get(intKey);
         assertTrue(ctxValue.isPresent());
-        assertEquals(intValue2, ctxValue.get().intValue());
+        assertEquals(ctxValue.get().intValue(), intValue2);
     }
 
     @Test
@@ -133,11 +133,11 @@ public class SimpleContextTest {
 
         Optional<Integer> ctxValue = ctx.get(intKey);
         assertTrue(ctxValue.isPresent());
-        assertEquals(intValue, ctxValue.get().intValue());
+        assertEquals(ctxValue.get().intValue(), intValue);
 
         int removedValue = ctx.remove(intKey);
 
-        assertEquals(intValue, removedValue);
+        assertEquals(removedValue, intValue);
         assertFalse(ctx.get(intKey).isPresent());
     }
 

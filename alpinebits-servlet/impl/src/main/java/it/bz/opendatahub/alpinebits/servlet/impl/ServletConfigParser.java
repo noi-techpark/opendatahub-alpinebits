@@ -13,10 +13,9 @@ package it.bz.opendatahub.alpinebits.servlet.impl;
 import it.bz.opendatahub.alpinebits.middleware.Middleware;
 import it.bz.opendatahub.alpinebits.servlet.ContextBuilder;
 import it.bz.opendatahub.alpinebits.servlet.RequestExceptionHandler;
+import jakarta.servlet.ServletConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.servlet.ServletConfig;
 
 /**
  * This class provides methods to parse a {@link ServletConfig} and return instances of {@link Middleware},

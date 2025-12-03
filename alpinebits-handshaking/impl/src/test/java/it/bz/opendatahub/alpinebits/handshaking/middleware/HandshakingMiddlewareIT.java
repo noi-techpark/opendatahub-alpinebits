@@ -28,6 +28,7 @@ import it.bz.opendatahub.alpinebits.xml.JAXBXmlToObjectConverter;
 import it.bz.opendatahub.alpinebits.xml.XmlToObjectConverter;
 import it.bz.opendatahub.alpinebits.xml.XmlValidationSchemaProvider;
 import it.bz.opendatahub.alpinebits.xml.schema.ota.OTAPingRS;
+import jakarta.servlet.http.HttpServletResponse;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -37,7 +38,6 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.testng.annotations.Test;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -162,7 +162,7 @@ public class HandshakingMiddlewareIT extends Arquillian {
 
     private String fromResource(String resource) {
         InputStream is = this.getClass().getClassLoader().getResourceAsStream(resource);
-        try (Scanner scanner = new Scanner(is, StandardCharsets.UTF_8.name())) {
+        try (Scanner scanner = new Scanner(is, StandardCharsets.UTF_8)) {
             return scanner.useDelimiter("\\A").next();
         }
     }

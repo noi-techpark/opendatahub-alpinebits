@@ -30,7 +30,7 @@ public class SimpleValidationPathTest {
     @Test
     public void testFromPath() {
         ValidationPath validationPath = SimpleValidationPath.fromPath(PATH_1);
-        assertEquals(PATH_1, validationPath.toString());
+        assertEquals(validationPath.toString(), PATH_1);
     }
 
     @Test

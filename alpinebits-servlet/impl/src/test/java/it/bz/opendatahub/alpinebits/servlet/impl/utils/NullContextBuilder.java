@@ -10,11 +10,10 @@
 
 package it.bz.opendatahub.alpinebits.servlet.impl.utils;
 
-import it.bz.opendatahub.alpinebits.servlet.ContextBuilder;
 import it.bz.opendatahub.alpinebits.middleware.Context;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import it.bz.opendatahub.alpinebits.servlet.ContextBuilder;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * A {@link ContextBuilder} that returns null, used for testing.

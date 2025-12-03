@@ -12,14 +12,19 @@ SPDX-License-Identifier: CC0-1.0
     <parent>
         <groupId>it.bz.opendatahub.alpinebits</groupId>
         <artifactId>alpinebits-middleware</artifactId>
-        <version>4.0.1</version>
+        <version>5.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>alpinebits-middleware-impl</artifactId>
-    <version>4.0.1</version>
+    <version>5.0.0</version>
 
     <name>AlpineBits middleware impl</name>
+    <description>Middleware implementation for AlpineBits. Provides concrete implementations for request processing pipeline and middleware components.</description>
+    <url>https://www.alpinebits.org/</url>
+    <scm>
+        <url>https://github.com/noi-techpark/opendatahub-alpinebits</url>
+    </scm>
 
     <dependencies>
         <dependency>

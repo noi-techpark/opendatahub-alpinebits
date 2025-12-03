@@ -157,6 +157,7 @@ public class HotelInfoValidator implements Validator<HotelInfoType, Void> {
         }
     }
 
+    @SuppressWarnings("java:S3776")
     private void validateServices(HotelInfoType.Services services, ValidationPath path) {
         VALIDATOR.expectNonEmptyCollection(
                 services.getServices(),

@@ -14,7 +14,6 @@ import it.bz.opendatahub.alpinebits.common.utils.middleware.ComposingMiddlewareB
 import it.bz.opendatahub.alpinebits.examples.inventory.middleware.InventoryPullMiddleware;
 import it.bz.opendatahub.alpinebits.middleware.Middleware;
 
-import javax.xml.bind.JAXBException;
 import java.util.Arrays;
 
 /**
@@ -26,7 +25,7 @@ public final class InventoryPullMiddlewareBuilder {
         // Empty
     }
 
-    public static Middleware buildInventoryPullMiddleware() throws JAXBException {
+    public static Middleware buildInventoryPullMiddleware() {
         return ComposingMiddlewareBuilder.compose(Arrays.asList(
                 XmlMiddlewareBuilder.buildXmlToObjectConvertingMiddleware(InventoryPullMiddleware.OTA_INVENTORY_PULL_REQUEST),
                 XmlMiddlewareBuilder.buildObjectToXmlConvertingMiddleware(InventoryPullMiddleware.OTA_INVENTORY_PULL_RESPONSE),

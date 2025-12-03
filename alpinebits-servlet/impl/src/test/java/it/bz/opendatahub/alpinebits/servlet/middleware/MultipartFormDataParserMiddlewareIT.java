@@ -11,6 +11,7 @@
 package it.bz.opendatahub.alpinebits.servlet.middleware;
 
 import it.bz.opendatahub.alpinebits.servlet.impl.AlpineBitsServlet;
+import jakarta.servlet.http.HttpServletResponse;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -21,7 +22,6 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import javax.servlet.http.HttpServletResponse;
 import java.net.URL;
 
 import static io.restassured.RestAssured.given;
@@ -37,13 +37,11 @@ public class MultipartFormDataParserMiddlewareIT extends Arquillian {
 
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
-        final WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war")
+        return ShrinkWrap.create(WebArchive.class, "test.war")
                 .addClasses(AlpineBitsServlet.class)
                 .addClasses(MultipartFormDataParserMiddleware.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource("web-multipart-formdata-parser-middleware-integration-test.xml", "web.xml");
-
-        return war;
     }
 
     @DataProvider(name = "badContentType")

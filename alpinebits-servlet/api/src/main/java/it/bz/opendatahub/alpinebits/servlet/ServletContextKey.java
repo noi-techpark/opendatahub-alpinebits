@@ -11,9 +11,8 @@
 package it.bz.opendatahub.alpinebits.servlet;
 
 import it.bz.opendatahub.alpinebits.middleware.Key;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * This class contains key definitions for servlet values.

@@ -12,23 +12,33 @@ SPDX-License-Identifier: CC0-1.0
     <parent>
         <groupId>it.bz.opendatahub.alpinebits</groupId>
         <artifactId>alpinebits-xml</artifactId>
-        <version>4.0.1</version>
+        <version>5.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>alpinebits-xml-api</artifactId>
-    <version>4.0.1</version>
+    <version>5.0.0</version>
 
     <name>AlpineBits XML API</name>
+    <description>API module for AlpineBits XML processing. Defines XML schemas and data binding.</description>
+    <url>https://www.alpinebits.org/</url>
+    <scm>
+        <url>https://github.com/noi-techpark/opendatahub-alpinebits</url>
+    </scm>
 
     <properties>
-        <jaxb2-maven.version>2.2</jaxb2-maven.version>
+        <jaxb2-maven.version>4.0.0</jaxb2-maven.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>it.bz.opendatahub.alpinebits</groupId>
             <artifactId>alpinebits-common-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
         </dependency>
 
         <!-- testing -->

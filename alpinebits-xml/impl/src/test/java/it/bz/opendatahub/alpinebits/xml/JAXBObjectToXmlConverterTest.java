@@ -30,7 +30,7 @@ import static org.testng.Assert.assertTrue;
 public class JAXBObjectToXmlConverterTest {
 
     @Test(expectedExceptions = XmlConversionException.class)
-    public void testToXml_Error() throws Exception {
+    public void testToXml_Error() {
         OTAPingRQ pingRQ = new OTAPingRQ();
         pingRQ.setEchoData("Some echo data");
 
@@ -46,7 +46,7 @@ public class JAXBObjectToXmlConverterTest {
     }
 
     @Test
-    public void testToXml_Ok() throws Exception {
+    public void testToXml_Ok() {
         OTAPingRQ pingRQ = new OTAPingRQ();
         pingRQ.setVersion(BigDecimal.ONE);
         pingRQ.setEchoData("Some echo data");
@@ -60,7 +60,7 @@ public class JAXBObjectToXmlConverterTest {
     }
 
     @Test
-    public void testToXml_ShouldUseGenericType_WhenClassToBeBoundExtendsJAXBElement() throws Exception {
+    public void testToXml_ShouldUseGenericType_WhenClassToBeBoundExtendsJAXBElement() {
         MessageAcknowledgementType mat = new MessageAcknowledgementType();
         mat.setSuccess(new SuccessType());
         ObjectFactory of = new ObjectFactory();

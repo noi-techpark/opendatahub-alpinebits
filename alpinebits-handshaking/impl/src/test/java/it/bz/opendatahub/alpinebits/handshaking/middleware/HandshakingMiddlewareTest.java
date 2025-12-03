@@ -183,7 +183,7 @@ public class HandshakingMiddlewareTest {
     private void checkOtaPingRsEchoData(OTAPingRS otaPingRs, String echoData) {
         // Extract echo data from otaPingRs
         Optional<String> otaPingRsEchoData = otaPingRs.getSuccessesAndEchoDatasAndWarnings().stream()
-                .filter(o -> o instanceof String)
+                .filter(String.class::isInstance)
                 .map(o -> Optional.of((String) o))
                 .findAny()
                 .orElseThrow(() -> new RuntimeException("Echo data expected but no No echo data found"));
@@ -195,7 +195,7 @@ public class HandshakingMiddlewareTest {
     private void checkOtaPingRsWarning(OTAPingRS otaPingRs, String warningContent) {
         // Extract warning from otaPingRs
         Optional<WarningsType> otaPingRsWarnings = otaPingRs.getSuccessesAndEchoDatasAndWarnings().stream()
-                .filter(o -> o instanceof WarningsType)
+                .filter(WarningsType.class::isInstance)
                 .map(o -> Optional.of((WarningsType) o))
                 .findAny()
                 .orElseThrow(() -> new RuntimeException("Warning expected but no warning found"));

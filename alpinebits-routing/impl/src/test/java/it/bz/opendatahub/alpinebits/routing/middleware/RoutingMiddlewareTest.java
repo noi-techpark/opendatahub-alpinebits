@@ -162,7 +162,7 @@ public class RoutingMiddlewareTest {
         assertFalse(resultValue1.isPresent());
 
         String resultValue2 = ctx.getOrThrow(testKey2);
-        assertEquals(testValue2, resultValue2);
+        assertEquals(resultValue2, testValue2);
     }
 
     private Middleware getValidRoutingMiddleware() {

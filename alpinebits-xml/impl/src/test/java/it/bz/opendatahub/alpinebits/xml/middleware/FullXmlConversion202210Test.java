@@ -49,6 +49,7 @@ import javax.xml.validation.Schema;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 import static org.testng.Assert.assertFalse;
 
@@ -121,7 +122,7 @@ public class FullXmlConversion202210Test {
     }
 
     @Test(dataProvider = "xmlValid")
-    public <T> void fullConversion(String xmlFile, Class<T> classToBeBound) throws Exception {
+    public <T> void fullConversion(String xmlFile, Class<T> classToBeBound) {
         String filename = "examples/v_2022_10/" + xmlFile;
         Context ctx = this.prepareCtx(filename);
 
@@ -140,7 +141,7 @@ public class FullXmlConversion202210Test {
 
         InputStream inputXmlStream = this.getClass().getClassLoader().getResourceAsStream(filename);
         ByteArrayOutputStream outputXmlStream = (ByteArrayOutputStream) ctx.getOrThrow(ResponseContextKeys.RESPONSE_CONTENT_STREAM);
-        String outputXml = outputXmlStream.toString("UTF-8");
+        String outputXml = outputXmlStream.toString(StandardCharsets.UTF_8);
 
         Diff xmlDiff = DiffBuilder.compare(inputXmlStream).withTest(outputXml)
                 .checkForSimilar()

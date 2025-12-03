@@ -20,12 +20,13 @@ import it.bz.opendatahub.alpinebits.servlet.MultipartFormDataParseException;
 import it.bz.opendatahub.alpinebits.servlet.ServletContextKey;
 import it.bz.opendatahub.alpinebits.servlet.UndefinedActionException;
 import it.bz.opendatahub.alpinebits.servlet.impl.utils.MultipartFormDataRequestBuilder;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.io.IOUtils;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -96,7 +97,7 @@ public class MultipartFormDataParserMiddlewareTest {
 
         Context ctx = this.executeMiddleware(request);
         InputStream stream = ctx.getOrThrow(RequestContextKey.REQUEST_CONTENT_STREAM);
-        String alpineBitsRequest = IOUtils.toString(stream);
+        String alpineBitsRequest = IOUtils.toString(stream, StandardCharsets.UTF_8);
         assertEquals(alpineBitsRequest, MultipartFormDataRequestBuilder.ALPINEBITS_REQUEST_PARAM);
     }
 

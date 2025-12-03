@@ -10,8 +10,9 @@
 
 package it.bz.opendatahub.alpinebits.servlet.impl.utils;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.WriteListener;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.WriteListener;
+
 import java.io.StringWriter;
 
 /**
@@ -34,7 +35,7 @@ public class ServletOutputStreamBuilder {
 
             @Override
             public void setWriteListener(WriteListener writeListener) {
-
+                // Empty
             }
 
             @Override

@@ -20,7 +20,6 @@ import it.bz.opendatahub.alpinebits.xml.XmlValidationSchemaProvider;
 import it.bz.opendatahub.alpinebits.xml.middleware.XmlRequestMappingMiddleware;
 import it.bz.opendatahub.alpinebits.xml.middleware.XmlResponseMappingMiddleware;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.validation.Schema;
 
 /**
@@ -32,13 +31,13 @@ public final class XmlMiddlewareBuilder {
         // Empty
     }
 
-    public static <T> Middleware buildXmlToObjectConvertingMiddleware(Key<T> key) throws JAXBException {
+    public static <T> Middleware buildXmlToObjectConvertingMiddleware(Key<T> key) {
         Schema schema = XmlValidationSchemaProvider.buildRngSchemaForAlpineBitsVersion("2017-10");
         XmlToObjectConverter<T> converter = new JAXBXmlToObjectConverter.Builder<>(key.getType()).schema(schema).build();
         return new XmlRequestMappingMiddleware<>(converter, key);
     }
 
-    public static <T> Middleware buildObjectToXmlConvertingMiddleware(Key<T> key) throws JAXBException {
+    public static <T> Middleware buildObjectToXmlConvertingMiddleware(Key<T> key) {
         Schema schema = XmlValidationSchemaProvider.buildRngSchemaForAlpineBitsVersion("2017-10");
         ObjectToXmlConverter converter = new JAXBObjectToXmlConverter.Builder()
                 .schema(schema)

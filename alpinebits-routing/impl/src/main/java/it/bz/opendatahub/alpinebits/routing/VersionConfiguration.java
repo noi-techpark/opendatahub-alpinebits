@@ -20,12 +20,12 @@ import java.util.stream.Collectors;
 
 /**
  * An AlpineBits version configuration, containing
- * information about the the actions defined.
+ * information about the actions defined.
  */
 public class VersionConfiguration {
 
-    private Map<Action, ActionConfiguration> actions = new HashMap<>();
-    private Map<String, ActionConfiguration> actionsByActionRequestParam = new HashMap<>();
+    private final Map<Action, ActionConfiguration> actions = new HashMap<>();
+    private final Map<String, ActionConfiguration> actionsByActionRequestParam = new HashMap<>();
 
     public void addActionConfiguration(Action action, ActionConfiguration actionConfiguration) {
         this.actions.put(action, actionConfiguration);

@@ -12,21 +12,25 @@ SPDX-License-Identifier: CC0-1.0
     <parent>
         <groupId>it.bz.opendatahub.alpinebits</groupId>
         <artifactId>examples-root</artifactId>
-        <version>4.0.1</version>
+        <version>5.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>examples-housekeeping</artifactId>
-    <version>4.0.1</version>
-
+    <version>5.0.0</version>
     <packaging>war</packaging>
+
     <name>AlpineBits examples - housekeeping</name>
+    <description>Example web application demonstrating the housekeeping features of the AlpineBits library.</description>
+    <url>https://www.alpinebits.org/</url>
+    <scm>
+        <url>https://github.com/noi-techpark/opendatahub-alpinebits</url>
+    </scm>
 
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.25</version>
         </dependency>
         <dependency>
             <groupId>it.bz.opendatahub.alpinebits</groupId>
@@ -41,8 +45,8 @@ SPDX-License-Identifier: CC0-1.0
             <artifactId>alpinebits-servlet-impl</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
     </dependencies>
 
@@ -54,7 +58,7 @@ SPDX-License-Identifier: CC0-1.0
             </plugin>
             <plugin>
                 <groupId>org.codehaus.cargo</groupId>
-                <artifactId>cargo-maven2-plugin</artifactId>
+                <artifactId>cargo-maven3-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

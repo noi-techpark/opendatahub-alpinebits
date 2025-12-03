@@ -37,7 +37,7 @@ public class FreeRoomsService {
     public FreeRoomsService() {
         this.om = new ObjectMapper();
         this.om.enable(SerializationFeature.INDENT_OUTPUT);
-        this.om.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        this.om.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
     }
 
     /**

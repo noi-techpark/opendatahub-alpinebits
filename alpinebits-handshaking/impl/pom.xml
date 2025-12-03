@@ -12,14 +12,19 @@ SPDX-License-Identifier: CC0-1.0
     <parent>
         <groupId>it.bz.opendatahub.alpinebits</groupId>
         <artifactId>alpinebits-handshaking</artifactId>
-        <version>4.0.1</version>
+        <version>5.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>alpinebits-handshaking-impl</artifactId>
-    <version>4.0.1</version>
+    <version>5.0.0</version>
 
     <name>AlpineBits handshaking impl</name>
+    <description>Handshaking implementation for AlpineBits (since 2018-10). Provides concrete implementations for protocol handshaking.</description>
+    <url>https://www.alpinebits.org/</url>
+    <scm>
+        <url>https://github.com/noi-techpark/opendatahub-alpinebits</url>
+    </scm>
 
     <dependencies>
         <dependency>
@@ -47,7 +52,6 @@ SPDX-License-Identifier: CC0-1.0
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -81,8 +85,8 @@ SPDX-License-Identifier: CC0-1.0
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

@@ -34,6 +34,7 @@ import static it.bz.opendatahub.alpinebits.validation.schema.common.ValidationUt
 /**
  * Tests for {@link ContactInfosValidator}.
  */
+@SuppressWarnings("checkstyle:ClassDataAbstractionCoupling")
 public class ContactInfosValidatorTest {
 
     private static final ContactInfosValidator VALIDATOR = new ContactInfosValidator();

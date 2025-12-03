@@ -26,7 +26,7 @@ import it.bz.opendatahub.alpinebits.xml.schema.ota.OTAReadRQ;
 import javax.xml.validation.Schema;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 /**
@@ -55,7 +55,7 @@ public class RngValidatingXmlRequestMappingMiddleware implements Middleware {
         OutputStream os = ctx.getOrThrow(ResponseContextKeys.RESPONSE_CONTENT_STREAM);
 
         try {
-            os.write(otaReadRQ.getClass().toString().getBytes(Charset.forName("UTF-8")));
+            os.write(otaReadRQ.getClass().toString().getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -19,15 +19,15 @@ import it.bz.opendatahub.alpinebits.servlet.InvalidRequestContentTypeException;
 import it.bz.opendatahub.alpinebits.servlet.MultipartFormDataParseException;
 import it.bz.opendatahub.alpinebits.servlet.ServletContextKey;
 import it.bz.opendatahub.alpinebits.servlet.UndefinedActionException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.fileupload2.core.DiskFileItem;
 import org.apache.commons.fileupload2.core.DiskFileItemFactory;
 import org.apache.commons.fileupload2.core.FileItem;
-import org.apache.commons.fileupload2.javax.JavaxServletFileUpload;
+import org.apache.commons.fileupload2.jakarta.servlet6.JakartaServletFileUpload;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -73,7 +73,7 @@ public class MultipartFormDataParserMiddleware implements Middleware {
     }
 
     private void checkIsMultipartOrThrow(HttpServletRequest request) {
-        boolean isMultipart = JavaxServletFileUpload.isMultipartContent(request);
+        boolean isMultipart = JakartaServletFileUpload.isMultipartContent(request);
         if (!isMultipart) {
             String contentType = request.getContentType();
             throw new InvalidRequestContentTypeException("Expecting content-type: multipart/form-data. Got: " + contentType);
@@ -84,16 +84,14 @@ public class MultipartFormDataParserMiddleware implements Middleware {
         LOG.debug("Parsing multipart/form-data");
 
         DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
-        JavaxServletFileUpload<DiskFileItem, DiskFileItemFactory> upload = new JavaxServletFileUpload<>(factory);
+        JakartaServletFileUpload<DiskFileItem, DiskFileItemFactory> upload = new JakartaServletFileUpload<>(factory);
 
         String abAction = null;
         InputStream abRequest = null;
 
-        List<DiskFileItem> items = null;
-
         try {
             // Parse the request into FileItem objects
-            items = upload.parseRequest(request);
+            List<DiskFileItem> items = upload.parseRequest(request);
 
             for (FileItem<DiskFileItem> item : items) {
                 if (FORM_PART_ACTION.equalsIgnoreCase(item.getFieldName())) {

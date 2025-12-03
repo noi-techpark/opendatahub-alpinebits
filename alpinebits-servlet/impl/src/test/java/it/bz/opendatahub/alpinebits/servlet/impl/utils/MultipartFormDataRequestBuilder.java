@@ -10,11 +10,12 @@
 
 package it.bz.opendatahub.alpinebits.servlet.impl.utils;
 
-import javax.servlet.ReadListener;
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.ReadListener;
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -100,11 +101,9 @@ public class MultipartFormDataRequestBuilder {
      *
      * @param s convert this <code>String</code> to a {@link ServletInputStream}
      * @return a {@link ServletInputStream} that returns the given <code>String</code> when read from
-     * @throws UnsupportedEncodingException if the <code>String</code> could not be converted to
-     *                                      a byte array using the <code>UTF-8</code> encoding
      */
-    public static ServletInputStream toServletInputStream(String s) throws UnsupportedEncodingException {
-        byte[] bytes = s.getBytes("UTF-8");
+    public static ServletInputStream toServletInputStream(String s) {
+        byte[] bytes = s.getBytes(StandardCharsets.UTF_8);
         return new ServletInputStream() {
 
             private int lastIndexRetrieved = -1;
@@ -146,7 +145,7 @@ public class MultipartFormDataRequestBuilder {
                 if (!isFinished()) {
                     i = bytes[lastIndexRetrieved + 1];
                     lastIndexRetrieved++;
-                    if (isFinished() && (readListener != null)) {
+                    if (isFinished() && readListener != null) {
                         try {
                             readListener.onAllDataRead();
                         } catch (IOException ex) {

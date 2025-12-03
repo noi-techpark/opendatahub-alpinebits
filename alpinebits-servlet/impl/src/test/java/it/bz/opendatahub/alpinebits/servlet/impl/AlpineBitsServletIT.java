@@ -12,6 +12,7 @@ package it.bz.opendatahub.alpinebits.servlet.impl;
 
 import it.bz.opendatahub.alpinebits.servlet.impl.utils.EmptyMiddleware;
 import it.bz.opendatahub.alpinebits.servlet.impl.utils.ThrowingMiddleware;
+import jakarta.servlet.http.HttpServletResponse;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -22,7 +23,6 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.testng.annotations.Test;
 
-import javax.servlet.http.HttpServletResponse;
 import java.net.URL;
 
 import static io.restassured.RestAssured.when;
@@ -38,25 +38,21 @@ public class AlpineBitsServletIT extends Arquillian {
     @Deployment(name = "ServletWithEmptyMiddleware", testable = false)
     @SuppressWarnings("ArquillianTooManyDeployment")
     public static WebArchive createDeploymentWithEmptyMiddleware() {
-        final WebArchive emptyMiddlewareWar = ShrinkWrap.create(WebArchive.class, "testServletWithEmptyMiddleware.war")
+        return ShrinkWrap.create(WebArchive.class, "testServletWithEmptyMiddleware.war")
                 .addClasses(AlpineBitsServlet.class)
                 .addClasses(EmptyMiddleware.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource("web-alpinebits-servlet-with-empty-middleware-integration-test.xml", "web.xml");
-
-        return emptyMiddlewareWar;
     }
 
     @Deployment(name = "ServletWithThrowingMiddleware", testable = false)
     @SuppressWarnings("ArquillianTooManyDeployment")
     public static WebArchive createDeploymentWithThrowingMiddleware() {
-        final WebArchive throwingMiddlewareWar = ShrinkWrap.create(WebArchive.class, "testServletWithThrowingMiddleware.war")
+        return ShrinkWrap.create(WebArchive.class, "testServletWithThrowingMiddleware.war")
                 .addClasses(AlpineBitsServlet.class)
                 .addClasses(ThrowingMiddleware.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource("web-alpinebits-servlet-with-throwing-middleware-integration-test.xml", "web.xml");
-
-        return throwingMiddlewareWar;
     }
 
     @Test(dataProvider = Arquillian.ARQUILLIAN_DATA_PROVIDER)

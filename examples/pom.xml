@@ -12,15 +12,20 @@ SPDX-License-Identifier: CC0-1.0
     <parent>
         <groupId>it.bz.opendatahub.alpinebits</groupId>
         <artifactId>alpinebits-root</artifactId>
-        <version>4.0.1</version>
+        <version>5.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>examples-root</artifactId>
-    <version>4.0.1</version>
-
+    <version>5.0.0</version>
     <packaging>pom</packaging>
+
     <name>AlpineBits examples - root</name>
+    <description>Example applications demonstrating AlpineBits usage.</description>
+    <url>https://www.alpinebits.org/</url>
+    <scm>
+        <url>https://github.com/noi-techpark/opendatahub-alpinebits</url>
+    </scm>
 
     <modules>
         <module>freerooms</module>
@@ -33,16 +38,16 @@ SPDX-License-Identifier: CC0-1.0
         <!-- Skip Sonar analysis for examples module -->
         <sonar.skip>true</sonar.skip>
 
-        <maven-war-plugin.version>3.2.2</maven-war-plugin.version>
-        <cargo-maven2-plugin.version>1.6.11</cargo-maven2-plugin.version>
+        <maven-war-plugin.version>3.5.0</maven-war-plugin.version>
+        <cargo-maven3-plugin.version>1.10.25</cargo-maven3-plugin.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -57,11 +62,11 @@ SPDX-License-Identifier: CC0-1.0
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.cargo</groupId>
-                    <artifactId>cargo-maven2-plugin</artifactId>
-                    <version>${cargo-maven2-plugin.version}</version>
+                    <artifactId>cargo-maven3-plugin</artifactId>
+                    <version>${cargo-maven3-plugin.version}</version>
                     <configuration>
                         <container>
-                            <containerId>tomcat8x</containerId>
+                            <containerId>tomcat10x</containerId>
                             <artifactInstaller>
                                 <groupId>org.apache.tomcat</groupId>
                                 <artifactId>tomcat</artifactId>

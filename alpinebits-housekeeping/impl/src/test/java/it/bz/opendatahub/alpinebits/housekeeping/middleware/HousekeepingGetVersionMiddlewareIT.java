@@ -18,6 +18,7 @@ import it.bz.opendatahub.alpinebits.servlet.impl.AlpineBitsServlet;
 import it.bz.opendatahub.alpinebits.servlet.middleware.AlpineBitsClientProtocolMiddleware;
 import it.bz.opendatahub.alpinebits.servlet.middleware.ContentTypeHintMiddleware;
 import it.bz.opendatahub.alpinebits.servlet.middleware.MultipartFormDataParserMiddleware;
+import jakarta.servlet.http.HttpServletResponse;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -27,7 +28,6 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.testng.annotations.Test;
 
-import javax.servlet.http.HttpServletResponse;
 import java.net.URL;
 
 import static io.restassured.RestAssured.given;
@@ -44,15 +44,13 @@ public class HousekeepingGetVersionMiddlewareIT extends Arquillian {
     @Deployment(testable = false)
     @SuppressWarnings("ArquillianTooManyDeployment")
     public static WebArchive createDeployment() {
-        final WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war")
+        return ShrinkWrap.create(WebArchive.class, "test.war")
                 .addClasses(AlpineBitsServlet.class)
                 .addClasses(AlpineBitsClientProtocolMiddleware.class)
                 .addClasses(MultipartFormDataParserMiddleware.class)
                 .addClasses(IntegrationTestingMiddleware.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource("web-housekeeping-middleware-integration-test.xml", "web.xml");
-
-        return war;
     }
 
     @Test

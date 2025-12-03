@@ -81,7 +81,7 @@ public class RoutingMiddleware implements Middleware {
 
         Optional<Middleware> optional = this.router.findMiddleware(version, actionRequestParam);
 
-        if (!optional.isPresent()) {
+        if (optional.isEmpty()) {
             throw new UndefinedRouteException("unknown or missing action");
         }
 

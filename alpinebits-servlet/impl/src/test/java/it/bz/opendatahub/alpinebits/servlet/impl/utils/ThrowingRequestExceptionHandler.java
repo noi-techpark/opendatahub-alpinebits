@@ -11,9 +11,8 @@
 package it.bz.opendatahub.alpinebits.servlet.impl.utils;
 
 import it.bz.opendatahub.alpinebits.servlet.RequestExceptionHandler;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * A {@link RequestExceptionHandler} that throws on every invocation, used for testing.

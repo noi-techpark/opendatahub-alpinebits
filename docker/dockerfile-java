@@ -1,4 +1,4 @@
-FROM maven:3-jdk-8-alpine
+FROM maven:3.9-eclipse-temurin-11-alpine
 
 ARG JENKINS_GROUP_ID=1000
 ARG JENKINS_USER_ID=1000

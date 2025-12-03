@@ -31,9 +31,9 @@ import it.bz.opendatahub.alpinebits.xml.schema.ota.PoliciesType.Policy.StayRequi
 import it.bz.opendatahub.alpinebits.xml.schema.ota.PoliciesType.Policy.StayRequirements.StayRequirement;
 import it.bz.opendatahub.alpinebits.xml.schema.ota.PoliciesType.Policy.TaxPolicies;
 import it.bz.opendatahub.alpinebits.xml.schema.ota.PoliciesType.Policy.TaxPolicies.TaxPolicy;
+import jakarta.xml.bind.JAXBElement;
 import org.testng.annotations.Test;
 
-import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 import java.math.BigDecimal;
 
@@ -42,6 +42,7 @@ import static it.bz.opendatahub.alpinebits.validation.schema.common.ValidationUt
 /**
  * Tests for {@link PoliciesValidator}.
  */
+@SuppressWarnings("checkstyle:ClassDataAbstractionCoupling")
 public class PoliciesValidatorTest {
 
     private static final PoliciesValidator VALIDATOR = new PoliciesValidator();

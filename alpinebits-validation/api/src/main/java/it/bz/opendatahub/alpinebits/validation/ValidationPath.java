@@ -14,7 +14,7 @@ package it.bz.opendatahub.alpinebits.validation;
  * A validation path can be used to trace the
  * path between from the beginning of a validation
  * to the current position.
- *
+ * <p>
  * This information can be used to simplify the
  * detection of the cause of a validation exception.
  */

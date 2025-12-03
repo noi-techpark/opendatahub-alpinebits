@@ -11,8 +11,8 @@
 package it.bz.opendatahub.alpinebits.servlet.impl;
 
 import it.bz.opendatahub.alpinebits.common.constants.HttpContentTypeHeaderValues;
+import jakarta.servlet.http.HttpServletResponse;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**

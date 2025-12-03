@@ -11,9 +11,8 @@
 package it.bz.opendatahub.alpinebits.servlet;
 
 import it.bz.opendatahub.alpinebits.middleware.Context;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * This interface defined methods to build a {@link Context}.

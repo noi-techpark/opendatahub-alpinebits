@@ -10,7 +10,8 @@
 
 package it.bz.opendatahub.alpinebits.xml.xmladapter;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
+
 import java.text.ParsePosition;
 import java.time.LocalDateTime;
 import java.time.ZoneId;

@@ -26,7 +26,7 @@ import static org.testng.Assert.assertNotNull;
 public class JAXBXmlToObjectConverterTest {
 
     @Test(expectedExceptions = XmlConversionException.class)
-    public void testToObject_Error() throws Exception {
+    public void testToObject_Error() {
         InputStream is = new InputStream() {
             @Override
             public int read() throws IOException {
@@ -39,21 +39,21 @@ public class JAXBXmlToObjectConverterTest {
     }
 
     @Test(expectedExceptions = XmlConversionException.class)
-    public void testToObject_Error_WhenXmlIsInvalid() throws Exception {
+    public void testToObject_Error_WhenXmlIsInvalid() {
         InputStream is = new ByteArrayInputStream("NOT AN XML".getBytes());
         XmlToObjectConverter<TestEntity> converter = new JAXBXmlToObjectConverter.Builder<>(TestEntity.class).build();
         converter.toObject(is);
     }
 
     @Test(expectedExceptions = XmlConversionException.class)
-    public void testToObject_Error_OnXmlMappingError() throws Exception {
+    public void testToObject_Error_OnXmlMappingError() {
         InputStream is = new ByteArrayInputStream("<?xml version=\"1.0\" encoding=\"UTF-8\"?><some></some>".getBytes());
         XmlToObjectConverter<TestEntity> converter = new JAXBXmlToObjectConverter.Builder<>(TestEntity.class).build();
         converter.toObject(is);
     }
 
     @Test
-    public void testToObject_Ok() throws Exception {
+    public void testToObject_Ok() {
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("examples/v_2017_10/GuestRequests-OTA_ReadRQ.xml");
         XmlToObjectConverter<OTAReadRQ> converter = new JAXBXmlToObjectConverter.Builder<>(OTAReadRQ.class).build();
         OTAReadRQ otaReadRQ = converter.toObject(is);

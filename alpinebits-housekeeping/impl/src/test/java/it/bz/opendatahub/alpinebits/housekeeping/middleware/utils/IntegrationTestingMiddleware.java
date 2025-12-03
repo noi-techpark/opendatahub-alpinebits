@@ -13,16 +13,12 @@ package it.bz.opendatahub.alpinebits.housekeeping.middleware.utils;
 import it.bz.opendatahub.alpinebits.middleware.Context;
 import it.bz.opendatahub.alpinebits.middleware.Middleware;
 import it.bz.opendatahub.alpinebits.middleware.MiddlewareChain;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test {@link Middleware} that delegates its work to a pre-configured
  * routing middleware for integration tests.
  */
 public class IntegrationTestingMiddleware implements Middleware {
-
-    private static final Logger LOG = LoggerFactory.getLogger(IntegrationTestingMiddleware.class);
 
     private final Middleware routingMiddleware;
 
