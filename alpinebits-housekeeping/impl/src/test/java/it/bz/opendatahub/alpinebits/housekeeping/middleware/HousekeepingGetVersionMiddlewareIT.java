@@ -70,7 +70,7 @@ public class HousekeepingGetVersionMiddlewareIT extends Arquillian {
                 .then()
                 .statusCode(HttpServletResponse.SC_BAD_REQUEST)
                 .header(ContentTypeHintMiddleware.RESPONSE_CONTENT_TYPE_HEADER, HttpContentTypeHeaderValues.TEXT_PLAIN)
-                .body(containsString("ERROR:unknown or missing action"));
+                .body(containsString("ERROR:your current alpinebits version does not match one of the servers supported versions"));
     }
 
 
