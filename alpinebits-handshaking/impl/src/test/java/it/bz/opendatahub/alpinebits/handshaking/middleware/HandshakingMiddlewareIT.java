@@ -86,7 +86,7 @@ public class HandshakingMiddlewareIT extends Arquillian {
                 .post(this.base + "AlpineBits")
                 .then()
                 .statusCode(HttpServletResponse.SC_BAD_REQUEST)
-                .body(containsString("ERROR:unknown or missing action"));
+                .body(containsString("ERROR:your current alpinebits version does not match one of the servers supported versions"));
     }
 
     @Test

@@ -27,7 +27,7 @@ public class UndefinedRouteException extends AlpineBitsException {
      * @param msg the detail message
      */
     public UndefinedRouteException(String msg) {
-        super(msg, STATUS, "unknown or missing action");
+        super(msg, STATUS, msg);
     }
 
 }

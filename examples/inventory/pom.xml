@@ -12,12 +12,12 @@ SPDX-License-Identifier: CC0-1.0
     <parent>
         <groupId>it.bz.opendatahub.alpinebits</groupId>
         <artifactId>examples-root</artifactId>
-        <version>5.0.0</version>
+        <version>5.0.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>examples-inventory</artifactId>
-    <version>5.0.0</version>
+    <version>5.0.1</version>
     <packaging>war</packaging>
 
     <name>AlpineBits examples - Inventory</name>
