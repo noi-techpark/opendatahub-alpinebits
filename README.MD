@@ -4,8 +4,6 @@ SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
 SPDX-License-Identifier: CC0-1.0
 -->
 
-![Logo of the project](https://raw.githubusercontent.com/idm-suedtirol/odh-alpinebits/master/alpine_bits_rgb.png)
-
 # AlpineBits server library
 
 [AlpineBits](https://www.alpinebits.org/) is an open standard to exchange
